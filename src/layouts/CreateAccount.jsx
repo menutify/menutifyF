@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
-import GoogleLoginComponent from './Login/GoogleLoginComponent'
-import FacebookLoginComponent from './Login/FacebookLoginComponent'
+import { useState } from 'react'
+import GoogleLoginComponent from '../Components/LoginGF/GoogleLoginComponent'
+import FacebookLoginComponent from '../Components/LoginGF/FacebookLoginComponent'
 
 function CreateAccount() {
   const [dataForm, setDataForm] = useState({
@@ -17,7 +17,7 @@ function CreateAccount() {
     setDataForm({ ...dataForm, [e.target.name]: e.target.value })
     console.log(dataForm)
   }
-  
+
   return (
     <div>
       <div className='socialRedContainer'>

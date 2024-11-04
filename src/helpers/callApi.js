@@ -1,10 +1,11 @@
 import axios from 'axios'
+import axiosInstance from './axiosConfig'
 
-const urlAPI = 'http://localhost:3000/api/'
+
 
 const getData = async (url, headers) => {
   try {
-    const response = await axios.get(urlAPI + url, {
+    const response = await axios.get(url, {
       headers
     })
 
@@ -24,7 +25,7 @@ const getData = async (url, headers) => {
 
 const postData = async (url, body, headers = {}) => {
   try {
-    const response = await axios.post(urlAPI + url, body, {
+    const response = await axiosInstance.post(url, body, {
       headers
     })
 

@@ -1,0 +1,37 @@
+import { useEffect, useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+
+import { googleLogout } from '@react-oauth/google'
+import GoogleLoginComponent from '../Components/LoginGF/GoogleLoginComponent'
+import FacebookLoginComponent from '../Components/LoginGF/FacebookLoginComponent'
+
+import '../style/Login.css'
+import FormLogin from '../Components/Forms/FormLogin'
+
+const Login = () => {
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    googleLogout()
+    if (localStorage.getItem('token')) navigate('/me')
+  }, [])
+
+  return (
+    <div className='login-container'>
+      <h2>Iniciar Sesión</h2>
+
+      <FormLogin />
+      <div className='socialRedContainer'>
+        <GoogleLoginComponent />
+        <FacebookLoginComponent />
+      </div>
+      <Link to={'/repassword'}>¿Olvidaste tu contraseña?</Link>
+      <p>
+        No tienes una cuenta?{' '}
+        <Link to={'/create-account'}>Registrate ahora!</Link>
+      </p>
+    </div>
+  )
+}
+
+export default Login

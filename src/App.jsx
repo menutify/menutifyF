@@ -4,15 +4,15 @@ import './App.css'
 //manejadores
 import { Route, Navigate, Routes, useNavigate } from 'react-router-dom'
 //componentes
-import Home from './Components/Home'
-import Login from './Components/Login'
-import Payment from './Components/Payment'
-import MetodoPago from './Components/MetodoPago'
-import Repassword from './Components/Repassword'
-import SendEmail from './Components/SendEmail'
-import ChangePassword from './Components/ChangePassword'
+import Home from './layouts/Home'
+import Login from './layouts/Login'
+import Payment from './layouts/Payment'
+import MetodoPago from './layouts/MetodoPago'
+import Repassword from './layouts/Repassword'
+import SendEmail from './layouts/SendEmail'
+import ChangePassword from './layouts/ChangePassword'
 import callAPI from './helpers/callApi'
-import CreateAccount from './Components/CreateAccount'
+import CreateAccount from './layouts/CreateAccount'
 
 function App() {
   const [loading, setLoading] = useState(true)
@@ -68,9 +68,7 @@ function App() {
       <Route path='/repassword' element={<Repassword />} />
       <Route path='/send-email' element={<SendEmail />} />
       <Route path='/change-password/:token' element={<ChangePassword />} />
-      <Route path= '/create-account' element={<CreateAccount />} />
-      
-
+      <Route path='/create-account' element={<CreateAccount />} />
     </Routes>
   )
 }
