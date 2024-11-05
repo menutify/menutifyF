@@ -13,6 +13,8 @@ import SendEmail from './layouts/SendEmail'
 import ChangePassword from './layouts/ChangePassword'
 import callAPI from './helpers/callApi'
 import CreateAccount from './layouts/CreateAccount'
+import ConfirmAccount from './layouts/ConfirmAccount'
+import ReadyAccount from './layouts/ReadyAccount'
 
 function App() {
   const [loading, setLoading] = useState(true)
@@ -54,14 +56,14 @@ function App() {
         path='/me'
         element={
           resp ? (
-            <Navigate to='/payment' replace />
+            <Navigate to='/create-account/payment' replace />
           ) : (
             <Navigate to='/home' replace />
           )
         }
       />
       <Route path='/login' element={<Login />} />
-      <Route path='/payment' element={<Payment />} />
+      <Route path='/create-account/payment' element={<Payment />} />
       <Route path='/home' element={<Home />} />
       <Route path='/MercadoPago' element={<MetodoPago />} />
       <Route path='/Stripe' element={<MetodoPago />} />
@@ -69,6 +71,14 @@ function App() {
       <Route path='/send-email' element={<SendEmail />} />
       <Route path='/change-password/:token' element={<ChangePassword />} />
       <Route path='/create-account' element={<CreateAccount />} />
+      <Route
+        path='/create-account/verify-account'
+        element={<ConfirmAccount />}
+      />
+      <Route
+        path='/create-account/ready-account/:token'
+        element={<ReadyAccount />}
+      />
     </Routes>
   )
 }
