@@ -8,7 +8,7 @@ import { useEffect } from 'react'
 
 const defaultValueForm = {
   country: '',
-  name: '',
+  nameShop: '',
   code: '',
   phone: '',
   emoji: ''
@@ -45,7 +45,12 @@ function FormPayment() {
           />
         ))}
       </select>
-      <TextInput />
+      <TextInput
+        name={'nameShop'}
+        data={data.nameShop}
+        setData={handleDataForm}
+        placeholder='nombre de negocio'
+      />
       <div
         style={{
           display: 'flex',
@@ -61,7 +66,6 @@ function FormPayment() {
           name='code'
           onChange={handleDataForm}
           defaultValue='code'
-          
         >
           <option value='code' disabled>
             +000

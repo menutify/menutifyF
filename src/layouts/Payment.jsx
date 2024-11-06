@@ -1,34 +1,18 @@
-import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
 import './Payment.css'
 import FormPayment from '../Components/Forms/FormPayment'
+import { useEffect } from 'react'
+import VerifyTokenExist from '../helpers/VerifyTokenExist'
+import routesPath from '../data/routesPath'
+import { useNavigate } from 'react-router-dom'
 
 function Payment() {
-  const [selectedRegion, setSelectedRegion] = useState('')
-  const [paymentUrl, setPaymentUrl] = useState('')
-
   const navigate = useNavigate()
 
-  const handleSelectChange = (e) => {
-    setSelectedRegion(e.target.value)
-    switch (e.target.value) {
-      case 'argentina':
-        setPaymentUrl('MercadoPago')
-        break
-      case 'otros':
-        setPaymentUrl('Stripe')
-        break
 
-      default:
-        setPaymentUrl('')
-    }
-  }
-
-  const handlePaymentClick = () => {
-    if (paymentUrl) {
-      navigate('/' + paymentUrl, { state: { metodo: paymentUrl } })
-    }
-  }
+  useEffect(() => {
+    console.log('payment')
+    VerifyTokenExist(routesPath.login,navigate)
+  }, [])
 
   return (
     <div className='container'>

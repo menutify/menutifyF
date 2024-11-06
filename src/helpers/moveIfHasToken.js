@@ -1,21 +1,25 @@
+import routesPath from '../data/routesPath'
 import callAPI from './callApi'
 
 const moveIfHasToken = async (token, navigate) => {
-  
-    const data = await callAPI.getData('auth/me', { authorization: token })
-    console.log({ data })
+  const data = await callAPI.getData('auth/me', { authorization: token })
+  console.log({ data })
 
-    if (data.error) {
-      localStorage.removeItem('token')
-      navigate('/login', { replace: true }) // Redirige sin dejar historial
-      return
-    }
-    if (data.new) {
-      navigate('/create-account/payment', { replace: true }) // Redirige sin dejar historial
-      return
-    }
-    navigate('/Home', { replace: true })
-  
+  // si hay errores mandame al login
+  if (data.error) {
+    localStorage.removeItem('token')
+    navigate(routesPath.login, { replace: true }) 
+    return
+  }
+
+  // si hay token y es nuevo mandame a payment
+  if (data.new) {
+    navigate(routesPath.caPayment, { replace: true })  
+    return
+  }
+
+  //sino hay token y no es nuevo, mandame a home
+  navigate(routesPath.home, { replace: true })
 }
 
 export default moveIfHasToken

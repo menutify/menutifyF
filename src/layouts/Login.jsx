@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { useEffect } from 'react'
+import { Link } from 'react-router-dom'
 
 import { googleLogout } from '@react-oauth/google'
 import GoogleLoginComponent from '../Components/LoginGF/GoogleLoginComponent'
@@ -9,6 +9,7 @@ import '../style/Login.css'
 import FormLogin from '../Components/Forms/FormLogin'
 
 const Login = () => {
+  
   useEffect(() => {
     console.log('login')
     googleLogout()

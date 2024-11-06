@@ -32,13 +32,14 @@ function App() {
       return
     }
 
-    // Verificar si la ruta es la de restablecimiento de contraseña
-    if (location.pathname.startsWith('/create-account/ready-account')) {
-      setLoading(false)
-      return // Permitir acceso a esta página sin token
-    }
+    // eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjoiZ2lhbmNvLm1hcnF1ZXpAZ21haWwuY29tIiwiaWF0IjoxNzMwODkzNDMzLCJleHAiOjE3MzA5MDc4MzN9.VIuC6jtitS6ouzG6CDxYvQJHBViaQqSqLe6WGiCuOA0
+
+    // // Verificar si la ruta es la de restablecimiento de contraseña
+    // if (location.pathname.startsWith('/create-account/ready-account')) {
+    //   setLoading(false)
+    //   return // Permitir acceso a esta página sin token
+    // }
     console.log({ location: location.pathname })
-    console.log(true)
     // navigate('/login', { replace: true })
     setLoading(false)
   }, [])

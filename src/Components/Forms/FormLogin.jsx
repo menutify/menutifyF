@@ -9,6 +9,7 @@ import ButtonSubmit from '../ButtonSubmit'
 import HandleFormSubmit from '../../helpers/handleForSubmit'
 import { useNavigate } from 'react-router-dom'
 import useHandleData from '../../hooks/useHandleData'
+import routesPath from '../../data/routesPath'
 
 const defaultValueForm = {
   email: 'gianco.marquez@gmail.com',
@@ -45,7 +46,7 @@ function FormLogin() {
 
     localStorage.setItem('token', resp.data.token)
 
-    navigate(resp.data.new ? '/create-account/payment' : '/me')
+    navigate(resp.data.new ? routesPath.caPayment : routesPath.home)
   }
 
   return (

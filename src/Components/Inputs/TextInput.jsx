@@ -1,10 +1,15 @@
-function TextInput({ data, setData, name = 'name', pattern = '' }) {
+function TextInput({
+  data,
+  setData,
+  name = 'name',
+  placeholder = 'text'
+}) {
   return (
     <input
       name={name}
       type='text'
-      placeholder='name and lastname'
-      pattern={pattern}
+      placeholder={placeholder}
+      
       value={data}
       onChange={(e) => setData(e)}
       required
