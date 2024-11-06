@@ -45,7 +45,7 @@ function FormLogin() {
 
     localStorage.setItem('token', resp.data.token)
 
-    navigate(resp.data.new ? '/payment' : '/me')
+    navigate(resp.data.new ? '/create-account/payment' : '/me')
   }
 
   return (

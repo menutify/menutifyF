@@ -5,33 +5,18 @@ import { useNavigate } from 'react-router-dom'
 import callAPI from '../helpers/callApi'
 
 const Home = () => {
-  useEffect(() => {
-    const token = localStorage.getItem('token')
-
-    const verifyToken = async () => {
-      if (token) {
-        const data = await callAPI.getData('auth/me', { authorization: token })
-        // console.log({ data })
-        //maneja el token vencido
-        if (data.error) {
-          localStorage.removeItem('token')
-          navigate('/login')
-        }
-        //envia el estado del usuario si es nuevo o no
-        console.log({ data })
-      }
-      // Cambia el estado de loading aquí
-    }
-
-    verifyToken()
-  }, [])
   const token = localStorage.getItem('token')
   const navigate = useNavigate()
+
   const logOut = () => {
     localStorage.removeItem('token')
-
-    navigate('/login')
+    navigate('/login', { replace: true })
   }
+
+  useEffect(() => {
+    console.log('home')
+    
+  }, [])
 
   return (
     <div className='home-container'>

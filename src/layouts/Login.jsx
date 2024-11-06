@@ -9,11 +9,9 @@ import '../style/Login.css'
 import FormLogin from '../Components/Forms/FormLogin'
 
 const Login = () => {
-  const navigate = useNavigate()
-
   useEffect(() => {
+    console.log('login')
     googleLogout()
-    if (localStorage.getItem('token')) navigate('/me')
   }, [])
 
   return (

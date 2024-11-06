@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 //estilos
 import './App.css'
 //manejadores
-import { Route, Navigate, Routes, useNavigate } from 'react-router-dom'
+import { Route, Navigate, Routes, useNavigate, replace } from 'react-router-dom'
 //componentes
 import Home from './layouts/Home'
 import Login from './layouts/Login'
@@ -11,33 +11,36 @@ import MetodoPago from './layouts/MetodoPago'
 import Repassword from './layouts/Repassword'
 import SendEmail from './layouts/SendEmail'
 import ChangePassword from './layouts/ChangePassword'
-import callAPI from './helpers/callApi'
 import CreateAccount from './layouts/CreateAccount'
 import ConfirmAccount from './layouts/ConfirmAccount'
 import ReadyAccount from './layouts/ReadyAccount'
+import moveIfHasToken from './helpers/moveIfHasToken'
+import routesPath from './data/routesPath'
 
 function App() {
   const [loading, setLoading] = useState(true)
-  const [resp, setResp] = useState(false)
   const navigate = useNavigate()
+
   const token = localStorage.getItem('token')
   useEffect(() => {
-    const verifyToken = async () => {
-      if (token) {
-        const data = await callAPI.getData('auth/me', { authorization: token })
-        // console.log({ data })
-        //maneja el token vencido
-        if (data.error) {
-          localStorage.removeItem('token')
-          navigate('/login')
-        }
-        //envia el estado del usuario si es nuevo o no
-        setResp(data.new)
-      }
-      setLoading(false) // Cambia el estado de loading aquí
+    console.log('app')
+    setLoading(true)
+    if (token) {
+      moveIfHasToken(token, navigate).finally(() => {
+        setLoading(false)
+      })
+      return
     }
 
-    verifyToken()
+    // Verificar si la ruta es la de restablecimiento de contraseña
+    if (location.pathname.startsWith('/create-account/ready-account')) {
+      setLoading(false)
+      return // Permitir acceso a esta página sin token
+    }
+    console.log({ location: location.pathname })
+    console.log(true)
+    // navigate('/login', { replace: true })
+    setLoading(false)
   }, [])
 
   if (loading) {
@@ -46,39 +49,21 @@ function App() {
 
   return (
     <Routes>
-      <Route path='/' element={<Navigate to='/login' />} />
-      {/* token existe? 
-      1-> user.existe?
-        1.1-> navegar pago
-        1.2-> navegar home
-      2-> navegar Login*/}
       <Route
-        path='/me'
-        element={
-          resp ? (
-            <Navigate to='/create-account/payment' replace />
-          ) : (
-            <Navigate to='/home' replace />
-          )
-        }
+        path={routesPath.initial}
+        element={<Navigate to={routesPath.login} />}
       />
-      <Route path='/login' element={<Login />} />
-      <Route path='/create-account/payment' element={<Payment />} />
-      <Route path='/home' element={<Home />} />
-      <Route path='/MercadoPago' element={<MetodoPago />} />
-      <Route path='/Stripe' element={<MetodoPago />} />
-      <Route path='/repassword' element={<Repassword />} />
-      <Route path='/send-email' element={<SendEmail />} />
-      <Route path='/change-password/:token' element={<ChangePassword />} />
-      <Route path='/create-account' element={<CreateAccount />} />
-      <Route
-        path='/create-account/verify-account'
-        element={<ConfirmAccount />}
-      />
-      <Route
-        path='/create-account/ready-account/:token'
-        element={<ReadyAccount />}
-      />
+      <Route path={routesPath.login} element={<Login />} />
+      <Route path={routesPath.home} element={<Home />} />
+      <Route path={routesPath.repassword} element={<Repassword />} />
+      <Route path={routesPath.sendEmail} element={<SendEmail />} />
+      <Route path={routesPath.changePassword} element={<ChangePassword />} />
+      <Route path={routesPath.createAccount} element={<CreateAccount />} />
+      <Route path={routesPath.caVerifyAccount} element={<ConfirmAccount />} />
+      <Route path={routesPath.caReadyAccount} element={<ReadyAccount />} />
+      <Route path={routesPath.caPayment} element={<Payment />} />
+      <Route path={routesPath.caPayMp} element={<MetodoPago />} />
+      <Route path={routesPath.caPaySt} element={<MetodoPago />} />
     </Routes>
   )
 }

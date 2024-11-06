@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import './Payment.css'
+import FormPayment from '../Components/Forms/FormPayment'
 
 function Payment() {
   const [selectedRegion, setSelectedRegion] = useState('')
@@ -25,29 +26,13 @@ function Payment() {
 
   const handlePaymentClick = () => {
     if (paymentUrl) {
-      navigate('/'+paymentUrl,{state:{metodo:paymentUrl}})
+      navigate('/' + paymentUrl, { state: { metodo: paymentUrl } })
     }
   }
 
   return (
     <div className='container'>
-      <h2 className='title'>Selecciona tu región de pago</h2>
-      <select
-        className='select'
-        value={selectedRegion}
-        onChange={handleSelectChange}
-      >
-        <option value=''>Selecciona tu región</option>
-        <option value='argentina'>Argentina</option>
-        <option value='otros'>Otros</option>
-      </select>
-      <button
-        className='button'
-        onClick={handlePaymentClick}
-        disabled={!selectedRegion}
-      >
-        Realizar pago
-      </button>
+      <FormPayment />
     </div>
   )
 }

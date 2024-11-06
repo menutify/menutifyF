@@ -1,15 +1,15 @@
 import axios from 'axios'
 import axiosInstance from './axiosConfig'
 
-
-
 const getData = async (url, headers) => {
   try {
-    const response = await axios.get(url, {
-      headers
+    
+    const response = await axiosInstance.get(url, {
+      headers: headers
     })
 
     const { data } = response
+
     return data
   } catch (e) {
     return {
