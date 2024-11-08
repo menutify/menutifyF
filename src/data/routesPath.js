@@ -10,7 +10,8 @@ const routesPath = {
   caReadyAccount: '/create-account/ready-account/:token',
   caPayment: '/create-account/payment',
   caPayMp: '/create-account/payment/MercadoPago',
-  caPaySt: '/create-account/payment/Stripe'
+  caPaySt: '/create-account/payment/Stripe',
+  payment: '/payment'
 }
 
 export default routesPath

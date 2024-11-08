@@ -1,56 +1,31 @@
-import { loadStripe } from '@stripe/stripe-js'
-import {
-  Elements,
-  CardElement,
-  useStripe,
-  useElements
-} from '@stripe/react-stripe-js'
+import { Elements } from '@stripe/react-stripe-js'
+import { useEffect, useState } from 'react'
+import FormStripe from '../Components/Forms/FormStripe'
 
-const stripePromise = loadStripe('pk_test_51O1xShLwPyf2SXpsEcrkgTdRQF8lahbNPIHCtcMw5SpNGepLHxvVN3ZGW7yzK3RfplxzaZ6B1lZSE8fk2zke8Q0C00J3q74bqF')
 
-function Pagos() {
-    const stripe = useStripe()
-    const elements = useElements()
-  
-    const handleSubmit = async (event) => {
-      event.preventDefault()
-  
-      if (!stripe || !elements) return
-  
-      const cardElement = elements.getElement(CardElement)
-  
-      const { paymentMethod, error } = await stripe.createPaymentMethod({
-        type: 'card',
-        card: cardElement
+// StripePromise: clave publica de stripe
+function Pagos({ stripePromise }) {
+  const [clientSecret, setClientSecret] = useState('')
+
+  useEffect(() => {
+    // se crea el metodo de pago y el producto a pagar, retorna el id de la compra
+    fetch('http://localhost:3000/api/pay/create-payment-intent')
+      .then((res) => res.json())
+      .then((e) => {
+        setClientSecret(e.clientSecret)
+        console.log({e})
       })
-  
-      if (error) {
-        console.log('[Error]', error)
-      } else {
-        const response = await fetch('http://localhost:3000/api/pay/create-payment', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            paymentMethodId: paymentMethod.id,
-            amount: 1000, // Monto en centavos (ej: 1000 = 10 USD)
-            currency: 'usd'
-          })
-        })
-  
-        const result = await response.json()
-        console.log(result)
-      }
-    }
+  }, [])
 
   return (
-    <Elements stripe={stripePromise}>
-     <form onSubmit={handleSubmit}>
-      <CardElement />
-      <button type='submit' disabled={!stripe}>
-        Pagar
-      </button>
-    </form>
-    </Elements>
+    <>
+      <h1>Payment</h1>
+      {clientSecret && stripePromise && (
+        <Elements stripe={stripePromise} options={{ clientSecret }}>
+          <FormStripe />
+        </Elements>
+      )}
+    </>
   )
 }
 

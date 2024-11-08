@@ -8,6 +8,27 @@
 * {
   box-sizing: border-box;
 }
+.formPay {
+  max-width: 500px;
+}
+
+.StripeElement {
+  background-color: #ffffff !important;
+  /* max-width: 500px; */
+  padding: 0 20px 20px 20px;
+}
+
+#link-authentication-element {
+  /* background-color: #0000ff !important; */
+  padding-bottom: 0;
+  border-radius: 5px 5px 0 0;
+  padding-top: 20px;
+}
+
+.formpay {
+  width: 500px;
+  gap: 10px;
+}
 
 .logo {
   height: 6em;
