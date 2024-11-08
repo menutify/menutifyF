@@ -9,7 +9,7 @@ function TextInput({
       name={name}
       type='text'
       placeholder={placeholder}
-      
+      autoComplete='off'
       value={data}
       onChange={(e) => setData(e)}
       required

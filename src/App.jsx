@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 //estilos
-import './App.css'
+import './App.scss'
 //manejadores
 import { Route, Navigate, Routes, useNavigate, replace } from 'react-router-dom'
 //componentes
@@ -16,11 +16,12 @@ import ConfirmAccount from './layouts/ConfirmAccount'
 import ReadyAccount from './layouts/ReadyAccount'
 import moveIfHasToken from './helpers/moveIfHasToken'
 import routesPath from './data/routesPath'
-import Pagos from './layouts/pagos'
+import Pagosv from './layouts/pagosv'
 import { loadStripe } from '@stripe/stripe-js'
 import Completion from './layouts/Completion'
 import Pagosv2 from './layouts/Pagosv2'
 import Pagosv3 from './layouts/Pagosv3'
+import FormPayment from './Components/Forms/FormPayment'
 
 function App() {
   // const [loading, setLoading] = useState(true)
@@ -72,7 +73,7 @@ function App() {
        <Route path={routesPath.caPayMp} element={<MetodoPago />} />
        <Route path={routesPath.caPaySt} element={<MetodoPago />} />
        <Route path={routesPath.payment} element={<Pagos />} /> */}
-      <Route path='/' element={<Pagosv3 stripePromise={stripePromise} />} />
+      <Route path='/' element={<Payment stripePromise={stripePromise} />} />
       <Route
         path='/completion'
         element={<Completion stripePromise={stripePromise} />}

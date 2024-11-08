@@ -1,29 +1,4 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
-}
 
-* {
-  box-sizing: border-box;
-}
-.formPay {
-  max-width: 500px;
-}
-
-.StripeElement {
-  background-color: #ffffff !important;
-  /* max-width: 500px; */
-  padding: 0 20px 20px 20px;
-}
-
-#link-authentication-element {
-  /* background-color: #0000ff !important; */
-  padding-bottom: 0;
-  border-radius: 5px 5px 0 0;
-  padding-top: 20px;
-}
 
 .formpay {
   width: 500px;
@@ -49,6 +24,27 @@
   }
   to {
     transform: rotate(360deg);
+  }
+}
+
+.div_container {
+  background-color: rgba(255, 0, 0, 0.161);
+  max-width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  .ca_pay_section {
+    flex: 1;
+  }
+  .ico_menutify{
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin: 10px;
+    font-style: italic;
+    font-weight: 600;
   }
 }
 

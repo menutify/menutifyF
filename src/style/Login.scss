@@ -23,17 +23,30 @@ h2 {
 
 input {
   width: 100%;
-  padding: 10px;
+  height: 35px;
+  padding: 10px 12px;
   margin: 10px 0;
-  border: none;
-  border-radius: 5px;
-  background-color: #333;
+  border: 1px solid #232325;
+  border-radius: 12px;
+  background-color: #101010;
   color: #fff;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield; /* Firefox */
+  -webkit-appearance: none; /* Chrome, Safari, Opera */
+  appearance: textfield; /* Estándar */
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0; /* Elimina el margen en algunos navegadores */
 }
 
 input:focus {
   outline: none;
-  background-color: #444;
+  // background-color: #444;
 }
 
 button {

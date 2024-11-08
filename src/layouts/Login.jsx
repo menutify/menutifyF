@@ -5,7 +5,7 @@ import { googleLogout } from '@react-oauth/google'
 import GoogleLoginComponent from '../Components/LoginGF/GoogleLoginComponent'
 import FacebookLoginComponent from '../Components/LoginGF/FacebookLoginComponent'
 
-import '../style/Login.css'
+import '../style/Login.scss'
 import FormLogin from '../Components/Forms/FormLogin'
 
 const Login = () => {

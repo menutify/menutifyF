@@ -1,83 +1,110 @@
+import { useState } from 'react'
 import {
-  PaymentElement,
   LinkAuthenticationElement,
-  useStripe,
-  useElements
+  PaymentElement,
+  useElements,
+  useStripe
 } from '@stripe/react-stripe-js'
+import axiosInstance from '../../helpers/axiosConfig'
+import { passwordLengthValidation } from '../../helpers/validForm'
 
-import { useEffect, useState } from 'react'
-function FormStripe() {
+function FormStripe({ data, clientId }) {
+  const [errorMessage, setErrorMessage] = useState()
+  const [loading, setLoading] = useState(false)
+  const [email, setEmail] = useState('')
+
   const stripe = useStripe()
   const elements = useElements()
-  const [message, setMessage] = useState(null)
-  const [isLoading, setIsLoading] = useState(false)
 
-  useEffect(() => {
-    console.log({ elements })
-  }, [])
+  const handleError = (error) => {
+    setLoading(false)
+    setErrorMessage(error.message || error)
+  }
 
-  const handleSubmit = async (e) => {
-    e.preventDefault()
+  const validations = {
+    name: (e) => {
+      return e.name.length > 4 ? false : 'Nombre Incorrecto'
+    },
 
-    if (!stripe || !elements) {
-      // Stripe.js has not yet loaded.
-      // Make sure to disable form submission until Stripe.js has loaded.
+    code: (e) => {
+      if (e.code.length > 5) return 'Codigo de telefono erroneo'
+    }
+  }
+  const handleSubmit = async (event) => {
+    event.preventDefault()
+    const { name, code, phone } = data
+
+    // setLoading(true)
+
+    for (const fun in validations) {
+      if (validations[fun](data)) {
+        handleError(validations[fun](data))
+        return
+      }
+    }
+
+    if (!name || !code || !phone) {
+      handleError('Todos los campos son obligatorios')
       return
     }
 
-    setIsLoading(true)
+    if (!stripe) {
+      return
+    }
 
-    //*´proceso de confirmacion del pago
+    setLoading(true)
+
+    // Trigger form validation and wallet collection
+    const { error: submitError } = await elements.submit()
+    if (submitError) {
+      // handleError(submitError)
+      return
+    }
+    console.log({ clientId })
+
+    if (!clientId) {
+      return
+    }
+
+    const resp = await axiosInstance.post('/pay/create-intent', {
+      customerId: clientId
+    })
+
+    const clientSecret = await resp.data.client_secret
+
+    // Confirm the PaymentIntent using the details collected by the Payment Element
     const { error } = await stripe.confirmPayment({
       elements,
+      clientSecret,
       confirmParams: {
-        // Make sure to change this to your payment completion page
         return_url: `${window.location.origin}/completion`
       }
     })
 
-    // This point will only be reached if there is an immediate error when
-    // confirming the payment. Otherwise, your customer will be redirected to
-    // your `return_url`. For some payment methods like iDEAL, your customer will
-    // be redirected to an intermediate site first to authorize the payment, then
-    // redirected to the `return_url`.
-    if (error.type === 'card_error' || error.type === 'validation_error') {
-      setMessage(error.message)
-    } else {
-      setMessage('An unexpected error occured.')
-    }
+    // console.log('datos recibidos por stripe', { data })
 
-    setIsLoading(false)
-  }
-  const appearance = {
-    theme: 'nigth', // Usando el tema minimalista predeterminado
-    variables: {
-      // Puedes personalizar más detalles si lo necesitas
-      borderRadius: '8px', // Bordes más suaves
-      spacingUnit: '2px', // Espaciado entre elementos
-      fontFamily: '"Helvetica Neue", Helvetica, sans-serif' // Fuente más limpia
+    if (error) {
+      // This point is only reached if there's an immediate error when
+      // confirming the payment. Show the error to your customer (for example, payment details incomplete)
+      // handleError(error)
+    } else {
+      // Your customer is redirected to your `return_url`. For some payment
+      // methods like iDEAL, your customer is redirected to an intermediate
+      // site first to authorize the payment, then redirected to the `return_url`.
     }
   }
+
   return (
-    <form id='payment-form' onSubmit={handleSubmit}>
+    <form className='formPay' onSubmit={handleSubmit}>
       <LinkAuthenticationElement
         id='link-authentication-element'
-        // Access the email value like so:
-        // onChange={(event) => {
-        //  setEmail(event.value.email);
-        // }}
-        //
-        // Prefill the email field like so:
-        // options={{defaultValues: {email: 'foo@bar.com'}}}
+        onChange={(e) => setEmail(e.value.email)}
       />
-      <PaymentElement id='payment-element' options={{ appearance }} />
-      <button disabled={isLoading || !stripe || !elements} id='submit'>
-        <span id='button-text'>
-          {isLoading ? <div className='spinner' id='spinner'></div> : 'Pay now'}
-        </span>
+      <PaymentElement />
+      <button type='submit' disabled={!stripe || loading}>
+        {loading ? 'cargando' : ' listo'}
       </button>
-      {/* Show any error or success messages */}
-      {message && <div id='payment-message'>{message}</div>}
+      {errorMessage && <div>{errorMessage}</div>}
     </form>
   )
 }

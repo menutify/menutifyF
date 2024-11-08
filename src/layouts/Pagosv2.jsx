@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Elements } from '@stripe/react-stripe-js'
 import FormStripev2 from '../Components/Forms/FormStripev2'
-import FormStripe from '../Components/Forms/FormStripe'
+import FormStripev from '../Components/Forms/FormStripev'
 
 function Pagosv2({ stripePromise }) {
   const [clientSecret, setClientSecret] = useState('')
@@ -55,7 +55,7 @@ function Pagosv2({ stripePromise }) {
               stripe={stripePromise}
               options={{ clientSecret, appearance }}
             >
-              <FormStripe isSubscription={isSubscription} />
+              <FormStripev isSubscription={isSubscription} />
             </Elements>
           )
         : stripePromise && (

@@ -3,13 +3,14 @@ function TextInput({ data, setData, name = 'name', pattern = '' }) {
     <input
       name={name}
       type='number'
-      placeholder='name and lastname'
+      placeholder='Phone number'
       pattern={pattern}
       value={data}
       onChange={(e) => setData(e)}
       required
       minLength={4}
       maxLength={50}
+      autoComplete='off'
     />
   )
 }

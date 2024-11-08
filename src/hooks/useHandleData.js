@@ -32,8 +32,19 @@ function useHandleData(defaultData = {}) {
       }
     }
 
+    // Validación para el campo "phone" (solo números)
+    if (nameContainer === 'phone') {
+      // Filtrar solo números
+      e.target.value = valueContainer.replace(/[^0-9]/g, '')
+
+      // Opcional: Limitar el número de dígitos (ejemplo: 15)
+      if (!lengthValidation(valueContainer, 15)) {
+        return
+      }
+    }
+
     if (nameContainer === 'code') {
-      const value = e.target.selectedOptions[0].attributes.value
+      const value = e.target.selectedOptions[0].attributes.value.nodeValue
       const emoji = e.target.selectedOptions[0].attributes.emoji.nodeValue
       setData({ ...data, ['emoji']: emoji, [e.target.name]: value })
       return

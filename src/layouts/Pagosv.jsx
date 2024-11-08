@@ -1,6 +1,6 @@
 import { Elements } from '@stripe/react-stripe-js'
 import { useEffect, useState } from 'react'
-import FormStripe from '../Components/Forms/FormStripe'
+import FormStripev from '../Components/Forms/FormStripev'
 
 
 // StripePromise: clave publica de stripe
@@ -22,7 +22,7 @@ function Pagos({ stripePromise }) {
       <h1>Payment</h1>
       {clientSecret && stripePromise && (
         <Elements stripe={stripePromise} options={{ clientSecret }}>
-          <FormStripe />
+          <FormStripev />
         </Elements>
       )}
     </>

@@ -55,11 +55,7 @@ function FormCreateAccount() {
 
       <form className='formRegister' onSubmit={handleNewUser}>
         <label htmlFor='email'>Name:</label>
-        <TextInput
-          data={data.name}
-          setData={handleDataForm}
-          pattern='[A-Za-z\s]+'
-        />
+        
 
         <label htmlFor='email'>Email:</label>
         <EmailInput data={data.email} setData={handleDataForm} />
