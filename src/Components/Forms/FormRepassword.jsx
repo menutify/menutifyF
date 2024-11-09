@@ -1,10 +1,10 @@
 import { useNavigate } from 'react-router-dom'
 import EmailInput from '../Inputs/EmailInput'
 import useHandleData from '../../hooks/useHandleData'
-import { emailValidation } from '../../helpers/validForm'
+import { emailValidation } from '../../utils/validForm'
 
 import ButtonSubmit from '../ButtonSubmit'
-import HandleFormSubmit from '../../helpers/handleForSubmit'
+import HandleFormSubmit from '../../utils/handleForSubmit'
 
 const defaultValueForm = {
   email: 'gianco.marquez@gmail.com'

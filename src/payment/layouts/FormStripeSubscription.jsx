@@ -1,14 +1,13 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import {
   LinkAuthenticationElement,
   PaymentElement,
   useElements,
   useStripe
 } from '@stripe/react-stripe-js'
-import axiosInstance from '../../helpers/axiosConfig'
-import { passwordLengthValidation } from '../../helpers/validForm'
+import axiosInstance from '../../utils/axiosConfig'
 
-function FormStripe({ data, clientId }) {
+function FormStripeSubscription({ data, clientId }) {
   const [errorMessage, setErrorMessage] = useState()
   const [loading, setLoading] = useState(false)
   const [email, setEmail] = useState('')
@@ -16,6 +15,9 @@ function FormStripe({ data, clientId }) {
   const stripe = useStripe()
   const elements = useElements()
 
+  useEffect(() => {
+    console.log({ data, clientId, stripe, elements })
+  }, [])
   const handleError = (error) => {
     setLoading(false)
     setErrorMessage(error.message || error)
@@ -30,6 +32,7 @@ function FormStripe({ data, clientId }) {
       if (e.code.length > 5) return 'Codigo de telefono erroneo'
     }
   }
+
   const handleSubmit = async (event) => {
     event.preventDefault()
     const { name, code, phone } = data
@@ -58,6 +61,7 @@ function FormStripe({ data, clientId }) {
     const { error: submitError } = await elements.submit()
     if (submitError) {
       // handleError(submitError)
+      console.log('Hubo un error en submitError')
       return
     }
     console.log({ clientId })
@@ -66,12 +70,13 @@ function FormStripe({ data, clientId }) {
       return
     }
 
-    const resp = await axiosInstance.post('/pay/create-intent', {
+    const resp = await axiosInstance.post('/pay/sub-intent', {
       customerId: clientId
     })
 
-    const clientSecret = await resp.data.client_secret
-
+    console.log({ resp: resp.data })
+    const clientSecret = await resp.data.clientSecret
+    console.log({ clientSecret })
     // Confirm the PaymentIntent using the details collected by the Payment Element
     const { error } = await stripe.confirmPayment({
       elements,
@@ -81,6 +86,7 @@ function FormStripe({ data, clientId }) {
       }
     })
 
+    console.log({ error })
     // console.log('datos recibidos por stripe', { data })
 
     if (error) {
@@ -109,4 +115,4 @@ function FormStripe({ data, clientId }) {
   )
 }
 
-export default FormStripe
+export default FormStripeSubscription

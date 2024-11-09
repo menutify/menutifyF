@@ -1,12 +1,12 @@
-import callAPI from '../../helpers/callApi'
+import callAPI from '../../utils/callApi'
 import EmailInput from '../Inputs/EmailInput'
 import Password from '../Inputs/PasswordInput'
 import {
   emailValidation,
   passwordLengthValidation
-} from '../../helpers/validForm'
+} from '../../utils/validForm'
 import ButtonSubmit from '../ButtonSubmit'
-import HandleFormSubmit from '../../helpers/handleForSubmit'
+import HandleFormSubmit from '../../utils/handleForSubmit'
 import { useNavigate } from 'react-router-dom'
 import useHandleData from '../../hooks/useHandleData'
 import routesPath from '../../data/routesPath'

@@ -1,21 +1,17 @@
-import { useEffect, useRef, useState } from 'react'
+import { useState } from 'react'
 import {
   LinkAuthenticationElement,
   PaymentElement,
   useElements,
   useStripe
 } from '@stripe/react-stripe-js'
-import axiosInstance from '../../helpers/axiosConfig'
-import { passwordLengthValidation } from '../../helpers/validForm'
+import axiosInstance from '../../utils/axiosConfig'
+import { passwordLengthValidation } from '../../utils/validForm'
 
-function FormStripeSubscription({ data, clientId }) {
+function FormStripe({ data, clientId }) {
   const [errorMessage, setErrorMessage] = useState()
   const [loading, setLoading] = useState(false)
   const [email, setEmail] = useState('')
-
-  useEffect(() => {
-    console.log({ data, clientId })
-  }, [])
 
   const stripe = useStripe()
   const elements = useElements()
@@ -34,7 +30,6 @@ function FormStripeSubscription({ data, clientId }) {
       if (e.code.length > 5) return 'Codigo de telefono erroneo'
     }
   }
-
   const handleSubmit = async (event) => {
     event.preventDefault()
     const { name, code, phone } = data
@@ -63,7 +58,6 @@ function FormStripeSubscription({ data, clientId }) {
     const { error: submitError } = await elements.submit()
     if (submitError) {
       // handleError(submitError)
-      console.log('Hubo un error en submitError')
       return
     }
     console.log({ clientId })
@@ -72,13 +66,12 @@ function FormStripeSubscription({ data, clientId }) {
       return
     }
 
-    const resp = await axiosInstance.post('/pay/sub-intent', {
+    const resp = await axiosInstance.post('/pay/create-intent', {
       customerId: clientId
     })
 
-    console.log({ resp: resp.data })
-    const clientSecret = await resp.data.clientSecret
-    console.log({ clientSecret })
+    const clientSecret = await resp.data.client_secret
+
     // Confirm the PaymentIntent using the details collected by the Payment Element
     const { error } = await stripe.confirmPayment({
       elements,
@@ -88,7 +81,6 @@ function FormStripeSubscription({ data, clientId }) {
       }
     })
 
-    console.log({ error })
     // console.log('datos recibidos por stripe', { data })
 
     if (error) {
@@ -117,4 +109,4 @@ function FormStripeSubscription({ data, clientId }) {
   )
 }
 
-export default FormStripeSubscription
+export default FormStripe

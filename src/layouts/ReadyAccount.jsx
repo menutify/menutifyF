@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import HandleFormSubmit from '../helpers/handleForSubmit'
+import HandleFormSubmit from '../utils/handleForSubmit'
 
 function ReadyAccount() {
   const [confirm, setConfirm] = useState(true)

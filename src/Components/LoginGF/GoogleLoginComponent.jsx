@@ -1,6 +1,6 @@
 import { GoogleLogin, googleLogout } from '@react-oauth/google'
 
-import callAPI from '../../helpers/callApi'
+import callAPI from '../../utils/callApi'
 import { useNavigate } from 'react-router-dom'
 
 function GoogleLoginComponent() {

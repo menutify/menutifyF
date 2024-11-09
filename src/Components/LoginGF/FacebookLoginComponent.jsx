@@ -1,5 +1,5 @@
 import FacebookLogin from 'react-facebook-login'
-import callAPI from '../../helpers/callApi'
+import callAPI from '../../utils/callApi'
 import { useNavigate } from 'react-router-dom'
 function FacebookLoginComponent() {
   

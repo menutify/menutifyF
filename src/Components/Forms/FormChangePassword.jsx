@@ -2,11 +2,11 @@ import { useNavigate } from 'react-router-dom'
 import useHandleData from '../../hooks/useHandleData'
 import Password from '../Inputs/PasswordInput'
 import ButtonSubmit from '../ButtonSubmit'
-import HandleFormSubmit from '../../helpers/handleForSubmit'
+import HandleFormSubmit from '../../utils/handleForSubmit'
 import {
   passwordLengthValidation,
   twinsPassword
-} from '../../helpers/validForm'
+} from '../../utils/validForm'
 import { useState } from 'react'
 
 const defaultValueForm = {

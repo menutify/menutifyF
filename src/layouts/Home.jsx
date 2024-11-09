@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import callAPI from '../helpers/callApi'
+import callAPI from '../utils/callApi'
 
 const Home = () => {
   const token = localStorage.getItem('token')

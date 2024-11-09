@@ -7,8 +7,8 @@ import {
   emailValidation,
   passwordLengthValidation,
   twinsPassword
-} from '../../helpers/validForm'
-import HandleFormSubmit from '../../helpers/handleForSubmit'
+} from '../../utils/validForm'
+import HandleFormSubmit from '../../utils/handleForSubmit'
 import TextInput from '../Inputs/TextInput'
 
 const defaultData = {

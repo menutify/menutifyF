@@ -3,20 +3,23 @@ import { useEffect, useState } from 'react'
 //manejador de datos
 import useHandleData from '../../hooks/useHandleData'
 //Elementos de html
-import Options from '../Options'
-import TextInput from '../Inputs/TextInput'
-import NumberInput from '../Inputs/NumberInput'
+import Options from '../../Components/Options'
+import TextInput from '../../Components/Inputs/TextInput'
+import NumberInput from '../../Components/Inputs/NumberInput'
 //Data iterable
 import phoneCodes from '../../data/phoneCodes'
 //ImageneS:
-import argflag from '../../img/createAccount/arFlag.svg'
-import earth from '../../img/createAccount/earth.svg'
+import argflag from '../../assets/createAccount/arFlag.svg'
+import earth from '../../assets/createAccount/earth.svg'
 
 //Stripe:
 
 import { Elements } from '@stripe/react-stripe-js'
-import { obtainCustomerId } from '../../helpers/stripeHelpers'
-import { styleFormStripeSub,styleFormStripe } from '../../style/styleFormStripe'
+import { obtainCustomerId } from '../utils/stripeHelpers'
+import {
+  styleFormStripeSub,
+  styleFormStripe
+} from '../../style/styleFormStripe'
 import FormStripe from './FormStripe'
 import FormStripeSubscription from './FormStripeSubscription'
 
@@ -154,17 +157,23 @@ function FormPayment({ stripePromise }) {
           />
         </div>
         <div>
-          {selectedOption ? (
-            <>
-              <>mercadoPago</>
-              <Elements stripe={stripePromise} options={styleFormStripeSub}>
-                <FormStripeSubscription data={data || {}} clientId={clientIdStripe} />
+          {stripePromise ? (
+            selectedOption ? (
+              <>
+                <Elements stripe={stripePromise} options={styleFormStripeSub}>
+                  <FormStripeSubscription
+                    data={data || {}}
+                    clientId={clientIdStripe}
+                  />
+                </Elements>
+              </>
+            ) : (
+              <Elements stripe={stripePromise} options={styleFormStripe}>
+                <FormStripe data={data || {}} clientId={clientIdStripe} />
               </Elements>
-            </>
+            )
           ) : (
-            <Elements stripe={stripePromise} options={styleFormStripe}>
-              <FormStripe data={data || {}} clientId={clientIdStripe} />
-            </Elements>
+            <>Loading...</>
           )}
         </div>
       </div>

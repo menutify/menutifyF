@@ -1,16 +1,16 @@
-import '../style/Payment.scss'
-import FormPayment from '../Components/Forms/FormPayment'
 import { useEffect } from 'react'
-import VerifyTokenExist from '../helpers/VerifyTokenExist'
-import routesPath from '../data/routesPath'
 import { useNavigate } from 'react-router-dom'
+import FormPayment from '../../payment/layouts/FormPayment'
+import VerifyTokenExist from '../../utils/VerifyTokenExist'
+import routesPath from '../../data/routesPath'
+import '../styles/Payment.scss'
 
 function Payment({ stripePromise }) {
   const navigate = useNavigate()
 
   useEffect(() => {
     console.log('payment')
-    // VerifyTokenExist(routesPath.login, navigate)
+    VerifyTokenExist(routesPath.login, navigate)
   }, [])
 
   return (
@@ -36,7 +36,7 @@ function Payment({ stripePromise }) {
           <FormPayment stripePromise={stripePromise} />
         </div>
       </section>
-      <section className='ca_pay_section ca_pay_section2'>143535435</section>
+      <section className='ca_pay_section ca_pay_section2'></section>
     </div>
   )
 }
