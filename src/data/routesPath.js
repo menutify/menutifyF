@@ -1,4 +1,4 @@
-const routesPath = {
+export const routesPath = {
   initial: '/',
   login: '/login',
   home: '/home',
@@ -14,4 +14,12 @@ const routesPath = {
   payment: '/payment'
 }
 
-export default routesPath
+//axios instance in utils have all url
+export const routesApi = {
+  authMe: '/auth/me',
+  login:'/login',
+  logout:'/login/logout',
+  caCreateCustomer:'/create-account/create-customer',
+  caStripePayment:'/create-account/create-payment-stripe'
+}
+

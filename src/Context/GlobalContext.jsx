@@ -1,5 +1,10 @@
-import { createContext } from 'react'
+import { createContext, useContext } from 'react'
 
-const Context = createContext(null)
+export const Context = createContext(null)
 
-export default Context
+export const useDataGlobalContext = () => {
+  const data = useContext(Context)
+  return data
+}
+
+

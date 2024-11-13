@@ -1,17 +1,25 @@
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import FormPayment from '../../payment/layouts/FormPayment'
-import VerifyTokenExist from '../../utils/VerifyTokenExist'
-import routesPath from '../../data/routesPath'
+
 import '../styles/Payment.scss'
+import callAPI from '../../utils/callApi'
+import { routesApi, routesPath } from '../../data/routesPath'
+import { useDataGlobalContext } from '../../Context/GlobalContext'
 
-function Payment({ stripePromise }) {
+function Payment() {
   const navigate = useNavigate()
-
+  const { setUser } = useDataGlobalContext()
   useEffect(() => {
     console.log('payment')
-    VerifyTokenExist(routesPath.login, navigate)
+    // VerifyTokenExist(routesPath.login, navigate)
   }, [])
+
+  const deleteCookie = async () => {
+    setUser({})
+    await callAPI.getData(routesApi.logout)
+    navigate(routesPath.login)
+  }
 
   return (
     <div className='ca_pay_container div_container ca_container'>
@@ -33,10 +41,11 @@ function Payment({ stripePromise }) {
             <span></span>
             <span></span>
           </div>
-          <FormPayment stripePromise={stripePromise} />
+          <FormPayment />
         </div>
       </section>
       <section className='ca_pay_section ca_pay_section2'></section>
+      <button onClick={deleteCookie}>LOGOUT</button>
     </div>
   )
 }

@@ -1,18 +1,16 @@
 import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import GoogleLoginComponent from '../layouts/GoogleLoginComponent'
+import FacebookLoginComponent from '../layouts/FacebookLoginComponent'
 
-import { googleLogout } from '@react-oauth/google'
-import GoogleLoginComponent from '../Components/LoginGF/GoogleLoginComponent'
-import FacebookLoginComponent from '../Components/LoginGF/FacebookLoginComponent'
-
-import '../style/Login.scss'
-import FormLogin from '../Components/Forms/FormLogin'
+import '../styles/Login.scss'
+import FormLogin from '../layouts/FormLogin'
+import { routesPath } from '../../data/routesPath'
 
 const Login = () => {
-  
   useEffect(() => {
     console.log('login')
-    googleLogout()
+    // googleLogout()
   }, [])
 
   return (
@@ -24,10 +22,10 @@ const Login = () => {
         <GoogleLoginComponent />
         <FacebookLoginComponent />
       </div>
-      <Link to={'/repassword'}>¿Olvidaste tu contraseña?</Link>
+      <Link to={routesPath.repassword}>¿Olvidaste tu contraseña?</Link>
       <p>
         No tienes una cuenta?{' '}
-        <Link to={'/create-account'}>Registrate ahora!</Link>
+        <Link to={routesPath.createAccount}>Registrate ahora!</Link>
       </p>
     </div>
   )

@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 
 function App() {
   const [message, setMessage] = useState('');
-  const userAgent = useState(navigator.userAgent); // Obtener el User-Agent
+  // const userAgent = useState(navigator.userAgent); // Obtener el User-Agent
 
   const login = async () => {
     try {
@@ -13,7 +13,7 @@ function App() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ userAgent })
+        // body: JSON.stringify({ userAgent })
       });
 
       const data = await response.json();

@@ -5,80 +5,85 @@ import {
   useElements,
   useStripe
 } from '@stripe/react-stripe-js'
-import axiosInstance from '../../utils/axiosConfig'
 
-function FormStripeSubscription({ data, clientId }) {
-  const [errorMessage, setErrorMessage] = useState()
+import validateInputData from '../../utils/validateFormInputData'
+import callAPI from '../../utils/callApi'
+import { routesApi } from '../../data/routesPath'
+
+function FormStripeSubscription({ id, data, clientId, setErrorMessage }) {
   const [loading, setLoading] = useState(false)
-  const [email, setEmail] = useState('')
+  // const [email, setEmail] = useState('')
 
+  //stripe hooks
   const stripe = useStripe()
   const elements = useElements()
 
-  useEffect(() => {
-    console.log({ data, clientId, stripe, elements })
-  }, [])
+  useEffect(() => {}, [])
+
   const handleError = (error) => {
     setLoading(false)
-    setErrorMessage(error.message || error)
-  }
-
-  const validations = {
-    name: (e) => {
-      return e.name.length > 4 ? false : 'Nombre Incorrecto'
-    },
-
-    code: (e) => {
-      if (e.code.length > 5) return 'Codigo de telefono erroneo'
-    }
+    setErrorMessage(error)
   }
 
   const handleSubmit = async (event) => {
     event.preventDefault()
-    const { name, code, phone } = data
 
-    // setLoading(true)
+    setLoading(true)
 
-    for (const fun in validations) {
-      if (validations[fun](data)) {
-        handleError(validations[fun](data))
-        return
-      }
-    }
+    //validamos datos
+    const validationMsg = validateInputData(data)
 
-    if (!name || !code || !phone) {
-      handleError('Todos los campos son obligatorios')
+    if (!clientId) {
+      handleError('ClienteId stripe no existe')
       return
     }
 
     if (!stripe) {
+      handleError('Error al cargar stripe hook')
       return
     }
 
-    setLoading(true)
+    if (validationMsg) {
+      handleError(validationMsg)
+      return
+    }
 
-    // Trigger form validation and wallet collection
+    // Activar la validación de formularios y la respuesta del monedero
     const { error: submitError } = await elements.submit()
+
     if (submitError) {
-      // handleError(submitError)
-      console.log('Hubo un error en submitError')
-      return
-    }
-    console.log({ clientId })
-
-    if (!clientId) {
+      handleError('Error al enviar elements hook')
       return
     }
 
-    const resp = await axiosInstance.post('/pay/sub-intent', {
-      customerId: clientId
+    //emoji no lo necesitamos enviar
+    const { emoji, ...sendData } = data
+    //nombre no peude tener espacios al inicio ni al final
+    sendData.name = sendData.name.trim()
+
+    //crear la suscripcion
+    const {
+      error: paymentError,
+      msg,
+      data: paymentData
+    } = await callAPI.postData(routesApi.caStripePayment, {
+      customerId: clientId,
+      ...sendData,
+      id
     })
 
-    console.log({ resp: resp.data })
-    const clientSecret = await resp.data.clientSecret
-    console.log({ clientSecret })
+    if (paymentError) {
+      handleError(msg)
+      return
+    }
+
+    console.log({ resp: paymentData })
+    const clientSecret = await paymentData.clientSecret
+
+    console.log({ clientSecret, clientId })
+    
     // Confirm the PaymentIntent using the details collected by the Payment Element
-    const { error } = await stripe.confirmPayment({
+    const { error: errorConfirmPayment } = await stripe.confirmPayment({
       elements,
       clientSecret,
       confirmParams: {
@@ -86,10 +91,13 @@ function FormStripeSubscription({ data, clientId }) {
       }
     })
 
-    console.log({ error })
+    console.log({ errorConfirmPayment })
     // console.log('datos recibidos por stripe', { data })
 
-    if (error) {
+    if (errorConfirmPayment) {
+      handleError('Error al terminar el pago')
+      setLoading(false)
+      return
       // This point is only reached if there's an immediate error when
       // confirming the payment. Show the error to your customer (for example, payment details incomplete)
       // handleError(error)
@@ -97,20 +105,20 @@ function FormStripeSubscription({ data, clientId }) {
       // Your customer is redirected to your `return_url`. For some payment
       // methods like iDEAL, your customer is redirected to an intermediate
       // site first to authorize the payment, then redirected to the `return_url`.
+      setLoading(false)
     }
   }
 
   return (
     <form className='formPay' onSubmit={handleSubmit}>
-      <LinkAuthenticationElement
+      {/* <LinkAuthenticationElement
         id='link-authentication-element'
         onChange={(e) => setEmail(e.value.email)}
-      />
+      /> */}
       <PaymentElement />
       <button type='submit' disabled={!stripe || loading}>
         {loading ? 'cargando' : ' listo'}
       </button>
-      {errorMessage && <div>{errorMessage}</div>}
     </form>
   )
 }

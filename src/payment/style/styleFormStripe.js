@@ -1,4 +1,4 @@
-export const styleFormStripe = {
+export const styleFormStripeOnePay = {
   mode: 'payment', //payment | setup | subscription
   amount: 2000,
   currency: 'usd',
@@ -56,4 +56,8 @@ export const styleFormStripeSub = {
     }
   },
   locale: 'en'
+}
+
+export const styleCardElmentSub={
+  
 }

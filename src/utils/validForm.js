@@ -6,32 +6,22 @@ export const errorsMessage = {
   passwordNoEqual: 'Contraseñas con coinciden'
 }
 
-const isValidLengthPassword = (password) => {
-  return password.length > 4 ? true : false
-}
 
-const isValidRepassword = (password1, password2) => {
-  return password1 === password2 ? true : false
-}
-
-const isValidEmail = (email) => {
-  const emailRegex = /^([^\s@]+)@([^\s@]+\.[^\s@]+(\.[^\s@]+)*)$/
-  return emailRegex.test(email)
-}
-
+//deben ser emails
 export const emailValidation = (email) => {
-  if (!isValidEmail(email)) return errorsMessage.errorEmail
+  const resp = /^([^\s@]+)@([^\s@]+\.[^\s@]+(\.[^\s@]+)*)$/.test(email)
+  if (!resp) return errorsMessage.errorEmail
   return false
 }
 
+//deben tener mas de 5 caracteres
 export const passwordLengthValidation = (password) => {
-  if (!isValidLengthPassword(password)) return errorsMessage.passwordLengthError
-
+  if (password.length > 5 === false) return errorsMessage.passwordLengthError
   return false
 }
 
-export const twinsPassword = (pas1, pas2) => {
-  if (!isValidRepassword(pas1, pas2)) return errorsMessage.passwordNoEqual
-
+//deben coincidir las contraseñas
+export const twinsPassword = (password1, password2) => {
+  if (password1 !== password2) return errorsMessage.passwordNoEqual
   return false
 }

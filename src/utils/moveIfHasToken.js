@@ -1,23 +1,26 @@
-import routesPath from '../data/routesPath'
+import { routesPath, routesApi } from '../data/routesPath'
 import callAPI from './callApi'
 
-const moveIfHasToken = async (token, navigate) => {
-  const data = await callAPI.getData('auth/me', { authorization: token })
-  console.log({ data })
-
+const moveIfHasToken = async (navigate, setUser) => {
+  const { data, error, msg } = await callAPI.getData(routesApi.authMe)
   // si hay errores mandame al login
-  if (data.error) {
-    localStorage.removeItem('token')
-    navigate(routesPath.login, { replace: true }) 
+  if (error) {
+    console.log(msg)
+    navigate(routesPath.login, { replace: true })
     return
   }
 
+  //en este punto ya tenemos la data
+  setUser(data)
   // si hay token y es nuevo mandame a payment
-  if (data.new) {
-    navigate(routesPath.caPayment, { replace: true })  
+  if (data.isNew) {
+    console.log(msg)
+    navigate(routesPath.caPayment, { replace: true })
     return
   }
 
+  //! verificar si tiene suscripcion activa, aunque eso puede ir en el home
+  console.log(msg)
   //sino hay token y no es nuevo, mandame a home
   navigate(routesPath.home, { replace: true })
 }

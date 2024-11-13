@@ -1,10 +1,20 @@
-import Context from './GlobalContext'
+import { useState } from 'react'
+import { Context } from './GlobalContext'
 
 // eslint-disable-next-line react/prop-types
 const AllContext = ({ children }) => {
-  const data = 'verde'
+  const [stripePromise, setStripePromise] = useState(null)
+  const [user, setUser] = useState(null)
+ 
 
-  return <Context.Provider value={data}>{children}</Context.Provider>
+  const options = {
+   
+    stripePromise,
+    setStripePromise,
+    user,
+    setUser
+  }
+  return <Context.Provider value={options}>{children}</Context.Provider>
 }
 
 export default AllContext

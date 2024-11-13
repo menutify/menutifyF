@@ -1,37 +1,49 @@
 import { useState } from 'react'
 import callAPI from './callApi'
-
-const HandleFormSubmit = (validations) => {
+import validateInputData from './validateFormInputData'
+/**
+ * HandleFormSubmit se encarga de validar y obtener los errores
+ * @returns
+ *  - handleSubmit funcion para llamar a la api
+ *  - error : objet {error:bool,msg:string}
+ *  - isPending : bool
+ */
+const HandleFormSubmit = () => {
   const [error, setError] = useState({ error: false, msg: '' })
   const [isPending, setIsPending] = useState(false)
 
   // valicion + submitData
-  const handleSubmit = async (data, path, body, header = {}) => {
+  /**
+   *
+   * @param {string} path
+   * @param {object} body
+   * @param {object} header
+   * @returns
+   * - si error= true , return null
+   * - si error= false , return data de la api
+   */
+  const handleSubmit = async (path, body, header = {}) => {
     setIsPending(true)
-    setError({ error: false, msg: '' })
 
-    // verificar validaciones
-    for (const validation of Object.values(validations)) {
-      const errorMessage = validation(data)
-      if (errorMessage) {
-        setError({ error: true, msg: errorMessage })
-        setIsPending(false)
-        return null
-      }
+    const validation = validateInputData(body)
+
+    if (validation) {
+      setError({ error: true, msg: validation })
+      setIsPending(false)
+      return
     }
 
-    // call Api
-    const resp = await callAPI.postData(path, body, header)
+    const { data, error, msg } = await callAPI.postData(path, body, header)
 
-    if (resp.error) {
-      setError({ error: true, msg: resp.data?.msg })
+    if (error) {
+      setError({ error: true, msg })
       setIsPending(false)
-      return null
+      return
     }
 
     setIsPending(false)
     //retornar datos de la APi
-    return resp
+    return data
   }
 
   return { handleSubmit, error, isPending }

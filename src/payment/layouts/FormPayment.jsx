@@ -16,53 +16,40 @@ import earth from '../../assets/createAccount/earth.svg'
 
 import { Elements } from '@stripe/react-stripe-js'
 import { obtainCustomerId } from '../utils/stripeHelpers'
-import {
-  styleFormStripeSub,
-  styleFormStripe
-} from '../../style/styleFormStripe'
-import FormStripe from './FormStripe'
+import { styleFormStripeSub } from '../style/styleFormStripe'
+
 import FormStripeSubscription from './FormStripeSubscription'
+import { useDataGlobalContext } from '../../Context/GlobalContext'
 
 const defaultValueForm = {
-  name: '',
+  name: 'ramiro Perez',
   code: '',
-  phone: '',
+  phone: '12345667',
   emoji: ''
 }
 
-function FormPayment({ stripePromise }) {
+function FormPayment() {
   const [data, handleDataForm] = useHandleData(defaultValueForm)
   const [selectedOption, setSelectedOption] = useState(true)
-  const [clientIdStripe, setClientIdStripe] = useState('')
-  // const [stripePromise, setStripePromise] = useState(null)
+  const [clientId, setClientId] = useState(null)
+  const [error, setError] = useState('')
+  const { stripePromise, user } = useDataGlobalContext()
 
+  //todo 1, el client id, se guardara en la tabla sub
+  //obtenemos el clientId de Stripe a traves del email
   useEffect(() => {
-    console.log('FormPayment')
-    // obtener clave publica para activar stripe
-    // fetch('http://localhost:3000/api/pay/config').then(async (r) => {
-    //   const data = await r.json()
-    //   const promise = await loadStripe(data.publishableKey)
-    //   setStripePromise(promise)
-    // })
+    obtainCustomerId(user.email).then(({ data, error, msg }) => {
+      if (error) {
+        setError(msg)
+        console.log({ errorInFormPayment: msg })
+        return
+      }
+      console.log({ customID: data.customer })
+      setClientId(data.customer)
+    })
   }, [])
 
-  useEffect(() => {
-    if (selectedOption) return
-
-    setClientIdStripe(localStorage.getItem('clientId'))
-    if (!localStorage.getItem('clientId')) {
-      console.log('creando clientId')
-      // obtener el id custom
-      obtainCustomerId().then((e) => {
-        localStorage.setItem('clientId', e)
-        setClientIdStripe(e)
-      })
-      return
-    }
-
-    console.log('ya existe clientId')
-  }, [selectedOption])
-
+  //toggle de metodo de pago
   const handleOptionChange = () => {
     setSelectedOption(!selectedOption)
   }
@@ -159,23 +146,22 @@ function FormPayment({ stripePromise }) {
         <div>
           {stripePromise ? (
             selectedOption ? (
-              <>
-                <Elements stripe={stripePromise} options={styleFormStripeSub}>
-                  <FormStripeSubscription
-                    data={data || {}}
-                    clientId={clientIdStripe}
-                  />
-                </Elements>
-              </>
+              <>MERCADOPAGO</>
             ) : (
-              <Elements stripe={stripePromise} options={styleFormStripe}>
-                <FormStripe data={data || {}} clientId={clientIdStripe} />
+              <Elements stripe={stripePromise} options={styleFormStripeSub}>
+                <FormStripeSubscription
+                  data={data || {}}
+                  id={user.id}
+                  clientId={clientId}
+                  setErrorMessage={setError}
+                />
               </Elements>
             )
           ) : (
             <>Loading...</>
           )}
         </div>
+        {error && <div>{error}</div>}
       </div>
     </>
   )
