@@ -5,14 +5,15 @@ import { Context } from './GlobalContext'
 const AllContext = ({ children }) => {
   const [stripePromise, setStripePromise] = useState(null)
   const [user, setUser] = useState(null)
- 
+  const [product, setProduct] = useState({})
 
   const options = {
-   
     stripePromise,
     setStripePromise,
     user,
-    setUser
+    setUser,
+    product,
+    setProduct
   }
   return <Context.Provider value={options}>{children}</Context.Provider>
 }

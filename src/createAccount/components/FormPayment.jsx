@@ -15,11 +15,15 @@ import earth from '../../assets/createAccount/earth.svg'
 //Stripe:
 
 import { Elements } from '@stripe/react-stripe-js'
-import { obtainCustomerId } from '../utils/stripeHelpers'
-import { styleFormStripeSub } from '../style/styleFormStripe'
+import { loadStripe } from '@stripe/stripe-js'
+
+import { obtainCustomerId } from '../../payment/utils/stripeHelpers'
+import { styleFormStripeSub } from '../../payment/style/styleFormStripe'
 
 import FormStripeSubscription from './FormStripeSubscription'
 import { useDataGlobalContext } from '../../Context/GlobalContext'
+import FormMPSubscription from './FormMPSubscription'
+import { getPublicKeyStripe } from '../../utils/getDataFromAPI'
 
 const defaultValueForm = {
   name: 'ramiro Perez',
@@ -31,26 +35,12 @@ const defaultValueForm = {
 function FormPayment() {
   const [data, handleDataForm] = useHandleData(defaultValueForm)
   const [selectedOption, setSelectedOption] = useState(true)
-  const [clientId, setClientId] = useState(null)
   const [error, setError] = useState('')
-  const { stripePromise, user } = useDataGlobalContext()
-
-  //todo 1, el client id, se guardara en la tabla sub
-  //obtenemos el clientId de Stripe a traves del email
-  useEffect(() => {
-    obtainCustomerId(user.email).then(({ data, error, msg }) => {
-      if (error) {
-        setError(msg)
-        console.log({ errorInFormPayment: msg })
-        return
-      }
-      console.log({ customID: data.customer })
-      setClientId(data.customer)
-    })
-  }, [])
+  const { user,stripePromise } = useDataGlobalContext()
 
   //toggle de metodo de pago
   const handleOptionChange = () => {
+    console.log('go')
     setSelectedOption(!selectedOption)
   }
 
@@ -144,21 +134,17 @@ function FormPayment() {
           />
         </div>
         <div>
-          {stripePromise ? (
-            selectedOption ? (
-              <>MERCADOPAGO</>
-            ) : (
-              <Elements stripe={stripePromise} options={styleFormStripeSub}>
-                <FormStripeSubscription
-                  data={data || {}}
-                  id={user.id}
-                  clientId={clientId}
-                  setErrorMessage={setError}
-                />
-              </Elements>
-            )
+          {selectedOption ? (
+            <FormMPSubscription />
           ) : (
-            <>Loading...</>
+            <Elements stripe={stripePromise} options={styleFormStripeSub}>
+              <FormStripeSubscription
+                data={data || {}}
+                id={user.id}
+                email={user.email}
+                setErrorMessage={setError}
+              />
+            </Elements>
           )}
         </div>
         {error && <div>{error}</div>}

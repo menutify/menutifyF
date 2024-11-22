@@ -1,7 +1,6 @@
-import { useState } from 'react'
-import GoogleLoginComponent from '../login/layouts/GoogleLoginComponent'
-import FacebookLoginComponent from '../login/layouts/FacebookLoginComponent'
-import FormCreateAccount from '../Components/Forms/FormCreateAccount'
+import GoogleLoginComponent from '../../login/layouts/GoogleLoginComponent'
+import FacebookLoginComponent from '../../login/layouts/FacebookLoginComponent'
+import FormCreateAccount from '../components/FormCreateAccount'
 
 function CreateAccount() {
   return (

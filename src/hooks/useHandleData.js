@@ -4,7 +4,7 @@ const onlyTextValidation = (value) => {
   const newValue = value
     .replace(/[^a-zA-Z\s]/g, '') //solo letras y espacios
     .replace(/\s+/g, ' ') //solo un espacio entre letars
-    // .trim() //no espacios en el inicio o final
+  // .trim() //no espacios en el inicio o final
   return newValue
 }
 
@@ -28,7 +28,7 @@ function useHandleData(defaultData = {}) {
   const [data, setData] = useState(defaultData)
 
   const handleDataForm = (e) => {
-    if (e.target.name === 'password') {
+    if (e.target.name === 'password' || e.target.name === 'repassword') {
       e.target.value = e.target.value.replace(/\s/g, '').trim()
     }
 
@@ -43,7 +43,7 @@ function useHandleData(defaultData = {}) {
       if (!lengthValidation(e.target.value, 35)) {
         return
       }
-      e.target.value = e.target.value.replace(/\s+/g, ' ') 
+      e.target.value = e.target.value.replace(/\s+/g, ' ')
     }
 
     // Validación para el campo "phone" (solo números)

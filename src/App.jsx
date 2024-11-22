@@ -2,7 +2,13 @@ import { useEffect, useState } from 'react'
 //estilos
 import './App.scss'
 //manejadores
-import { Route, Navigate, Routes, useNavigate, Link } from 'react-router-dom'
+import {
+  Route,
+  Navigate,
+  Routes,
+  useNavigate,
+  useLocation
+} from 'react-router-dom'
 //componentes
 import Home from './layouts/Home'
 import Login from './login/pages/Login'
@@ -10,20 +16,16 @@ import Login from './login/pages/Login'
 // import Repassword from './layouts/Repassword'
 // import SendEmail from './layouts/SendEmail'
 // import ChangePassword from './layouts/ChangePassword'
-// import CreateAccount from './layouts/CreateAccount'
-// import ConfirmAccount from './layouts/ConfirmAccount'
-// import ReadyAccount from './layouts/ReadyAccount'
+import CreateAccount from './createAccount/pages/CreateAccount'
+import ConfirmAccount from './layouts/ConfirmAccount'
+import ReadyAccount from './createAccount/pages/ReadyAccount'
 import Payment from './createAccount/pages/Payment'
-// import Completion from './payment/pages/Completion'
-// import Test from './Test'
-
-//metodos de pago
-import { loadStripe } from '@stripe/stripe-js'
+import Completion from './payment/pages/Completion'
 
 //utils
 import { useDataGlobalContext } from './Context/GlobalContext'
-import { getPublicKeyStripe } from './utils/getDataFromAPI'
 import moveIfHasToken from './utils/moveIfHasToken'
+import initPayMethod from './utils/initPayMethod'
 import { googleLogout } from '@react-oauth/google'
 
 //data
@@ -31,19 +33,20 @@ import { routesPath } from './data/routesPath'
 
 function App() {
   const [loading, setLoading] = useState(true)
-  const { setStripePromise,setUser } = useDataGlobalContext()
+  const { setUser, setStripePromise, setProduct } = useDataGlobalContext()
+
+  //rrd
   const navigate = useNavigate()
+  const location = useLocation()
 
   useEffect(() => {
     setLoading(true)
 
     const asyncInitialTask = async () => {
-      //*inicializamos stripe
-      const key = await getPublicKeyStripe()
-      setStripePromise(loadStripe(key))
-
+      //inicializa los metodos de pago
+      await initPayMethod(setStripePromise, setProduct)
       //*verificamos que el token exista y sea valido
-      await moveIfHasToken(navigate,setUser)
+      await moveIfHasToken(navigate, setUser, location)
       setLoading(false)
     }
 
@@ -66,16 +69,16 @@ function App() {
       {/* <Route path={routesPath.repassword} element={<Repassword />} /> */}
       {/* <Route path={routesPath.sendEmail} element={<SendEmail />} /> */}
       {/* <Route path={routesPath.changePassword} element={<ChangePassword />} /> */}
-      {/* <Route path={routesPath.createAccount} element={<CreateAccount />} /> */}
-      {/* <Route path={routesPath.caVerifyAccount} element={<ConfirmAccount />} /> */}
-      {/* <Route path={routesPath.caReadyAccount} element={<ReadyAccount />} /> */}
+      <Route path={routesPath.createAccount} element={<CreateAccount />} />
+      <Route path={routesPath.caVerifyAccount} element={<ConfirmAccount />} />
+      <Route path={routesPath.caReadyAccount} element={<ReadyAccount />} />
       <Route path={routesPath.caPayment} element={<Payment />} />
       {/* <Route path={routesPath.caPayMp} element={<MetodoPago />} /> */}
       {/* <Route path={routesPath.caPaySt} element={<MetodoPago />} /> */}
 
       {/* <Route path='/ooooo' element={<Payment />} /> */}
       {/* <Route path='/--login' element={<Test />} /> */}
-      {/* <Route path='/--completion' element={<Completion />} /> */}
+      <Route path='/createAccount/completion' element={<Completion />} />
     </Routes>
   )
 }

@@ -10,7 +10,7 @@ import validateInputData from '../../utils/validateFormInputData'
 import callAPI from '../../utils/callApi'
 import { routesApi } from '../../data/routesPath'
 
-function FormStripeSubscription({ id, data, clientId, setErrorMessage }) {
+function FormStripeSubscription({ id, data, email, setErrorMessage }) {
   const [loading, setLoading] = useState(false)
   // const [email, setEmail] = useState('')
 
@@ -18,7 +18,9 @@ function FormStripeSubscription({ id, data, clientId, setErrorMessage }) {
   const stripe = useStripe()
   const elements = useElements()
 
-  useEffect(() => {}, [])
+  useEffect(() => {
+    console.log(`${window.location.origin}/createAccount/completion`)
+  }, [])
 
   const handleError = (error) => {
     setLoading(false)
@@ -32,11 +34,6 @@ function FormStripeSubscription({ id, data, clientId, setErrorMessage }) {
 
     //validamos datos
     const validationMsg = validateInputData(data)
-
-    if (!clientId) {
-      handleError('ClienteId stripe no existe')
-      return
-    }
 
     if (!stripe) {
       handleError('Error al cargar stripe hook')
@@ -55,6 +52,7 @@ function FormStripeSubscription({ id, data, clientId, setErrorMessage }) {
       handleError('Error al enviar elements hook')
       return
     }
+    console.log({ data })
 
     //emoji no lo necesitamos enviar
     const { emoji, ...sendData } = data
@@ -67,11 +65,12 @@ function FormStripeSubscription({ id, data, clientId, setErrorMessage }) {
       msg,
       data: paymentData
     } = await callAPI.postData(routesApi.caStripePayment, {
-      customerId: clientId,
+      email,
       ...sendData,
       id
     })
 
+    console.log({ paymentData })
     if (paymentError) {
       handleError(msg)
       return
@@ -80,14 +79,14 @@ function FormStripeSubscription({ id, data, clientId, setErrorMessage }) {
     console.log({ resp: paymentData })
     const clientSecret = await paymentData.clientSecret
 
-    console.log({ clientSecret, clientId })
-    
+    console.log({ clientSecret })
+
     // Confirm the PaymentIntent using the details collected by the Payment Element
     const { error: errorConfirmPayment } = await stripe.confirmPayment({
       elements,
       clientSecret,
       confirmParams: {
-        return_url: `${window.location.origin}/completion`
+        return_url: `${window.location.origin}/createAccount/completion`
       }
     })
 

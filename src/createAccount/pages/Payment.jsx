@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import FormPayment from '../../payment/layouts/FormPayment'
+import FormPayment from '../components/FormPayment'
 
 import '../styles/Payment.scss'
 import callAPI from '../../utils/callApi'

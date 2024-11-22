@@ -1,7 +1,18 @@
+
 import { routesPath, routesApi } from '../data/routesPath'
 import callAPI from './callApi'
 
-const moveIfHasToken = async (navigate, setUser) => {
+const moveIfHasToken = async (navigate,setUser,location) => {
+
+  if (
+    location.pathname == '/create-account' ||
+    location.pathname.startsWith('/create-account/ready-account') ||
+    location.pathname == '/createAccount/completion'
+  ) {
+    return
+  }
+
+
   const { data, error, msg } = await callAPI.getData(routesApi.authMe)
   // si hay errores mandame al login
   if (error) {
@@ -12,6 +23,7 @@ const moveIfHasToken = async (navigate, setUser) => {
 
   //en este punto ya tenemos la data
   setUser(data)
+  console.log(data)
   // si hay token y es nuevo mandame a payment
   if (data.isNew) {
     console.log(msg)

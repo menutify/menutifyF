@@ -1,37 +1,47 @@
 import { useEffect, useState } from 'react'
+import { useDataGlobalContext } from '../../Context/GlobalContext'
 
-function Completion({ stripePromise }) {
+function Completion() {
   const [messageBody, setMessageBody] = useState('')
+  const {stripePromise }= useDataGlobalContext()
 
   useEffect(() => {
     if (!stripePromise) return
-    
-    console.log({ strippePrromise: typeof stripePromise, stripePromise })
 
     const task = async () => {
       const url = new URL(window.location)
-      const clientSecret = url.searchParams.get('payment_intent_client_secret')
-      const { error, paymentIntent } =
-        await stripePromise.retrievePaymentIntent(clientSecret)
+      const clientSecret = url.searchParams.get('payment_intent_client_secret')     
+      try {
+        // Asegúrate de que `stripe.paymentIntents` esté definido
+        if (stripePromise.retrievePaymentIntent) {
+          // Usamos paymentIntents.retrieve para obtener el paymentIntent
+          const { error, paymentIntent } =
+            await stripePromise.retrievePaymentIntent(clientSecret)
 
-      console.log({ error, paymentIntent })
+          console.log({ error, paymentIntent })
 
-      setMessageBody(
-        error ? (
-          `> ${error.message}`
-        ) : (
-          <>
-            &gt; Payment {paymentIntent.status}:{' '}
-            <a
-              href={`https://dashboard.stripe.com/test/payments/${paymentIntent.id}`}
-              target='_blank'
-              rel='noreferrer'
-            >
-              {paymentIntent.id}
-            </a>
-          </>
-        )
-      )
+          setMessageBody(
+            error ? (
+              `> ${error.message}`
+            ) : (
+              <>
+                &gt; Payment {paymentIntent.status}:{' '}
+                <a
+                  href={`https://dashboard.stripe.com/test/payments/${paymentIntent.id}`}
+                  target='_blank'
+                  rel='noreferrer'
+                >
+                  {paymentIntent.id}
+                </a>
+              </>
+            )
+          )
+        } else {
+          console.error('paymentIntents no está disponible en stripe.')
+        }
+      } catch (err) {
+        console.error('Error al recuperar el PaymentIntent:', err)
+      }
     }
 
     task()

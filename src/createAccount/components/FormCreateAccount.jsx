@@ -1,21 +1,15 @@
 import useHandleData from '../../hooks/useHandleData'
-import EmailInput from '../Inputs/EmailInput'
-import Password from '../Inputs/PasswordInput'
-import ButtonSubmit from '../ButtonSubmit'
+import EmailInput from '../../Components/Inputs/EmailInput'
+import Password from '../../Components/Inputs/PasswordInput'
+import ButtonSubmit from '../../Components/ButtonSubmit'
 import { useNavigate } from 'react-router-dom'
-import {
-  emailValidation,
-  passwordLengthValidation,
-  twinsPassword
-} from '../../utils/validForm'
 import HandleFormSubmit from '../../utils/handleForSubmit'
-import TextInput from '../Inputs/TextInput'
+import { routesApi, routesPath } from '../../data/routesPath'
 
 const defaultData = {
-  name: '',
-  email: '',
-  password: '',
-  repassword: ''
+  email: 'gianco.marquez@gmail.com',
+  password: 'elkake',
+  repassword: 'elkake'
 }
 
 function FormCreateAccount() {
@@ -23,31 +17,25 @@ function FormCreateAccount() {
 
   const [data, handleDataForm] = useHandleData(defaultData)
 
-  // validaciones de datos
-  const validations = {
-    email: (e) => emailValidation(e.email),
-    password: (e) => passwordLengthValidation(e.password),
-    repassword: (e) => twinsPassword(e.password, e.repassword)
-  }
-
-  const { handleSubmit, error, isPending } = HandleFormSubmit(validations)
+  //manejador del submit
+  const { handleSubmit, error, isPending } = HandleFormSubmit()
 
   const handleNewUser = async (e) => {
     e.preventDefault()
 
     console.log({ data })
-    const resp = await handleSubmit(data, 'user', {
-      name: data.name,
+    const resp = await handleSubmit(routesApi.createAccount, {
       email: data.email,
       password: data.repassword
     })
 
+    
     if (!resp) {
       console.log('error al enviar email de verificacion')
       return
     }
 
-    navigate('/create-account/verify-account')
+    navigate(routesPath.caVerifyAccount)
   }
   return (
     <>
@@ -55,7 +43,6 @@ function FormCreateAccount() {
 
       <form className='formRegister' onSubmit={handleNewUser}>
         <label htmlFor='email'>Name:</label>
-        
 
         <label htmlFor='email'>Email:</label>
         <EmailInput data={data.email} setData={handleDataForm} />

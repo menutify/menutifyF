@@ -50,7 +50,7 @@ const validations = {
   password: (e) => passwordLengthValidation(e.password),
   name: (e) => nameValidation(e.name),
   code: (e) => codePhoneValidation(e.code),
-  phone: (e) => PhoneValidation(e.phone)
+  phone: (e) => PhoneValidation(e.phone),repassword: (e) => twinsPassword(e.password, e.repassword)
 }
 
 /**

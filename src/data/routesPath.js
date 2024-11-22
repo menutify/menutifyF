@@ -17,9 +17,10 @@ export const routesPath = {
 //axios instance in utils have all url
 export const routesApi = {
   authMe: '/auth/me',
-  login:'/login',
-  logout:'/login/logout',
-  caCreateCustomer:'/create-account/create-customer',
-  caStripePayment:'/create-account/create-payment-stripe'
+  login: '/login',
+  logout: '/login/logout',
+  createAccount: '/create-account/verify ',
+  caCreate: '/create-account/create ',
+  caCreateCustomer: '/create-account/create-customer',
+  caStripePayment: '/create-account/create-payment-stripe'
 }
-
