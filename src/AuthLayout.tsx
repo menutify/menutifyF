@@ -1,9 +1,10 @@
 import { Outlet } from 'react-router-dom'
 import logo from './assets/logo.svg'
 import logo2 from './assets/logo2.svg'
+import MyCarrousel from './components/my/MyCarrousel'
 function AuthLayout() {
   return (
-    <div className='flex w-screen h-screen bg-bg_color_1 overflow-auto'>
+    <div className='flex w-full min-h-screen bg-bg_color_1 overflow-auto'>
       <div className='mr-auto absolute left-5 top-5'>
         <img src={logo} alt='' />
       </div>
@@ -17,8 +18,10 @@ function AuthLayout() {
           </div>
         </div>
       </section>
-      <section className='w-2 flex-1 justify-center items-center bg-white'>
-        {/* Aquí puedes poner una imagen o ilustración */}
+      <section className='w-full flex flex-1 justify-center items-center bg-white p-4 relative '>
+        
+          <MyCarrousel />
+        
       </section>
     </div>
   )

@@ -13,14 +13,13 @@ import Separator from '@/components/my/Separator'
 function CreateAccount() {
   return (
     <div className='flex-1 flex gap-3 flex-col h-full items-center'>
-    <div className='flex gap-3 flex-col '>
-
-      <Title2 className=''>{caAccount.title1}</Title2>
-      <Parr className='text-parr_color_1 '>{logText.parr1}</Parr>
-      <ProgressBar state={1} />
-      <GoogleAndFaceSession />
-      <Separator text={logText.other}/>
-    </div >
+      <div className='flex gap-3 flex-col '>
+        <Title2 className=''>{caAccount.title1}</Title2>
+        <Parr className='text-parr_color_1 '>{logText.parr1}</Parr>
+        <ProgressBar state={1} />
+        <GoogleAndFaceSession />
+        <Separator text={logText.other} />
+      </div>
 
       <FormCreateAccount />
     </div>
