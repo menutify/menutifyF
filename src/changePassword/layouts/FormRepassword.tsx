@@ -9,6 +9,7 @@ import useFormHook from '@/hooks/useFormHook'
 import { repasswordFormScheme } from '@/utils/formScheme'
 import { routesApi, routesPath } from '@/data/routes'
 import { logText, repasText } from '@/data/text'
+import FormContainer from '@/components/my/FormContainer'
 
 const defaultValueForm = {
   email: ''
@@ -31,32 +32,23 @@ function FormRepassword() {
   }
 
   return (
-    <>
-      <Form {...formOptions}>
-        <form
-          onSubmit={formOptions.handleSubmit(onSubmit)}
-          className='space-y-2'
-        >
-          <div>
-            <FormFieldComponent
-              className='mb-2'
-              form={formOptions}
-              name={'email'}
-              ph={logText.ph1}
-              title=''
-            />
-          </div>
-          <Button
-            className='bg-button_color_1 w-full h-9 '
-            type='submit'
-            disabled={isPending ? true : false}
-          >
-            {repasText.button}
-          </Button>
-        </form>
-      </Form>
-      {error.error && <p className='error'>{error.msg}</p>}
-    </>
+    <FormContainer
+      formOptions={formOptions}
+      error={error}
+      isPending={isPending}
+      functionSubmit={onSubmit}
+      textButton={repasText.button}
+    >
+      <div>
+        <FormFieldComponent
+          className=''
+          form={formOptions}
+          name={'email'}
+          ph={logText.ph1}
+          title=''
+        />
+      </div>
+    </FormContainer>
   )
 }
 

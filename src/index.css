@@ -80,6 +80,56 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
+/* -----------MERCADO PAGO INPUTS */
+#cardNumberSecureField_container,
+#securityCodeSecureField_container,
+#expirationDateSecureField_container {
+  height: 36px;
+
+  border-radius: 24px;
+
+  position: relative;
+}
+
+#cardNumberSecureField_container *,
+#securityCodeSecureField_container *,
+#expirationDateSecureField_container * {
+  border-radius: 4px;
+  background-color: #1a1a1a;
+}
+#cardNumberSecureField_container {
+  flex: 1 1 auto;
+}
+
+#securityCodeSecureField_container {
+  flex: 0 0 auto;
+  width: 50px;
+}
+
+#expirationDateSecureField_container {
+  width: 70px;
+  flex: 0 0 auto;
+}
+/* ----------------GOOGLE BOTON--------------------- */
+
+.S9gUrf-YoZ4jf {
+  opacity: 0.001;
+  /* height: 200px; */
+  flex:1 1 auto;
+  
+  z-index: 12;
+}
+
+
+
+.S9gUrf-YoZ4jf.invisible{
+  opacity: 0;
+}
+
+input {
+  background-color: #1a1a1a;
+}
+
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;

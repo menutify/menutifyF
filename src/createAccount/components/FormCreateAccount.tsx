@@ -9,6 +9,7 @@ import useFormHook from '@/hooks/useFormHook'
 import { caAccountFormScheme } from '@/utils/formScheme'
 import { routesApi, routesPath } from '@/data/routes'
 import { caAccount } from '@/data/text'
+import FormContainer from '@/components/my/FormContainer'
 
 const defaultValueForm = {
   email: '',
@@ -41,49 +42,40 @@ function FormCreateAccount() {
     navigate(routesPath.caVerifyAccount, { replace: true })
   }
   return (
-    <>
-      <Form {...formOptions}>
-        <form
-          onSubmit={formOptions.handleSubmit(onSubmit)}
-          className='space-y-2'
-        >
-          <div>
-            <FormFieldComponent
-              className='mb-2'
-              type='email'
-              form={formOptions}
-              name={'email'}
-              ph={caAccount.ph1}
-              title=''
-            />
-            <FormFieldComponent
-              className='mb-2'
-              type='password'
-              form={formOptions}
-              name={'password'}
-              ph={caAccount.ph2}
-              title=''
-            />
-            <FormFieldComponent
-              className='mb-2'
-              type='password'
-              form={formOptions}
-              name={'repassword'}
-              ph={caAccount.ph3}
-              title=''
-            />
-          </div>
-          <Button
-            className='bg-button_color_1 w-full h-9 '
-            type='submit'
-            disabled={isPending ? true : false}
-          >
-            {caAccount.button1}
-          </Button>
-        </form>
-      </Form>
-      {error.error && <p className='text-red-800'>{error.msg}</p>}
-    </>
+    <FormContainer
+      formOptions={formOptions}
+      error={error}
+      isPending={isPending}
+      functionSubmit={onSubmit}
+      textButton={caAccount.button1}
+    >
+      <div>
+        <FormFieldComponent
+          className=''
+          type='email'
+          form={formOptions}
+          name={'email'}
+          ph={caAccount.ph1}
+          title=''
+        />
+        <FormFieldComponent
+          className=''
+          type='password'
+          form={formOptions}
+          name={'password'}
+          ph={caAccount.ph2}
+          title=''
+        />
+        <FormFieldComponent
+          className=''
+          type='password'
+          form={formOptions}
+          name={'repassword'}
+          ph={caAccount.ph3}
+          title=''
+        />
+      </div>
+    </FormContainer>
   )
 }
 

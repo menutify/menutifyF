@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import { emailValidator, passwordValidator } from './inputValidator'
+import { dniValidator, emailValidator, nameValidator, passwordValidator, phoneValidator } from './inputValidator'
 
 export const loginFormScheme = z.object({
   email: emailValidator,
@@ -27,4 +27,11 @@ export const caAccountFormScheme = z.object({
 }).refine((data) => data.password === data.repassword, {
   message: 'Las contraseñas no coinciden',
   path: ['repassword']
+})
+
+export const caPaymentFormScheme=z.object({
+  name:nameValidator,
+  phone:phoneValidator,
+  dni:dniValidator,
+  cardName:nameValidator,
 })

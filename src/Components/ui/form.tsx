@@ -84,6 +84,20 @@ const FormItem = React.forwardRef<
 })
 FormItem.displayName = "FormItem"
 
+const FormItemPayment = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement>
+>(({ className, ...props }, ref) => {
+  const id = React.useId()
+
+  return (
+    <FormItemContext.Provider value={{ id }}>
+      <div ref={ref} className={cn("space-y-0", className)} {...props} />
+    </FormItemContext.Provider>
+  )
+})
+FormItemPayment.displayName = "FormItem"
+
 const FormLabel = React.forwardRef<
   React.ElementRef<typeof LabelPrimitive.Root>,
   React.ComponentPropsWithoutRef<typeof LabelPrimitive.Root>
@@ -167,7 +181,7 @@ FormMessage.displayName = "FormMessage"
 export {
   useFormField,
   Form,
-  FormItem,
+  FormItem,FormItemPayment,
   FormLabel,
   FormControl,
   FormDescription,

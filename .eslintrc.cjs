@@ -12,6 +12,6 @@ module.exports = {
     }
   },
   rules: {
-    // Aquí puedes agregar reglas personalizadas
+    
   }
 }

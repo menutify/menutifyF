@@ -6,15 +6,27 @@ export default {
     extend: {
       colors: {
         // -------------MY VARS------------------
+        /**
+color UI #FF6504
+blackground #191919
+color campos #101010
+border #232325
+o inicio con google #595A5B
+barra de progreso sin llenar #28282A
+placeholder fields #595A5B
+         */
         bg_color_1: '#191919',
-        button_color_1: '#FF3948',
+        primary_color: '#FF6504',
+        secondary_color: '##EA5B00',
+        bg_input: '#101010',
+        border_input_color: '#232325',
+        ph_color_1: '#595A5B',
+        progress_bar: '#28282A',
+
         parr_color_1: '#BCBCBC',
         parr_color_2: '#E5E5E5',
         parr_color_3: '#888888',
-        ph_color_1: '#595A5B',
-		input_c_1:'#101010',
-		input_c_2:'#232325',
-		extra_1:'#28282A',
+
         // ---------------------------------------
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
@@ -64,7 +76,14 @@ export default {
       },
       fontFamily: {
         Helvetica: ['Helvetica Neue']
-      }
+      },
+      spacing: {
+        '1-3': '32%'
+      },
+      screens: {
+        // Define un breakpoint customizado para una altura de 680px
+        'max-h-680': { 'raw': '(max-height: 680px)' },
+      },
     }
   },
   plugins: [require('tailwindcss-animate')]

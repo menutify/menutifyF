@@ -2,7 +2,13 @@ import { useEffect, useState } from 'react'
 //estilos
 
 //manejadores
-import { Route, Routes, useNavigate, useLocation } from 'react-router-dom'
+import {
+  Route,
+  Routes,
+  useNavigate,
+  useLocation,
+  replace
+} from 'react-router-dom'
 //utils
 import { useDataGlobalContext } from './Context/GlobalContext'
 import moveIfHasToken from './utils/moveIfHasToken'
@@ -20,7 +26,7 @@ import CreateAccount from './createAccount/pages/CreateAccount'
 import Repassword from './changePassword/pages/Repassword'
 import SendEmail from './changePassword/pages/SendEmail'
 import ChangePassword from './changePassword/pages/ChangePassword'
-import ConfirmChangePassword from './changePassword/pages/confirmChangePassword'
+import ConfirmChangePassword from './changePassword/pages/ConfirmChangePassword'
 import VerifyAccount from './createAccount/pages/VerifyAccount'
 import ReadyAccount from './createAccount/pages/ReadyAccount'
 
@@ -45,6 +51,9 @@ function App() {
     }
 
     asyncInitialTask()
+    if (location.pathname === '/') {
+      navigate('/login', { replace: true })
+    }
     setLoading(false)
   }, [])
 

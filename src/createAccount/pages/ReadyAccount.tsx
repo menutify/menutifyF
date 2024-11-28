@@ -1,54 +1,60 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import HandleFormSubmit from '../../utils/handleForSubmit'
 import { routesApi, routesPath } from '../../data/routes'
 import { useDataGlobalContext } from '../../Context/GlobalContext'
+import { User } from '@/types'
+import { Button } from '@/components/ui/button'
+import { caAccount } from '@/data/text'
+import Title2 from '@/components/my/Title2'
+import Parr from '@/components/my/Parr'
 
 function ReadyAccount() {
   const navigate = useNavigate()
   const { token } = useParams()
   const { setUser } = useDataGlobalContext()
+  const [fail, setFail] = useState(false)
   const { error, handleSubmit, isPending } = HandleFormSubmit()
 
   useEffect(() => {
-    handleSubmit(routesApi.caCreate, {}, { Authorization: token })
+    handleSubmit(routesApi.caCreate, {}, { Authorization: token as string })
       .then((data) => {
         if (!data) {
+          setFail(true)
           return
         }
-        /**
-         * data={
-         email:"gianco.marquez@gmail.com"
-         id: 1
-         new: true
-         */
-        setUser(data)
+        console.log(data)
+        setUser(data as User)
       })
       .catch(() => {
         console.error('Error en el inicio de sesión:')
-
+        setFail(true)
         return
       })
   }, [])
-  const logOut = async () => {
-    setUser({})
-    await callAPI.getData(routesApi.logout)
-    navigate(routesPath.login)
+
+  const routeNavigate = () => {
+    navigate(fail ? routesPath.login : routesPath.caPayment, { replace: true })
   }
 
   return (
-    <div>
-      ReadyAccount
-      {error.error && <p className='error'>{error.msg}</p>}
-      <button
-        style={{ backgroundColor: error.error || isPending ? 'gray' : 'green' }}
-        disabled={error.error || isPending}
-        onClick={() => navigate(routesPath.caPayment)}
+    <>
+      <Title2 className=''>
+        {fail ? caAccount.title4 : caAccount.title3}
+      </Title2>
+      <Parr className='text-parr_color_1'>
+        {fail ? caAccount.parr3 : caAccount.parr2}
+      </Parr>
+      <Button
+        onClick={routeNavigate}
+        className='bg-primary_color'
+        disabled={isPending ? true : false}
       >
-        Continue -&gt;
-      </button>
-      <button onClick={logOut}>Cerrar sesion</button>
-    </div>
+        {caAccount.button2}
+      </Button>
+      {error.error && <p className='error'>{error.msg}</p>}
+      {/* <button onClick={logOut}>Cerrar sesion</button> */}
+    </>
   )
 }
 

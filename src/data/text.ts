@@ -9,7 +9,8 @@ export const logText = {
   repass: '¿Olvidaste tu contraseña?',
   noacc: '¿No tienes una cuenta?',
   regis: 'Registrate',
-  other: ' O ingresa con'
+  other: ' O ingresa con',
+  logout: 'Cerrar sesión'
 }
 
 export const repasText = {
@@ -17,24 +18,45 @@ export const repasText = {
   parr1: 'Se le enviara un correo de reestablecimiento al email que coloque.',
   button: 'Enviar',
   //sendEmail:
-  title2:'Correo enviado',
-  parr2:'Se le envio un correo de reestablecimiento de contraseña.',
+  title2: 'Correo enviado',
+  parr2: 'Se le envio un correo de reestablecimiento de contraseña.',
   // changepassword
   label1: 'Nueva contraseña',
   label2: 'Repetir contraseña',
   // confirmado
-  title3:'Proceso completado',
-  parr3:'Se reestablecio su contraseña correctamente.',
-  button2:'Iniciar sesión',
+  title3: 'Proceso completado',
+  parr3: 'Se reestablecio su contraseña correctamente.',
+  button2: 'Iniciar sesión'
 }
 
-export const caAccount={
-  title1:'Registrate en Menutify',
-  ph1:'Email',
-  ph2:'Crear una contraseña',
-  ph3:'Repita su contraseña',
-  button1:'Registrarse',
+export const caAccount = {
+  title1: 'Registrate en Menutify',
+  ph1: 'Email',
+  ph2: 'Crear una contraseña',
+  ph3: 'Repita su contraseña',
+  button1: 'Registrarse',
   //verify
-  title2:'Correo de verificaion enviado',
-  parr1:'Se le envio un correo de verificacion a su Email',
+  title2: 'Correo de verificaion enviado',
+  parr1: 'Se le envio un correo de verificacion a su Email',
+  //ready
+  title3: 'Confimacion de Cuenta',
+  parr2: 'Se creo la cuenta correctamente',
+  title4: 'Error de confirmacion de cuenta',
+  parr3: 'No se pudo confirmar la creación de la cuenta, link vencido',
+  button2: 'Continuar'
+}
+
+export const caPayment = {
+  parr1:
+    'Esta información nos ayudará a asegurar una experiencia fluida y personalizada para usted.',
+  title1: 'Informacion de cuenta',
+  ph1: 'Nombre completo',
+  ph2: '+54',
+  ph3: '2xxxxxxxxx',
+  terms1: 'Acepto los',
+  termlink: 'Terminos y Condiciones',
+  terms2: 'Quiero recibir correos de publicidad',button: 'Continuar',
+  other:'Forma de pago',
+  option1:'Tarjeta',
+  option2:'MercadoPago',
 }

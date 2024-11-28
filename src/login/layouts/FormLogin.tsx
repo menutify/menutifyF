@@ -10,6 +10,7 @@ import { useDataGlobalContext } from '@/Context/GlobalContext'
 import HandleFormSubmit from '@/utils/handleForSubmit'
 import { routesApi, routesPath } from '@/data/routes'
 import { logText } from '@/data/text'
+import FormContainer from '@/components/my/FormContainer'
 
 const defaultValueForm = {
   email: '',
@@ -38,40 +39,31 @@ function FormLogin() {
     })
   }
   return (
-    <>
-      <Form {...formOptions}>
-        <form
-          onSubmit={formOptions.handleSubmit(onSubmit)}
-          className='space-y-2'
-        >
-          <div>
-            <FormFieldComponent
-            className='mb-2'
-              form={formOptions}
-              name={'email'}
-              ph={logText.ph1}
-              title=''
-            />
-            <FormFieldComponent
-            className='mb-2'
-              type='password'
-              form={formOptions}
-              name={'password'}
-              ph={logText.ph2}
-              title=''
-            />
-          </div>
-          <Button
-            className='bg-button_color_1 w-full h-9 '
-            type='submit'
-            disabled={isPending ? true : false}
-          >
-            {logText.button}
-          </Button>
-        </form>
-      </Form>
-      {error.error && <p className='error'>{error.msg}</p>}
-    </>
+    <FormContainer
+      formOptions={formOptions}
+      error={error}
+      isPending={isPending}
+      functionSubmit={onSubmit}
+      textButton={logText.button}
+    >
+      <div>
+        <FormFieldComponent
+          className=''
+          form={formOptions}
+          name={'email'}
+          ph={logText.ph1}
+          title=''
+        />
+        <FormFieldComponent
+          className=''
+          type='password'
+          form={formOptions}
+          name={'password'}
+          ph={logText.ph2}
+          title=''
+        />
+      </div>
+    </FormContainer>
   )
 }
 

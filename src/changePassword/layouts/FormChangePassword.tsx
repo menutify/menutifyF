@@ -9,6 +9,7 @@ import useFormHook from '@/hooks/useFormHook'
 import { repasswordConfirmFormScheme } from '@/utils/formScheme'
 import { routesApi, routesPath } from '@/data/routes'
 import { logText, repasText } from '@/data/text'
+import FormContainer from '@/components/my/FormContainer'
 
 const defaultValueForm = {
   password: '',
@@ -40,45 +41,36 @@ function FormChangePassword() {
 
     if (!resp) return
 
-    navigate(routesPath.confirmChangePassword,{replace:true})
+    navigate(routesPath.confirmChangePassword, { replace: true })
   }
 
   return (
-    <>
-      <Form {...formOptions}>
-        <form
-          onSubmit={formOptions.handleSubmit(onSubmit)}
-          className='space-y-2'
-        >
-          <div>
-            <FormFieldComponent
-              className='mb-2'
-              type='password'
-              form={formOptions}
-              name={'password'}
-              ph={logText.ph2}
-              title={repasText.label1}
-            />
-            <FormFieldComponent
-              className='mb-2'
-              type='password'
-              form={formOptions}
-              name={'repassword'}
-              ph={logText.ph2}
-              title={repasText.label2}
-            />
-          </div>
-          <Button
-            className='bg-button_color_1 w-full h-9 '
-            type='submit'
-            disabled={isPending ? true : false}
-          >
-            {logText.button}
-          </Button>
-        </form>
-      </Form>
-      {error.error && <p className='error'>{error.msg}</p>}
-    </>
+    <FormContainer
+      formOptions={formOptions}
+      error={error}
+      isPending={isPending}
+      functionSubmit={onSubmit}
+      textButton={logText.button}
+    >
+      <div>
+        <FormFieldComponent
+          className=''
+          type='password'
+          form={formOptions}
+          name={'password'}
+          ph={logText.ph2}
+          title={repasText.label1}
+        />
+        <FormFieldComponent
+          className=''
+          type='password'
+          form={formOptions}
+          name={'repassword'}
+          ph={logText.ph2}
+          title={repasText.label2}
+        />
+      </div>
+    </FormContainer>
   )
 }
 

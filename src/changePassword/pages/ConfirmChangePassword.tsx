@@ -13,17 +13,13 @@ function ConfirmChangePassword() {
   }
 
   return (
-    <div className='flex gap-2 flex-col w-80'>
-      <Title2 className='mb-2'>{repasText.title3}</Title2>
-      <Parr className='text-parr_color_1 mb-2'>{repasText.parr3}</Parr>
-      <Button
-        onClick={moveTo}
-        className='bg-button_color_1 w-full h-9 '
-        type='submit'
-      >
+    <>
+      <Title2 className=''>{repasText.title3}</Title2>
+      <Parr className='text-parr_color_1'>{repasText.parr3}</Parr>
+      <Button onClick={moveTo} className='bg-primary_color'>
         {repasText.button2}
       </Button>
-    </div>
+    </>
   )
 }
 

@@ -1,11 +1,11 @@
 import { GoogleLogin, googleLogout } from '@react-oauth/google'
-
+import { useRef } from 'react'
 import callAPI from '../../utils/callApi'
 import { useNavigate } from 'react-router-dom'
 
 function GoogleLoginComponent() {
   const navigate = useNavigate()
-
+  const googleButton = useRef()
   const handleLoginGoogleSuccess = (credentialResponse) => {
     callAPI
       .postData('login/google', { credential: credentialResponse.credential })
@@ -32,6 +32,7 @@ function GoogleLoginComponent() {
   }
   return (
     <GoogleLogin
+     
       // className='google_button'
       onSuccess={handleLoginGoogleSuccess}
       onError={() => {
@@ -39,16 +40,18 @@ function GoogleLoginComponent() {
       }}
       ux_mode='popup'
       // itpSupport='true'
-      type='icon'
-      shape='circle'
+      type='standard' //icon | standard
+      size='large'
+      shape='rectangular' //bordes: rectangular | circle
       width={100}
-      theme='outline'
+      theme='filled_black'
       containerProps={{
         style: {
-          borderRadius: '50%', // Hace el contenedor circular
+          borderRadius: '8px', // Hace el contenedor circular
           overflow: 'hidden', // Asegura que el contenido se ajuste al contenedor
-          width: '40px', // Ancho del botón
-          height: '40px',
+          marginRight:'-0px',
+          width: '155px', // Ancho del botón
+          height: '2.25rem',
           backgroundColor: 'transparent'
         }
       }}
