@@ -1,33 +1,53 @@
-import React from 'react'
+import { useEffect, useState } from 'react'
 
 function OrderBar({
   state = 0,
+  indexLen = 2,
+  func
 }: {
-  state: 0 | 1 | 2
+  state: number
+  indexLen: number
+  func: (index: number) => void
 }) {
-  const options = {
-    0: [true, false, false],
-    1: [false, true, false],
-    2: [false, false, true]
-  }
+  const [options, setOptions] = useState<number[][]>([])
+
+  useEffect(() => {
+    const arrayOption = (number: number) => {
+      //from: crea un arreglo y que ira dentro de ese arreglo
+      const data = Array.from({ length: number }, () => Array(number).fill(0))
+      for (let i = 0; i < number; i++) {
+        for (let j = 0; j < number; j++) {
+          if (i === j) {
+            data[i][j] = 1
+          } else {
+            data[i][j] = 0
+          }
+        }
+      }
+      console.log(data)
+      return data
+    }
+
+    setOptions(arrayOption(indexLen))
+  }, [indexLen])
+
+  const isValidState = options[state] !== undefined
 
   return (
-    <div className='h-1.5 w-12 relative flex '>
-      <span
-        className={`h-full w-3 ${
-          options[state][1] ? 'bg-primary_color' : 'bg-white'
-        } rounded-md before:block before:absolute before:h-full before:rounded-md ${
-          options[state][0]
-            ? 'before:bg-primary_color'
-            : 'before:bg-white'
-        }  before:-left-0 before:right-0 m-auto 
-          before:w-3
-         after:block after:absolute after:h-full  after:rounded-md ${
-           options[state][2]
-             ? 'after:bg-primary_color'
-             : 'after:bg-white'
-         } after:-right-0 after:w-3`}
-      />
+    <div className='h-4 w-full  justify-center items-center relative flex  gap-6 '>
+      {options.map((e, i) => (
+        <span
+          key={`elkake${i}`}
+          onClick={() => func(i)}
+          className={`h-full cursor-pointer
+           
+            ${
+              isValidState && options[state][i]
+                ? 'bg-primary_color w-8 scale-x-120'
+                : 'bg-[#00000022] w-4 scale-x-100'
+            } rounded-full `}
+        />
+      ))}
     </div>
   )
 }

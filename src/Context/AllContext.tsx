@@ -11,8 +11,13 @@ const AllContext = ({ children }: ReactComponent) => {
     subActive: null
   })
   const [product, setProduct] = useState({})
-
+  const [marginTop, setMarginTop] = useState(0)
+  const [charge, setCharge] = useState(false)
   const options = {
+    charge,
+    setCharge,
+    marginTop,
+    setMarginTop,
     user,
     setUser,
     product,

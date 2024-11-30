@@ -8,7 +8,7 @@ function FormContainer({formOptions,error,isPending,textButton, functionSubmit,c
     <Form {...formOptions}>
         <form
           onSubmit={formOptions.handleSubmit(functionSubmit)}
-          className='flex flex-col gap-4 w-full'
+          className='flex flex-col gap-3 w-full'
         >
           {children}
           <Button

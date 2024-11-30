@@ -11,7 +11,7 @@ export const carrouselData = [
   },
   {
     img: 'https://wallpapers.com/images/high/720p-c2ibz0yee6btvhr1.webp',
-    title: 'Consejos para dormir mejor cada noche',
+    title: 'Consejos para dormir mejor ',
     parr: 'parra 3 Lorem Ipsum is simply dummy text of the printing and typesetting industry.Lorem Ipsum is simply dummy text of the printing and typesetting industry. '
   }
 ]

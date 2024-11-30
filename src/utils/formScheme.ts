@@ -40,6 +40,6 @@ export const caAccountFormScheme = z
   })
 
 export const caPaymentFormScheme = z.object({
-  dni: dniValidator,
-  cardName: nameValidator
+  email:emailValidator
+
 })

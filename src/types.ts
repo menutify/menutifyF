@@ -5,6 +5,10 @@ export interface ReactComponent {
 }
 
 export interface AppContextType {
+  charge: boolean
+  setCharge: React.Dispatch<React.SetStateAction<boolean>>
+  marginTop: number
+  setMarginTop: React.Dispatch<React.SetStateAction<number>>
   user: User
   setUser: React.Dispatch<React.SetStateAction<User>>
   product: object

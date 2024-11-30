@@ -1,26 +1,27 @@
 import { Outlet } from 'react-router-dom'
 import logo from './assets/logo.svg'
-import logo2 from './assets/logo2.svg'
 import MyCarrousel from './components/my/MyCarrousel'
+
 function AuthLayout() {
+  
+// bg-bg_color_1
   return (
-    <div className='flex w-full min-h-screen bg-bg_color_1 overflow-auto'>
-      <div className='mr-auto absolute left-5 top-5'>
-        <img src={logo} alt='' />
+    <div className='relative flex w-full max-w-[1920px] min-h-screen  '>
+      <div className='absolute  left-[6%] top-[2.5%] md:left-[2.5%] md:top-[5%] '>
+        <img
+          className='scale-90 md:scale-125 origin-top-left'
+          src={logo}
+          alt=''
+        />
       </div>
-      <section className='flex-1 flex justify-center  items-center bg-bg_color_1 flex-col text-white max-h-680:justify-start max-h-680:pt-20'>
-        <div className='min-w-80 w-80 pl-3 pr-3 flex flex-col justify-center items-center gap-3 min-h-[560px] max-h-680:justify-start '>
-          <div className='w-full '>
-            <img src={logo2} alt='' />
-          </div>
-          <div className='flex gap-3 flex-col w-full'>
-            <Outlet />
-          </div>
+      <section className='w-full min-w-[320px] max-h-600:pt-[10%]  flex-complete bg-bg_color_1 flex-col text-white'>
+        <div className=' my-[5%] w-[90%] max-w-[400px] flex-complete flex-col gap-my_gap_1 '>
+          <Outlet />
         </div>
       </section>
-      <section className='w-full flex flex-1 justify-center items-center bg-white p-4 relative '>
-        
-          <MyCarrousel />
+      <section className='hidden md:flex w-full relative   justify-center items-center  bg-white '>
+        <MyCarrousel />
+       
         
       </section>
     </div>

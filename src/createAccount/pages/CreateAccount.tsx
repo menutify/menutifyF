@@ -7,22 +7,26 @@ import FormCreateAccount from '../components/FormCreateAccount'
 import ProgressBar from '@/components/my/ProgressBar'
 import GoogleAndFaceSession from '@/login/layouts/GoogleAndFaceSession'
 import Separator from '@/components/my/Separator'
+import MyCard from '@/components/my/MyCard'
+import Logo from '@/components/my/Logo'
+import { useEffect } from 'react'
+import { useDataGlobalContext } from '@/Context/GlobalContext'
 // import FacebookLoginComponent from '../../login/layouts/FacebookLoginComponent'
 // import FormCreateAccount from '../components/FormCreateAccount'
 
 function CreateAccount() {
-  return (
-    <div className='flex-1 flex gap-3 flex-col h-full items-center'>
-      <div className='flex gap-3 flex-col '>
-        <Title2 className=''>{caAccount.title1}</Title2>
-        <Parr className='text-parr_color_1 '>{logText.parr1}</Parr>
-        <ProgressBar state={1} />
-        <GoogleAndFaceSession />
-        <Separator text={logText.other} />
-      </div>
+  
 
+  return (
+    <MyCard>
+      <Logo />
+      <Title2 className=''>{caAccount.title1}</Title2>
+      <Parr className='text-parr_color_1 '>{logText.parr1}</Parr>
+      <ProgressBar state={1} className={'mt-2 mb-3'} />
+      <GoogleAndFaceSession className={''} />
+      <Separator text={logText.other} className='mt-2 mb-1' />
       <FormCreateAccount />
-    </div>
+    </MyCard>
   )
 }
 

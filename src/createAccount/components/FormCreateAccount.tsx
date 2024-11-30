@@ -16,7 +16,7 @@ import phoneCodes from '@/data/phoneCodes'
 
 const defaultValueForm = {
   name: '',
-  // code: '',
+ 
   phone: '',
   email: '',
   password: '',

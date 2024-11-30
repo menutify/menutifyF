@@ -19,7 +19,7 @@ placeholder fields #595A5B
         primary_color: '#FF6504',
         secondary_color: '##EA5B00',
         bg_input: '#101010',
-        border_input_color: '#232325',
+        border_input_color: '#464647',
         ph_color_1: '#595A5B',
         progress_bar: '#28282A',
 
@@ -78,13 +78,30 @@ placeholder fields #595A5B
         Helvetica: ['Helvetica Neue']
       },
       spacing: {
-        '1-3': '32%'
+        '1-3': '32%',
+        // 'logo-left':'clamp(46px,5%,200px)'
+        'logo-left': 'clamp(3%,4%,15%)',
+        'my_gap_1':'1rem',
+        'my_gap_2':'1.2rem',
+        'my_gap_3':'1.4rem',
       },
       screens: {
         // Define un breakpoint customizado para una altura de 680px
-        'max-h-680': { 'raw': '(max-height: 680px)' },
-      },
+        'max-h-680': { raw: '(max-height: 680px)' },
+        'max-h-600': {raw:'(max-height: 680px)'}
+      }
     }
   },
-  plugins: [require('tailwindcss-animate')]
+  plugins: [
+    require('tailwindcss-animate'),
+    function ({ addUtilities }) {
+      addUtilities({
+        '.flex-complete': {
+          display: 'flex',
+          'justify-content': 'center',
+          'align-items': 'center'
+        }
+      })
+    }
+  ]
 }

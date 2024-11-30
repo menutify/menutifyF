@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import FormPayment from '../components/FormPayment'
 
@@ -10,16 +10,12 @@ import Title2 from '@/components/my/Title2'
 import Parr from '@/components/my/Parr'
 import { caPayment } from '@/data/text'
 import ProgressBar from '@/components/my/ProgressBar'
+import Logo from '@/components/my/Logo'
+import MyCard from '@/components/my/MyCard'
 
 function Payment() {
   const navigate = useNavigate()
   const { setUser } = useDataGlobalContext()
-  useEffect(() => {
-    // console.log('payment')
-    // setUser({})
-    // callAPI.getData(routesApi.logout).then((e) => navigate(routesPath.login))
-    // VerifyTokenExist(routesPath.login, navigate)
-  }, [])
 
   const logOut = async () => {
     setUser({
@@ -33,18 +29,19 @@ function Payment() {
   }
 
   return (
-    <>
+    <MyCard className='md:mt-20 overflow-x-hidden '>
+      <Logo />
       <Title2 className=''>{caPayment.title1}</Title2>
       <Parr className='text-parr_color_1'>{caPayment.parr1}</Parr>
 
-      <ProgressBar state={2} />
+      <ProgressBar state={2} className={'mt-2 mb-3'} />
 
       <FormPayment />
 
-      <Button onClick={logOut} className='bg-ph_color_1 font-medium'>
+      <Button onClick={logOut} className='bg-ph_color_1 mt-3 h-10'>
         Cerrar sesión
       </Button>
-    </>
+    </MyCard>
   )
 }
 

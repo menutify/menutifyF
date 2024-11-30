@@ -2,20 +2,25 @@ import { GoogleLogin, googleLogout } from '@react-oauth/google'
 import { useRef } from 'react'
 import callAPI from '../../utils/callApi'
 import { useNavigate } from 'react-router-dom'
+import { useDataGlobalContext } from '@/Context/GlobalContext'
+import HandleFormSubmit from '@/utils/handleForSubmit'
+import { routesApi, routesPath } from '@/data/routes'
 
 function GoogleLoginComponent() {
+  const { user } = useDataGlobalContext()
   const navigate = useNavigate()
-  const googleButton = useRef()
+
+  const { handleSubmit } = HandleFormSubmit()
+
   const handleLoginGoogleSuccess = (credentialResponse) => {
-    callAPI
-      .postData('login/google', { credential: credentialResponse.credential })
+    handleSubmit(routesApi.google, { credential: credentialResponse.credential })
       .then((resp) => {
         console.log({ resp }) // Puedes redirigir al usuario o guardar el token aquí
 
-        localStorage.setItem('token', resp.data.token)
-        localStorage.setItem('email', resp.data.email)
+        localStorage.setItem('token', resp.token)
+        localStorage.setItem('email', resp.email)
 
-        resp.data.new ? navigate('/payment') : navigate('/me')
+        resp.new ? navigate(routesPath.caPayment) : navigate('/home')
       })
       .catch((error) => console.error('Error al autenticar:', error))
       .finally(() => handleLogoutWithGoogle())
@@ -24,15 +29,17 @@ function GoogleLoginComponent() {
   const handleLogoutWithGoogle = () => {
     googleLogout()
     if (window.google && window.google.accounts) {
-      window.google.accounts.id.revoke(localStorage.getItem('email'), () => {
-        console.log('Sesión de Google revocada.')
-        localStorage.removeItem('email') // Limpia el correo guardado si tienes uno
-      })
+      window.google.accounts.id.revoke(
+        localStorage.getItem(user.email || localStorage.getItem('email') || ''),
+        () => {
+          console.log('Sesión de Google revocada.')
+          localStorage.removeItem('email') // Limpia el correo guardado si tienes uno
+        }
+      )
     }
   }
   return (
     <GoogleLogin
-     
       // className='google_button'
       onSuccess={handleLoginGoogleSuccess}
       onError={() => {
@@ -49,9 +56,9 @@ function GoogleLoginComponent() {
         style: {
           borderRadius: '8px', // Hace el contenedor circular
           overflow: 'hidden', // Asegura que el contenido se ajuste al contenedor
-          marginRight:'-0px',
-          width: '155px', // Ancho del botón
-          height: '2.25rem',
+          marginRight: '-0px',
+          width: '50%', // Ancho del botón
+          height: '100%',
           backgroundColor: 'transparent'
         }
       }}

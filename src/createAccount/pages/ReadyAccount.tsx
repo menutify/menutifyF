@@ -8,6 +8,8 @@ import { Button } from '@/components/ui/button'
 import { caAccount } from '@/data/text'
 import Title2 from '@/components/my/Title2'
 import Parr from '@/components/my/Parr'
+import Logo from '@/components/my/Logo'
+import MyCard from '@/components/my/MyCard'
 
 function ReadyAccount() {
   const navigate = useNavigate()
@@ -38,7 +40,8 @@ function ReadyAccount() {
   }
 
   return (
-    <>
+    <MyCard>
+      <Logo />
       <Title2 className=''>
         {fail ? caAccount.title4 : caAccount.title3}
       </Title2>
@@ -47,14 +50,14 @@ function ReadyAccount() {
       </Parr>
       <Button
         onClick={routeNavigate}
-        className='bg-primary_color'
+        className='bg-primary_color mt-2'
         disabled={isPending ? true : false}
       >
         {caAccount.button2}
-      </Button>
+      </Button >
       {error.error && <p className='error'>{error.msg}</p>}
       {/* <button onClick={logOut}>Cerrar sesion</button> */}
-    </>
+    </MyCard>
   )
 }
 

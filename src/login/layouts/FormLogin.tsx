@@ -34,9 +34,16 @@ function FormLogin() {
 
     setUser(data)
 
-    navigate(data.isNew ? routesPath.caPayment : routesPath.home, {
-      replace: true
-    })
+    navigate(
+      data.isNew
+        ? data.subActive
+          ? routesPath.completePayment
+          : routesPath.caPayment
+        : routesPath.home,
+      {
+        replace: true
+      }
+    )
   }
   return (
     <FormContainer
@@ -48,14 +55,12 @@ function FormLogin() {
     >
       <div>
         <FormFieldComponent
-          className=''
           form={formOptions}
           name={'email'}
           ph={logText.ph1}
           title=''
         />
         <FormFieldComponent
-          className=''
           type='password'
           form={formOptions}
           name={'password'}

@@ -29,10 +29,13 @@ import ChangePassword from './changePassword/pages/ChangePassword'
 import ConfirmChangePassword from './changePassword/pages/ConfirmChangePassword'
 import VerifyAccount from './createAccount/pages/VerifyAccount'
 import ReadyAccount from './createAccount/pages/ReadyAccount'
+import CompletePayment from './createAccount/pages/CompletePayment'
+import Home from './layouts/Home'
+import LoadingBar from './components/my/LoadingBar'
 
 function App() {
   const [loading, setLoading] = useState<boolean>(true)
-  const { setUser } = useDataGlobalContext()
+  const { setUser, setCharge } = useDataGlobalContext()
 
   //rrd
   const navigate = useNavigate()
@@ -40,6 +43,7 @@ function App() {
 
   useEffect(() => {
     setLoading(true)
+    setCharge(true)
     googleLogout()
 
     const asyncInitialTask = async () => {
@@ -54,41 +58,51 @@ function App() {
     if (location.pathname === '/') {
       navigate('/login', { replace: true })
     }
+    setCharge(false)
     setLoading(false)
   }, [])
 
   if (loading) {
-    return <div>Loading...</div>
+    return (
+      <div>
+        <LoadingBar />
+        <h1>LOADING....</h1>
+      </div>
+    )
   }
 
   return (
-    <Routes>
-      //{' '}
-      {/* <Route
-        path={routesPath.initial}
-        element={<Navigate to={routesPath.login} />}
-      /> */}
-      <Route path={routesPath.initial} element={<AuthLayout />}>
-        <Route path={routesPath.login} element={<Login />} />
-        {/* <Route path={routesPath.home} element={<Home />} /> */}
-        <Route path={routesPath.repassword} element={<Repassword />} />
-        <Route path={routesPath.sendEmail} element={<SendEmail />} />
-        <Route path={routesPath.changePassword} element={<ChangePassword />} />
-        <Route path={routesPath.createAccount} element={<CreateAccount />} />
-        <Route
-          path={routesPath.confirmChangePassword}
-          element={<ConfirmChangePassword />}
-        />
-        <Route path={routesPath.caVerifyAccount} element={<VerifyAccount />} />
-        <Route path={routesPath.caReadyAccount} element={<ReadyAccount />} />
-        <Route path={routesPath.caPayment} element={<Payment />} />
-        {/* <Route path={routesPath.caPayMp} element={<MetodoPago />} /> */}
-        {/* <Route path={routesPath.caPaySt} element={<MetodoPago />} /> */}
-        {/* <Route path='/ooooo' element={<Payment />} /> */}
-        {/* <Route path='/--login' element={<Test />} /> */}
-        {/* <Route path='/createAccount/completion' element={<Completion />} /> */}
-      </Route>
-    </Routes>
+    <>
+      <LoadingBar />
+      <Routes>
+        <Route path={routesPath.initial} element={<AuthLayout />}>
+          <Route path={routesPath.login} element={<Login />} />
+          {/* <Route path={routesPath.home} element={<Home />} /> */}
+          <Route path={routesPath.repassword} element={<Repassword />} />
+          <Route path={routesPath.sendEmail} element={<SendEmail />} />
+          <Route
+            path={routesPath.changePassword}
+            element={<ChangePassword />}
+          />
+          <Route path={routesPath.createAccount} element={<CreateAccount />} />
+          <Route
+            path={routesPath.confirmChangePassword}
+            element={<ConfirmChangePassword />}
+          />
+          <Route
+            path={routesPath.caVerifyAccount}
+            element={<VerifyAccount />}
+          />
+          <Route path={routesPath.caReadyAccount} element={<ReadyAccount />} />
+          <Route path={routesPath.caPayment} element={<Payment />} />
+          <Route
+            path={routesPath.completePayment}
+            element={<CompletePayment />}
+          />
+        </Route>
+        <Route path={routesPath.home} element={<Home />} />
+      </Routes>
+    </>
   )
 }
 

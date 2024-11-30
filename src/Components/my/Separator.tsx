@@ -1,10 +1,14 @@
-import React from 'react'
+
 import Parr from './Parr'
 
-function Separator({ text }) {
+function Separator({ text='separator', className = '' }) {
   return (
-    <div className='flex items-center justify-center gap-3 mt-2 mb-2'>
-      <span className='flex-1  h-0.5 w-full block bg-progress_bar rounded-sm'></span>
+    <div
+      className={`flex items-center h-3  justify-center gap-my_gap_1  ${className}`}
+    >
+      <span
+        className={`flex-1  h-0.5 w-full block bg-progress_bar rounded-sm `}
+      ></span>
       <Parr className='flex text-ph_color_1'>{text}</Parr>
       <span className='flex-1 h-0.5 w-full block bg-progress_bar rounded-sm'></span>
     </div>

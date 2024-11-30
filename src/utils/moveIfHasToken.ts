@@ -23,12 +23,17 @@ const moveIfHasToken = async (navigate, setUser, location) => {
   setUser(data)
   console.log(data)
   // si hay token y es nuevo mandame a payment
-  if (data.isNew) {
+  if (data.isNew && !data.subActive) {
     console.log(msg)
     navigate(routesPath.caPayment, { replace: true })
     return
   }
 
+  if (data.isNew && data.subActive) {
+    console.log(msg)
+    navigate(routesPath.completePayment, { replace: true })
+    return
+  }
   //! verificar si tiene suscripcion activa, aunque eso puede ir en el home
   console.log(msg)
   //sino hay token y no es nuevo, mandame a home

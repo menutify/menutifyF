@@ -27,7 +27,7 @@ function FormFieldComponent({
           <FormLabel>{title}</FormLabel>
           <FormControl>
             <Input
-              className='h-9 bg-bg_input border-border_input_color'
+              className='h-10 text-base bg-bg_input border-border_input_color placeholder:text-base'
               placeholder={ph}
               {...field}
               type={type}

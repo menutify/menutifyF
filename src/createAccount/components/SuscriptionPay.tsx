@@ -1,0 +1,141 @@
+import HandleFormSubmit from '@/utils/handleForSubmit'
+import useFormHook from '@/hooks/useFormHook'
+import { caPaymentFormScheme } from '@/utils/formScheme'
+import { Form } from '@/components/ui/form'
+import FormFieldComponent from '@/components/Forms/FormFieldComponent'
+import { z } from 'zod'
+import { caPayment } from '@/data/text'
+import { Button } from '@/components/ui/button'
+
+
+import mpLogo from '@/assets/createAccount/mp.svg'
+
+
+
+import { useDataGlobalContext } from '@/Context/GlobalContext'
+
+const defaultValueForm = {
+  email: ''
+}
+
+function FormPayment() {
+  // const [modal, setModal] = useState(false)
+  const formOptions = useFormHook(caPaymentFormScheme, defaultValueForm)
+  
+  const { user } = useDataGlobalContext()
+
+  const { handleSubmit, error, isPending } = HandleFormSubmit()
+
+  const onSubmit = async (values: z.infer<typeof caPaymentFormScheme>) => {
+    console.log(values)
+    const { email } = values
+    console.log(email)
+    try {
+      // Hacemos la llamada al backend para crear el plan y obtener el link de pago
+      const data = await handleSubmit('/payment/create-preapproval-plan', {
+        email,
+        data: user.email
+      }) 
+
+      console.log(data)
+      if (!data) {
+        return
+      }
+
+      const paymentLink = data.init_point // Link de pago generado por MercadoPago
+
+      // Redirigimos al usuario a la página de pago de MercadoPago
+      window.location.href = paymentLink
+    } catch (error) {
+      console.log({ error })
+      console.error('Error al crear el plan de suscripción', error)
+    }
+  }
+
+  return (
+    <>
+      <Form {...formOptions}>
+        <form
+          onSubmit={formOptions.handleSubmit(onSubmit)}
+          className='space-y-2 flex flex-col gap-3'
+        >
+          <div className='flex justify-center items-center gap-2 h-9 w-full '>
+            <div className='flex-1 h-full w-full bg-black rounded-md flex justify-center items-center'>
+              <img className='h-full rounded-md' src={mpLogo} alt='' />
+            </div>
+
+            <div className='flex gap-2 flex-col mt-2 mb-2'>
+              <FormFieldComponent
+                className=''
+                type='email'
+                form={formOptions}
+                name={'email'}
+                ph={'Email de mercadopago'}
+                title={''}
+              />
+            </div>
+          </div>
+
+          {error.error && <p className='error'>{error.msg}</p>}
+          <Button
+            className='bg-primary_color w-full h-9 '
+            type='submit'
+            disabled={isPending ? true : false}
+          >
+            {caPayment.button}
+          </Button>
+        </form>
+      </Form>
+
+      {/* <div className='radio-group'>
+        
+          
+
+        <TextInput
+          name={'name'}
+          data={data.name}
+          setData={handleDataForm}
+          placeholder='Name and Last name'
+          pattern='[A-Za-z\s]+'
+        />
+        <div className='form-pay-number'>
+          <div>
+            <img src={data.emoji} alt='' />
+          </div>
+          <select
+            className='select'
+            name='code'
+            onChange={handleDataForm}
+            defaultValue='code'
+          >
+            <option value='code' disabled>
+              +00
+            </option>
+            {phoneCodes.map((info, i) => (
+              <Options
+                key={info.code + i}
+                id={info.code}
+                value={info.dial_code}
+                text={`${info.dial_code}`}
+                emoji={info.emoji}
+              />
+            ))}
+          </select>
+          <NumberInput
+            name='phone'
+            data={data.phone}
+            setData={handleDataForm}
+          />
+        </div>
+        <div>
+          
+            <FormMPSubscription />
+          
+        </div>
+        {error && <div>{error}</div>}
+      </div> */}
+    </>
+  )
+}
+
+export default FormPayment
