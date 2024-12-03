@@ -38,7 +38,7 @@ function Payment() {
 
       <FormPayment />
 
-      <Button onClick={logOut} className='bg-ph_color_1 mt-3 h-10'>
+      <Button onClick={logOut} className='bg-ph_color_1 h-10'>
         Cerrar sesión
       </Button>
     </MyCard>

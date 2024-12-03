@@ -24,6 +24,13 @@ export interface User {
 
 export interface handleSubmit {
   path: string
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   body: Record<string, any>
   header: Record<string, string>
+}
+
+export interface googleCredentials {
+  clientId: string
+  credential: string
+  select_by: string
 }

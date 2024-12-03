@@ -2,8 +2,6 @@ import { useNavigate } from 'react-router-dom'
 import HandleFormSubmit from '../../utils/handleForSubmit'
 
 import { z } from 'zod'
-import { Button } from '@/components/ui/button'
-import { Form } from '@/components/ui/form'
 import FormFieldComponent from '@/components/Forms/FormFieldComponent'
 import useFormHook from '@/hooks/useFormHook'
 import { caAccountFormScheme } from '@/utils/formScheme'
@@ -13,10 +11,11 @@ import FormContainer from '@/components/my/FormContainer'
 import { Label } from '@radix-ui/react-label'
 import InputTel from '@/components/my/InputTel'
 import phoneCodes from '@/data/phoneCodes'
+import FormFieldCheckbox from '@/components/my/FormFieldCheckbox'
 
 const defaultValueForm = {
   name: '',
- 
+  check: false,
   phone: '',
   email: '',
   password: '',
@@ -32,14 +31,12 @@ function FormCreateAccount() {
   const { handleSubmit, error, isPending } = HandleFormSubmit()
 
   const onSubmit = async (values: z.infer<typeof caAccountFormScheme>) => {
-    
+    const { email, password, repassword, phone: oldPhone, name } = values
 
-    const { email, password, repassword,phone:oldPhone,name } = values
+    const phone = oldPhone.replace(' ', '').replace('-', '')
 
-    const phone=oldPhone.replace(" ", "").replace("-", "")
-    
     const resp = await handleSubmit(routesApi.verifyAccount, {
-      country:'Argentina',
+      country: 'Argentina',
       name,
       phone,
       email,
@@ -105,7 +102,9 @@ function FormCreateAccount() {
           ph={caAccount.ph3}
           title=''
         />
+        <FormFieldCheckbox form={formOptions} name={'check'} />
       </div>
+      
     </FormContainer>
   )
 }

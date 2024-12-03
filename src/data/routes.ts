@@ -19,6 +19,7 @@ export const routesPath = {
 //axios instance in utils have all url
 export const routesApi = {
   google: '/login/google',
+  facebook: '/login/facebook',
   authMe: '/auth/me',
   login: '/login',
   logout: '/login/logout',

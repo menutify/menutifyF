@@ -6,6 +6,7 @@ function AuthLayout() {
   
 // bg-bg_color_1
   return (
+    
     <div className='relative flex w-full max-w-[1920px] min-h-screen  '>
       <div className='absolute  left-[6%] top-[2.5%] md:left-[2.5%] md:top-[5%] '>
         <img

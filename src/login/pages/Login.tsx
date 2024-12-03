@@ -1,4 +1,3 @@
-import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import FormLogin from '../layouts/FormLogin'
 import { routesPath } from '../../data/routes'
@@ -9,7 +8,8 @@ import GoogleAndFaceSession from '../layouts/GoogleAndFaceSession'
 import Separator from '@/components/my/Separator'
 import MyCard from '@/components/my/MyCard'
 import Logo from '@/components/my/Logo'
-import { useDataGlobalContext } from '@/Context/GlobalContext'
+
+import FacebookLoginComponent from '../layouts/FacebookLoginComponent'
 
 const Login = () => {
   return (

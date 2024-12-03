@@ -4,32 +4,80 @@ import { caPaymentFormScheme } from '@/utils/formScheme'
 import { Form } from '@/components/ui/form'
 import { CardPayment } from '@mercadopago/sdk-react'
 import { useDataGlobalContext } from '@/Context/GlobalContext'
+import { useState } from 'react'
+import {
+  ICardPaymentBrickPayer,
+  ICardPaymentFormData
+} from '@mercadopago/sdk-react/bricks/cardPayment/type'
+import checkSVG from '@/assets/payment/check.svg'
+import errorSVG from '@/assets/payment/error.svg'
+import { Button } from '@/components/ui/button'
+import Parr from '@/components/my/Parr'
 import axiosInstance from '@/utils/axiosConfig'
+import { routesPath } from '@/data/routes'
+import { useNavigate } from 'react-router-dom'
 
 const defaultValueForm = {
   email: ''
 }
 
-function FormPayment() {
-  // const [modal, setModal] = useState(false)
-  const formOptions = useFormHook(caPaymentFormScheme, defaultValueForm)
+interface dataPayment {
+  status: string
+  status_detail: string
+}
 
+function FormPayment() {
+  const [modal, setModal] = useState(false)
+  const [state, setState] = useState(false)
+  const [msg, setMsg] = useState('')
+  const formOptions = useFormHook(caPaymentFormScheme, defaultValueForm)
+  const navigate = useNavigate()
   const { user } = useDataGlobalContext()
 
-  // const { handleSubmit, error, isPending } = HandleFormSubmit()
-
-  const onSubmit = async (values) => {
-    console.log(values)
+  const onSubmit = async (e: ICardPaymentFormData<ICardPaymentBrickPayer>) => {
+    // console.log(e)
     try {
-      const rest = await axiosInstance.post('/payment/create-payment', {
-        ...values,
-        user
-      })
-      console.log(rest)
+      const { data: respData } = await axiosInstance.post(
+        '/payment/create-payment',
+        {
+          ...e,
+          user
+        }
+      )
+
+      const { data } = respData
+
+      if (!data) return
+
+      const { status, status_detail } = data as dataPayment
+      setModal(true)
+      console.log({ status, status_detail })
+      if (status === 'rejected') {
+        setState(false)
+        setMsg(status_detail)
+        return
+      }
+
+      setState(true)
+      setMsg(status_detail)
+
+      //rest.data{
+      //   error: false,
+      // data: { email, id, id_pay },
+      //msg: 'Pago correctamente procesado'
+      // }
     } catch (error) {
       console.log(error)
       return
     }
+  }
+
+  const continueRegister = () => {
+    navigate(routesPath.completePayment)
+  }
+
+  const goBack = () => {
+    setModal(false)
   }
 
   return (
@@ -37,20 +85,39 @@ function FormPayment() {
       <Form {...formOptions}>
         <form
           onSubmit={formOptions.handleSubmit(onSubmit)}
-          className='space-y-2 flex flex-col gap-3'
+          className='space-y-2 flex flex-col '
         >
-          <div className='mb-2 overflow-hidden'>
-            <CardPayment
-              customization={{
-                visual: {
-                  style: {
-                    theme: 'dark'
+          <div className='overflow-hidden'>
+            {modal ? (
+              <div className='w-full gap-4 pb-4 h-full flex flex-col justify-center items-center'>
+                <Parr>
+                  {state ? 'Se pago correctamente' : 'Hubo un error en el pago'}
+                </Parr>
+                <span className='text-[#666666]'>Cod: {msg}</span>
+                <div className='w-[20%]'>
+                  <img src={state ? checkSVG : errorSVG} alt='' />
+                </div>
+
+                <Button
+                  className='bg-ph_color_1 mt-3 h-10 w-full'
+                  onClick={state ? continueRegister : goBack}
+                >
+                  {state ? ' Continuar' : 'Volver'}
+                </Button>
+              </div>
+            ) : (
+              <CardPayment
+                customization={{
+                  visual: {
+                    style: {
+                      theme: 'dark'
+                    }
                   }
-                }
-              }}
-              initialization={{ amount: 100 }}
-              onSubmit={onSubmit}
-            />
+                }}
+                initialization={{ amount: import.meta.env.VITE_PRICE_MP }}
+                onSubmit={onSubmit}
+              />
+            )}
           </div>
           {/* <Button
             className='bg-primary_color w-full '

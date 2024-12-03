@@ -32,7 +32,13 @@ export const caAccountFormScheme = z
     phone: phoneValidator,
     email: emailValidator,
     password: passwordValidator,
-    repassword: z.string()
+    repassword: z.string(),
+    check: z
+      .boolean()
+      .default(false)
+      .refine((val) => val === true, {
+        message: 'Aceptar los terminos y condiciones'
+      })
   })
   .refine((data) => data.password === data.repassword, {
     message: 'Las contraseñas no coinciden',
@@ -40,6 +46,5 @@ export const caAccountFormScheme = z
   })
 
 export const caPaymentFormScheme = z.object({
-  email:emailValidator
-
+  email: emailValidator
 })

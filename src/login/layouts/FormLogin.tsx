@@ -1,6 +1,4 @@
 import { z } from 'zod'
-import { Button } from '@/components/ui/button'
-import { Form } from '@/components/ui/form'
 import FormFieldComponent from '@/components/Forms/FormFieldComponent'
 
 import { loginFormScheme } from '@/utils/formScheme'
@@ -11,6 +9,7 @@ import HandleFormSubmit from '@/utils/handleForSubmit'
 import { routesApi, routesPath } from '@/data/routes'
 import { logText } from '@/data/text'
 import FormContainer from '@/components/my/FormContainer'
+import { User } from '@/types'
 
 const defaultValueForm = {
   email: '',
@@ -32,11 +31,13 @@ function FormLogin() {
 
     if (!data) return
 
-    setUser(data)
+    setUser(data as User)
+
+    const { isNew, subActive } = data as User
 
     navigate(
-      data.isNew
-        ? data.subActive
+      isNew
+        ? subActive
           ? routesPath.completePayment
           : routesPath.caPayment
         : routesPath.home,

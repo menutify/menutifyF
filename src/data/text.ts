@@ -43,7 +43,10 @@ export const caAccount = {
   parr2: 'Se creo la cuenta correctamente',
   title4: 'Error de confirmacion de cuenta',
   parr3: 'No se pudo confirmar la creación de la cuenta, link vencido',
-  button2: 'Continuar'
+  button2: 'Continuar',
+  //complete
+  title5:'Proceso completado'
+  ,parr4:'Su cuenta esta lista para usar.'
 }
 
 export const caPayment = {
@@ -60,3 +63,4 @@ export const caPayment = {
   option1:'Tarjeta',
   option2:'MercadoPago',
 }
+

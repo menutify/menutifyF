@@ -24,7 +24,7 @@ function OrderBar({
           }
         }
       }
-      console.log(data)
+      // console.log(data)
       return data
     }
 
