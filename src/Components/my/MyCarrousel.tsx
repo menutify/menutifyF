@@ -45,10 +45,10 @@ function MyCarrousel() {
     }
   }, [currentIndex])
 
-  const espaciado = 30
+  const espaciado = 50
 
   return (
-    <div className='fixed top-1/2 -translate-y-1/2  max-w-[36%] overflow-hidden '>
+    <div className='fixed top-1/2 -translate-y-1/2  max-w-[750px] w-[40%] overflow-hidden '>
       {/* Carrusel de imágenes */}
       <div
         className={`flex  transition-transform duration-200`}
@@ -62,18 +62,18 @@ function MyCarrousel() {
         {carrouselData.map((data, index) => (
           <div
             key={index}
-            className='top-0 left-0 w-full z-40 flex-shrink-0 flex flex-col justify-center items-center gap-4'
+            className='top-0 left-0 w-full z-40 flex-shrink-0 flex flex-col justify-center items-center gap-4 '
           >
             <div className='mb-6 w-full  relative rounded-3xl overflow-hidden'>
               <span className='absolute w-4/5 h-10 left-0 right-0 m-auto bg-[#00000033] shadow-md shadow-[#00000022] bottom-1.5 rounded-3xl -z-10'></span>
               <img
                 src={data.img}
                 alt={`Imagen ${index + 1}`}
-                className='w-[97%] h-[97%] rounded-3xl  -z-20 '
+                className='w-[100%] h-[97%] rounded-3xl  -z-20 '
               />
             </div>
             <Title2>{data.title}</Title2>
-            <Parr className='text-center text-parr_color_3'>{data.parr}</Parr>
+            <Parr className='text-center text-parr_color_3 '>{data.parr}</Parr>
           </div>
         ))}
       </div>

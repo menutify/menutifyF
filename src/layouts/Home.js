@@ -1,4 +1,4 @@
-// src/components/Home.jsx
+
 import { useNavigate } from 'react-router-dom'
 import callAPI from '../utils/callApi'
 import { useDataGlobalContext } from '@/Context/GlobalContext'

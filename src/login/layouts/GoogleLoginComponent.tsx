@@ -35,7 +35,7 @@ function GoogleLoginComponent() {
         // localStorage.setItem('email', email || '')
         setUser(resp as User)
         // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-        isNew ? navigate(routesPath.caPayment) : navigate(routesPath.home)
+        isNew ? navigate(routesPath.caPayment) : navigate(routesPath.dashboard)
       })
       .catch((error) => console.error('Error al autenticar:', error))
       .finally(() => {

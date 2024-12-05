@@ -5,16 +5,6 @@ export default {
   theme: {
     extend: {
       colors: {
-        // -------------MY VARS------------------
-        /**
-color UI #FF6504
-blackground #191919
-color campos #101010
-border #232325
-o inicio con google #595A5B
-barra de progreso sin llenar #28282A
-placeholder fields #595A5B
-         */
         bg_color_1: '#191919',
         primary_color: '#FF6504',
         secondary_color: '##EA5B00',
@@ -22,12 +12,13 @@ placeholder fields #595A5B
         border_input_color: '#464647',
         ph_color_1: '#595A5B',
         progress_bar: '#28282A',
-
         parr_color_1: '#BCBCBC',
         parr_color_2: '#E5E5E5',
         parr_color_3: '#888888',
+		sb_text:'#fff',
+		sb_bg:'#aaa',
+		sb_hover:'#aaaa',
 
-        // ---------------------------------------
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
         ring: 'hsl(var(--ring))',
@@ -67,6 +58,16 @@ placeholder fields #595A5B
           3: 'hsl(var(--chart-3))',
           4: 'hsl(var(--chart-4))',
           5: 'hsl(var(--chart-5))'
+        },
+        sidebar: {
+          DEFAULT: 'hsl(var(--sidebar-background))',
+          foreground: 'hsl(var(--sidebar-foreground))',
+          primary: 'hsl(var(--sidebar-primary))',
+          'primary-foreground': 'hsl(var(--sidebar-primary-foreground))',
+          accent: 'hsl(var(--sidebar-accent))',
+          'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
+          border: 'hsl(var(--sidebar-border))',
+          ring: 'hsl(var(--sidebar-ring))'
         }
       },
       borderRadius: {
@@ -79,17 +80,22 @@ placeholder fields #595A5B
       },
       spacing: {
         '1-3': '32%',
-        // 'logo-left':'clamp(46px,5%,200px)'
         'logo-left': 'clamp(3%,4%,15%)',
-        'my_gap_1':'1rem',
-        'my_gap_2':'1.2rem',
-        'my_gap_3':'1.4rem',
+        my_gap_1: '1rem',
+        my_gap_2: '1.2rem',
+        my_gap_3: '1.4rem'
       },
       screens: {
-        // Define un breakpoint customizado para una altura de 680px
-        'max-h-680': { raw: '(max-height: 680px)' },
-        'max-h-600': {raw:'(max-height: 680px)'}
-      }
+        'max-h-680': {
+          raw: '(max-height: 680px)'
+        },
+        'max-h-600': {
+          raw: '(max-height: 680px)'
+        }
+      },
+	  boxShadow: {
+        'inner-custom': 'inset 0px 0px 25px rgba(0, 0, 0, 0.3)', // sombra interna personalizada
+      },
     }
   },
   plugins: [

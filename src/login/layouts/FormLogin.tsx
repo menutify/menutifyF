@@ -40,7 +40,7 @@ function FormLogin() {
         ? subActive
           ? routesPath.completePayment
           : routesPath.caPayment
-        : routesPath.home,
+        : routesPath.dashboard,
       {
         replace: true
       }

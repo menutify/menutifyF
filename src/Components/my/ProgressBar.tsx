@@ -1,4 +1,3 @@
-import React from 'react'
 
 function ProgressBar({ state = 1, className = '' }: { state: 1 | 2 | 3,className:string }) {
   const options = {

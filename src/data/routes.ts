@@ -1,7 +1,7 @@
 export const routesPath = {
   initial: '/',
   login: '/login',
-  home: '/home',
+  dashboard: '/dashboard',
   repassword: '/repassword',
   sendEmail: '/send-email',
   changePassword: '/change-password/:token',
@@ -13,7 +13,9 @@ export const routesPath = {
   caPayMp: '/create-account/payment/MercadoPago',
   caPaySt: '/create-account/payment/Stripe',
   payment: '/payment',
-  completePayment: '/create-account/complete'
+  completePayment: '/create-account/complete',
+  
+restaurant:'/dashboard/restaurant'
 }
 
 //axios instance in utils have all url

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 //estilos
 
 //manejadores
@@ -7,7 +7,8 @@ import {
   Routes,
   useNavigate,
   useLocation,
-  replace
+  Navigate,
+
 } from 'react-router-dom'
 //utils
 import { useDataGlobalContext } from './Context/GlobalContext'
@@ -30,12 +31,13 @@ import ConfirmChangePassword from './changePassword/pages/ConfirmChangePassword'
 import VerifyAccount from './createAccount/pages/VerifyAccount'
 import ReadyAccount from './createAccount/pages/ReadyAccount'
 import CompletePayment from './createAccount/pages/CompletePayment'
-import Home from './layouts/Home'
 import LoadingBar from './components/my/LoadingBar'
+import Dashboard from './Dashboard'
+import Restaurant from './Dashboard/restaurant/page/Restaurant'
+
 
 function App() {
-  const [loading, setLoading] = useState<boolean>(true)
-  const { setUser, setCharge } = useDataGlobalContext()
+  const { setUser, setLoading, loading } = useDataGlobalContext()
 
   //rrd
   const navigate = useNavigate()
@@ -43,7 +45,6 @@ function App() {
 
   useEffect(() => {
     setLoading(true)
-    setCharge(true)
     googleLogout()
 
     const asyncInitialTask = async () => {
@@ -58,7 +59,6 @@ function App() {
     if (location.pathname === '/') {
       navigate('/login', { replace: true })
     }
-    setCharge(false)
     setLoading(false)
   }, [])
 
@@ -77,7 +77,7 @@ function App() {
       <Routes>
         <Route path={routesPath.initial} element={<AuthLayout />}>
           <Route path={routesPath.login} element={<Login />} />
-          {/* <Route path={routesPath.home} element={<Home />} /> */}
+        
           <Route path={routesPath.repassword} element={<Repassword />} />
           <Route path={routesPath.sendEmail} element={<SendEmail />} />
           <Route
@@ -100,7 +100,13 @@ function App() {
             element={<CompletePayment />}
           />
         </Route>
-        <Route path={routesPath.home} element={<Home />} />
+        <Route
+          path={routesPath.dashboard}
+          element={<Dashboard />}
+        >
+           <Route index element={<Navigate to={routesPath.restaurant} />} />
+          <Route  path={routesPath.restaurant} element={<Restaurant />} />
+        </Route>
       </Routes>
     </>
   )

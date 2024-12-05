@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 
 function LoadingBar() {
-  const { charge: loading } = useDataGlobalContext()
+  const { loading: loading } = useDataGlobalContext()
   const [progress, setProgress] = useState(0)
   const [shouldAnimate, setShouldAnimate] = useState(true)
   const location = useLocation()
@@ -27,12 +27,12 @@ function LoadingBar() {
 
   useEffect(() => {
     setShouldAnimate(false)
-    
+
     setProgress(0)
     const timeout = setTimeout(() => {
       console.log('first')
       setShouldAnimate(true)
-      
+
       setProgress(100) // Completa la barra
 
       return () => clearTimeout(timeout)
@@ -40,13 +40,14 @@ function LoadingBar() {
   }, [location.pathname])
 
   return (
-    <div className='bg-primary_color'
+    <div
+      className='bg-primary_color'
       style={{
         position: 'fixed',
         top: 0,
         left: 0,
         height: '4px',
-        
+
         width: `${progress}%`,
         transition: shouldAnimate ? 'width 0.1s ease-in-out' : 'none',
         zIndex: 9999

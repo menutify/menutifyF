@@ -37,7 +37,7 @@ const moveIfHasToken = async (navigate, setUser, location) => {
   //! verificar si tiene suscripcion activa, aunque eso puede ir en el home
   console.log(msg)
   //sino hay token y no es nuevo, mandame a home
-  navigate(routesPath.home, { replace: true })
+  navigate(routesPath.dashboard, { replace: true })
 }
 
 export default moveIfHasToken

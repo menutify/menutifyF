@@ -50,7 +50,7 @@ function Completion() {
   return (
     <>
       <h1>Thank you!</h1>
-      <a href='/'>home</a>
+      <a href='/'>Dashboard</a>
       <div
         id='messages'
         role='alert'

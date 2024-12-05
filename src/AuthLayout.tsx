@@ -20,7 +20,7 @@ function AuthLayout() {
           <Outlet />
         </div>
       </section>
-      <section className='hidden md:flex w-full relative   justify-center items-center  bg-white '>
+      <section className='hidden md:flex w-full relative  justify-center items-center  bg-white '>
         <MyCarrousel />
        
         

@@ -28,7 +28,7 @@ function CompletePayment() {
   }
 
   const { handleSubmit, error, isPending } = HandleFormSubmit()
-  const moveToHome = async () => {
+  const moveToDashboard = async () => {
     const data = await handleSubmit(routesApi.caComplete, { id: user.id })
 
     if (!data) return
@@ -37,7 +37,7 @@ function CompletePayment() {
 
     if (isNew == false && subActive == true) {
       setUser({ ...user, isNew, subActive })
-      navigate(routesPath.home)
+      navigate(routesPath.dashboard)
       return
     }
 
@@ -53,7 +53,7 @@ function CompletePayment() {
       <ProgressBar state={3} className={'mt-2 mb-3'} />
       {error.error && <p className='error'>{error.msg}</p>}
       <Button
-        onClick={moveToHome}
+        onClick={moveToDashboard}
         className='bg-primary_color w-full h-9 mt-2'
         type='submit'
         disabled={isPending ? true : false}
