@@ -19,25 +19,35 @@ function LoadingBar() {
       // Llena la barra al 100% cuando loading es false
       setProgress(100)
 
-      // Resetea la barra después de completarse
-      //   const timeout = setTimeout(() => setProgress(0), 500);
-      //   return () => clearTimeout(timeout);
+      //Resetea la barra después de completarse
+      const timeout = setTimeout(() => {
+        setShouldAnimate(false)
+        setProgress(0)
+      }, 1000)
+      return () => clearTimeout(timeout)
     }
   }, [loading])
 
-  useEffect(() => {
-    setShouldAnimate(false)
+  // useEffect(() => {
+  //   setShouldAnimate(false)
 
-    setProgress(0)
-    const timeout = setTimeout(() => {
-      console.log('first')
-      setShouldAnimate(true)
+  //   setProgress(0)
+  //   const timeout = setTimeout(() => {
+  //     setShouldAnimate(true)
 
-      setProgress(100) // Completa la barra
+  //     setProgress(100) // Completa la barra
+  //   }, 100)
 
-      return () => clearTimeout(timeout)
-    }, 100)
-  }, [location.pathname])
+  //   const timeout2 = setTimeout(() => {
+  //     setShouldAnimate(true)
+
+  //     setProgress(0) // Completa la barra
+  //   }, 150)
+  //   return () => {
+  //     clearTimeout(timeout2)
+  //     clearTimeout(timeout)
+  //   }
+  // }, [location.pathname])
 
   return (
     <div

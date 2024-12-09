@@ -45,8 +45,8 @@ export const caAccount = {
   parr3: 'No se pudo confirmar la creación de la cuenta, link vencido',
   button2: 'Continuar',
   //complete
-  title5:'Proceso completado'
-  ,parr4:'Su cuenta esta lista para usar.'
+  title5: 'Proceso completado',
+  parr4: 'Su cuenta esta lista para usar.'
 }
 
 export const caPayment = {
@@ -58,9 +58,25 @@ export const caPayment = {
   ph3: '2xxxxxxxxx',
   terms1: 'Acepto los',
   termlink: 'Terminos y Condiciones',
-  terms2: 'Quiero recibir correos de publicidad',button: 'Continuar',
-  other:'Forma de pago',
-  option1:'Tarjeta',
-  option2:'MercadoPago',
+  terms2: 'Quiero recibir correos de publicidad',
+  button: 'Continuar',
+  other: 'Forma de pago',
+  option1: 'Tarjeta',
+  option2: 'MercadoPago'
 }
 
+export const restaurantData = {
+  modal_address: 'Dirección de tu negocio',
+  modal_address_ph: 'Añade tu dirección',
+  modal_number: 'Número de tu negocio',
+  modal_number_ph: 'Añade tu Número',
+  modal_send: 'Método de envío de tu negocio',
+  modal_send_ph: 'Añade tu Método de envío',
+  modal_domain: 'Dominio de tu negocio',
+  modal_domain_ph: 'Añade tu Dominio',
+  modal_button: 'Guardar',
+
+  modal_exit: 'Salir',
+  modal_currency: 'Tipo de moneda',
+  modal_currency_text: 'Selecciona el tipo de moneda de tu preferencia'
+}

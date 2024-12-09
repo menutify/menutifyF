@@ -7,8 +7,7 @@ import {
   Routes,
   useNavigate,
   useLocation,
-  Navigate,
-
+  Navigate
 } from 'react-router-dom'
 //utils
 import { useDataGlobalContext } from './Context/GlobalContext'
@@ -31,10 +30,12 @@ import ConfirmChangePassword from './changePassword/pages/ConfirmChangePassword'
 import VerifyAccount from './createAccount/pages/VerifyAccount'
 import ReadyAccount from './createAccount/pages/ReadyAccount'
 import CompletePayment from './createAccount/pages/CompletePayment'
-import LoadingBar from './components/my/LoadingBar'
-import Dashboard from './Dashboard'
+import LoadingBar from './Components/my/LoadingBar'
+import Dashboard from './Dashboard/Dashboard'
 import Restaurant from './Dashboard/restaurant/page/Restaurant'
-
+import Component from './Component'
+import CreateMenu from './Dashboard/createMenu/page/CreateMenu'
+import Categories from './Dashboard/createMenu/components/Categories'
 
 function App() {
   const { setUser, setLoading, loading } = useDataGlobalContext()
@@ -77,7 +78,7 @@ function App() {
       <Routes>
         <Route path={routesPath.initial} element={<AuthLayout />}>
           <Route path={routesPath.login} element={<Login />} />
-        
+
           <Route path={routesPath.repassword} element={<Repassword />} />
           <Route path={routesPath.sendEmail} element={<SendEmail />} />
           <Route
@@ -100,12 +101,22 @@ function App() {
             element={<CompletePayment />}
           />
         </Route>
-        <Route
-          path={routesPath.dashboard}
-          element={<Dashboard />}
-        >
-           <Route index element={<Navigate to={routesPath.restaurant} />} />
-          <Route  path={routesPath.restaurant} element={<Restaurant />} />
+        <Route path={routesPath.dashboard} element={<Dashboard />}>
+          <Route index element={<Navigate to={routesPath.restaurant} />} />
+          <Route path={routesPath.restaurant} element={<Restaurant />} />
+          <Route path={routesPath.seeMenu} element={<Component />} />
+          <Route path={routesPath.createMenu} element={<CreateMenu />}>
+            <Route
+              index
+              element={<Navigate to={`${routesPath.createMenu}/menu`} />}
+            />
+            <Route
+              path={`${routesPath.createMenu}/menu`}
+              element={<Categories />}
+            />
+          </Route>
+          <Route path={routesPath.settingsMenu} element={<Component />} />
+          <Route path={routesPath.account} element={<Component />} />
         </Route>
       </Routes>
     </>

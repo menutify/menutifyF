@@ -50,3 +50,10 @@ export const dniValidator = z
   .string()
   .regex(/^\d+$/, { message: 'El DNI debe contener solo números' }) // Asegura que el DNI contiene solo números
   .length(8, { message: 'Debe contener exactamente 8 dígitos' })
+
+export const domainValidator = z
+  .string()
+  .min(5, { message: 'Debe tener al menos 5 caracteres.' })
+  .max(25, { message: 'Debe tener menos de 25 caracteres.' })
+  .regex(/^\S*$/, { message: 'No puede contener espacios.' })
+  .trim()

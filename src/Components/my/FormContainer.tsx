@@ -1,7 +1,7 @@
 import { Button } from '../ui/button'
 import { Form } from '../ui/form'
 
-function FormContainer({formOptions,error,isPending,textButton, functionSubmit,children}) {
+function FormContainer({formOptions,error=false,isPending=false,textButton, functionSubmit,children}) {
   return (
     <>
     

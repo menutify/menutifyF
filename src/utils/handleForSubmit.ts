@@ -30,9 +30,13 @@ const HandleFormSubmit = () => {
   ): Promise<Record<string, any> | boolean> => {
     setIsPending(true)
 
-    const { data, error, msg } = await callAPI.postData(path, body, header)
+    const {
+      data,
+      error: apiError,
+      msg
+    } = await callAPI.postData(path, body, header)
 
-    if (error) {
+    if (apiError) {
       setError({ error: true, msg })
       setIsPending(false)
       return false
@@ -43,7 +47,59 @@ const HandleFormSubmit = () => {
     return data
   }
 
-  return { handleSubmit, error, isPending }
+
+  const handleSubmitForm = async (
+    path: string,
+    body: Record<string, any>,
+    header: Record<string, string> = {}
+  ): Promise<Record<string, any> | boolean> => {
+    setIsPending(true)
+
+    const {
+      data,
+      error: apiError,
+      msg
+    } = await callAPI.postDataForm(path, body, header)
+
+    if (apiError) {
+      setError({ error: true, msg })
+      setIsPending(false)
+      return false
+    }
+
+    setIsPending(false)
+    //retornar datos de la APi
+    return data
+  }
+
+  const handlePatchSubmit = async (
+    path: string,
+    body: Record<string, any>,
+    header: Record<string, string> = {}
+  ): Promise<Record<string, any> | boolean> => {
+    setIsPending(true)
+  
+    const {
+      data,
+      error: apiError,
+      msg
+    } = await callAPI.patchDataForm(path, body, header)
+  
+    if (apiError) {
+      setError({ error: true, msg })
+      setIsPending(false)
+      return false
+    }
+  
+    setIsPending(false)
+    //retornar datos de la APi
+    return data
+  }
+
+
+  return { handleSubmit,handlePatchSubmit,handleSubmitForm, error, isPending }
 }
+
+
 
 export default HandleFormSubmit

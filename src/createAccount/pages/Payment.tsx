@@ -1,7 +1,5 @@
-import { useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import FormPayment from '../components/FormPayment'
-
 import callAPI from '../../utils/callApi'
 import { routesApi, routesPath } from '../../data/routes'
 import { useDataGlobalContext } from '../../Context/GlobalContext'
@@ -9,7 +7,7 @@ import { Button } from '@/components/ui/button'
 import Title2 from '@/components/my/Title2'
 import Parr from '@/components/my/Parr'
 import { caPayment } from '@/data/text'
-import ProgressBar from '@/components/my/ProgressBar'
+import ProgressBar from '@/Components/my/ProgressBar'
 import Logo from '@/components/my/Logo'
 import MyCard from '@/components/my/MyCard'
 

@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import { useDataGlobalContext } from '@/Context/GlobalContext'
+import React from 'react'
 
 const colors = [
   '#FF5733', // Bright Orange
@@ -13,21 +14,20 @@ const colors = [
 ]
 
 function PickColor() {
-  const [indexColor, setIndexColor] = useState('#FF5733')
-  const [colorPicker, setColorPicker] = useState('#000000')
+  const { restaurant, setRestaurant } = useDataGlobalContext()
 
-  const handleColorPicker = (e) => {
-    setIndexColor(e.target.value)
-    setColorPicker(e.target.value)
+  const handleColorPicker = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setRestaurant({ ...restaurant, s_color: e.target.value })
   }
 
   const handleClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    const clickedElement = e.target.closest('div[id]') // Busca el div con el atributo `id`
-    if (clickedElement) {
-      const id = clickedElement.id
-      if (id.length < 7) return
-      console.log({ id })
-      setIndexColor(id)
+    
+    if (e.target.id) {
+      if (e.target.id.length < 7) return
+
+      setRestaurant({ ...restaurant, s_color: e.target.id })
+
+      
     }
     return
   }
@@ -37,27 +37,38 @@ function PickColor() {
       {colors.map((col, i) => (
         <div
           key={col}
-          id={col}
           className='block w-8 h-8 md:w-12 md:h-12 p-1 rounded-full bg-white border-2'
-          style={{ borderColor: `${col == indexColor ? col : 'transparent'}` }}
+          style={{
+            borderColor: `${col == restaurant.s_color ? col : 'transparent'}`
+          }}
         >
           <span
+            id={col}
             className='w-full h-full block rounded-full'
             style={{ backgroundColor: `${col}` }}
           ></span>
         </div>
       ))}
-      <div className='flex justify-center items-center mt-1 h-[22px] w-[22px] ml-1 md:w-[36px] md:h-[36px]  rounded-full bg-white '>
+      <div
+        className='flex  w-8 h-8 md:w-12 md:h-12  rounded-full bg-white p-1 border-2 '
+        style={{
+          borderColor: `${
+            restaurant.s_color ? restaurant.s_color : 'transparent'
+          }`
+        }}
+      >
         <label
-          htmlFor='pickerColor'
-          className='block w-full h-full   rounded-full'
-          style={{ backgroundColor: `${colorPicker}` }}
+        htmlFor='pickerColor'
+          className='block w-full h-full rounded-full'
+          style={{
+            backgroundColor: `${restaurant.s_color}`
+          }}
         ></label>
         <input
           onChange={handleColorPicker}
           id='pickerColor'
           type='color'
-          className='absolute opacity-0'
+          className='absolute opacity-0 w-1 h-1'
         />
       </div>
     </div>

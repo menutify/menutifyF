@@ -1,6 +1,6 @@
 import { z } from 'zod'
 import {
-  dniValidator,
+  domainValidator,
   emailValidator,
   nameValidator,
   passwordValidator,
@@ -47,4 +47,20 @@ export const caAccountFormScheme = z
 
 export const caPaymentFormScheme = z.object({
   email: emailValidator
+})
+
+export const restaurantAddress = z.object({
+  address: z.string().trim().min(12, { message: 'minimo 12 caracteres' }).trim()
+})
+
+export const restaurantNumber = z.object({
+  number: phoneValidator
+})
+
+export const restaurantSendMethod = z.object({
+  send_method: nameValidator
+})
+
+export const domainMethod = z.object({
+  domain: domainValidator
 })

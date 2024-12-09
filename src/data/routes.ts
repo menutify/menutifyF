@@ -14,8 +14,12 @@ export const routesPath = {
   caPaySt: '/create-account/payment/Stripe',
   payment: '/payment',
   completePayment: '/create-account/complete',
-  
-restaurant:'/dashboard/restaurant'
+
+  restaurant: '/dashboard/restaurant',
+  seeMenu: '/dashboard/menus',
+  createMenu: '/dashboard/create',
+  settingsMenu: '/dashboard/settings',
+  account: '/dashboard/account'
 }
 
 //axios instance in utils have all url
@@ -31,5 +35,8 @@ export const routesApi = {
   caCreate: '/create-account/create ',
   caCreateCustomer: '/create-account/create-customer',
   caStripePayment: '/create-account/create-payment-stripe',
-  caComplete: '/create-account/complete'
+  caComplete: '/create-account/complete',
+  logoRestaurant: '/restaurant/resturant-logo'
+  ,restaurant:'/restaurant'
+ 
 }
