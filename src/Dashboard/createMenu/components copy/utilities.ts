@@ -1,5 +1,3 @@
-import { Categories } from '@/types'
-
 //verifica que el item pertenezca al array
 export const itemIsinArray = (fatherArray, idElement) => {
   if (fatherArray.findIndex((e) => e.id == idElement) != -1) return true
@@ -33,52 +31,16 @@ export const setChangeToArray = (prevArray, activeId, overId) => {
 
   updatedItems.splice(newIndex, 0, movedNode)
 
-  updatedItems.forEach((e, i) => (e.pos = i))
-
   return updatedItems
 }
 
-export const setChangeToTreeArray = (prevArray, activeId, overId) => {
-  //index del objeto viejo
-  const oldIndex = prevArray.findIndex((item) => item.id === activeId)
-
-  const newIndex = prevArray.findIndex((item) => {
-    return item.id === overId
-  })
-
-  const [movedNode] = prevArray.splice(oldIndex, 1)
-
-  prevArray.splice(newIndex, 0, movedNode)
-
-  prevArray.forEach((e, i) => (e.pos = i))
-
-  return prevArray
-}
-
-export const securityFunction = (id, type, op, letter) => {
+export const securityFunction = (id, type, letter, op) => {
   if (op == 0) {
-    console.log('o')
     return typeof id === type || !id.startsWith(letter)
   }
-  console.log('i')
-  return typeof id === type && id.startsWith(letter)
+  return typeof id === type && !id.startsWith(letter)
 }
 
 export const ItemIsIncludeInArray = (arrayData, id) => {
   return arrayData.includes(id)
-}
-
-/**
- *
- * @param aid activeID
- * @param oid overID
- * @returns :
- * - [NEWactiveId ,NEWoverID ,ParentID]
- */
-export const getNewChildsId = (aid, oid) => {
-  return [
-    parseInt(aid.split('-')[2]),
-    parseInt(oid.split('-')[2]),
-    parseInt(aid.split('-')[1])
-  ]
 }

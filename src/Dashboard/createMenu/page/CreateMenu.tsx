@@ -71,16 +71,17 @@ function CreateMenu() {
                   className='kanban-item p-2 flex flex-col gap-4 bg-red-300 m-2'
                   key={todo.id}
                 >
-                  <h2>{todo.id}</h2>
-
+                  <h2>
+                    id Padre:{todo.id} -- index:{todo.pos}
+                  </h2>
+                  <p>id-----name----index---state</p>
                   <ul>
-                    {foods.map((e) => {
+                    {todo.foods.map((e) => {
                       return (
-                        e.parentId == todo.id && (
-                          <li key={e.id}>
-                            {e.id} --- {e.name} --- {e.pos}
-                          </li>
-                        )
+                        <li key={e.id}>
+                          {e.id} --- {e.name} --- {e.pos} ------
+                          {e.state ? '1' : '0'}
+                        </li>
                       )
                     })}
                   </ul>

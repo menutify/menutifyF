@@ -1,7 +1,8 @@
 import { useState } from 'react'
 import { Context } from './GlobalContext'
-import { ReactComponent, Restaurant, User } from '@/types'
+import { Categories, ReactComponent, Restaurant, User } from '@/types'
 import { restaurantInicialData } from '@/data/initialStateData'
+import foodSVG from '@/assets/createMenu/food.svg'
 
 const AllContext = ({ children }: ReactComponent) => {
   const [user, setUser] = useState<User>({
@@ -16,10 +17,93 @@ const AllContext = ({ children }: ReactComponent) => {
   const [restaurant, setRestaurant] = useState<Restaurant>(
     restaurantInicialData
   )
-  const [categories, setCategories] = useState([
-    { id: 1, name: 'Padre 1', depth: 0 },
-    { id: 2, name: 'Padre 2', depth: 0 },
-    { id: 3, name: 'Padre 3', depth: 0 }
+  const [portalVisible, setPortalVisible] = useState(false)
+  const [categories, setCategories] = useState<Categories[]>([
+    {
+      id: 1,
+      pos: 0,
+      name: 'Padre 1',
+      id_menu: 1,
+      foods: [
+        {
+          id: 0,
+          id_cat: 1,
+          img: foodSVG,
+          state: true,
+          price: 123,
+          name: 'Hijo 1',
+          pos: 0
+        },
+        {
+          id: 1,
+          id_cat: 1,
+          img: foodSVG,
+          state: true,
+          price: 123,
+          name: 'Hijo 2',
+          pos: 1
+        },
+        {
+          id: 2,
+          id_cat: 1,
+          img: foodSVG,
+          state: true,
+          price: 123,
+          name: 'Hijo 3',
+          pos: 2
+        }
+      ]
+    },
+    {
+      id: 2,
+      pos: 1,
+      name: 'Padre 2',
+      id_menu: 1,
+      foods: [
+        {
+          id: 3,
+          id_cat: 2,
+          img: foodSVG,
+          state: true,
+          price: 123,
+          name: 'Hijo 4',
+          pos: 0
+        },
+        {
+          id: 4,
+          id_cat: 2,
+          img: foodSVG,
+          state: true,
+          price: 123,
+          name: 'Hijo 5',
+          pos: 1
+        }
+      ]
+    },
+    {
+      id: 3,
+      pos: 2,
+      name: 'Padre 3',
+      id_menu: 1,
+      foods: [
+        {
+          id: 5,
+          id_cat: 3,
+          img: foodSVG,
+          state: true,
+          price: 123,
+          name: 'Hijo 6',
+          pos: 0
+        }
+      ]
+    },
+    {
+      id: 4,
+      pos: 3,
+      name: 'Padre 4',
+      id_menu: 1,
+      foods: []
+    }
   ])
 
   const [foods, setFoods] = useState([
@@ -43,7 +127,9 @@ const AllContext = ({ children }: ReactComponent) => {
     restaurant,
     setRestaurant,
     categories,
-    setCategories,foods,setFoods
+    setCategories,
+    foods,
+    setFoods,portalVisible,setPortalVisible
   }
 
   return <Context.Provider value={options}>{children}</Context.Provider>

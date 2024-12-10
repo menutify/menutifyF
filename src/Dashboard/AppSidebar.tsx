@@ -93,10 +93,10 @@ export function AppSidebar() {
       <div
         className={`${
           restaurant.state === 1 ? 'hidden' : 'block'
-        } w-full h-full absolute bg-[#0001] z-50`}
+        } w-full h-full absolute bg-[#0001] z-50 `}
       ></div>
       <SidebarContent>
-        <SidebarGroup className='grid grid-rows-[5%_15%_1fr_40%] gap-2 md:grid-rows-[5%_20%_1fr_40%] h-[100%] text-sb_text py-4 '>
+        <SidebarGroup className='grid grid-rows-[5%_15%_1fr_40%] gap-2 md:grid-rows-[5%_20%_1fr_40%] h-[100%] text-sb_text py-4  '>
           <SidebarHeader>
             <div className='h-full px-5'>
               <img className='h-full' src={logoVSG} alt='' />

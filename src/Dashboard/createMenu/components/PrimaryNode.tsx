@@ -4,21 +4,35 @@ import {
   useSortable,
   verticalListSortingStrategy
 } from '@dnd-kit/sortable'
-import { CSS } from '@dnd-kit/utilities'
 import SecondaryNode from './SecondaryNode'
+import { CSS } from '@dnd-kit/utilities'
+import { FoodOrderList } from '@/types'
+import { ArrowDown } from 'lucide-react'
 
-function PrimaryNode({ id, name, depth, children, items }) {
+interface primaryNode {
+  id: number
+  name: string
+  arrayChild: FoodOrderList[]
+  dragMode: boolean
+}
+
+function PrimaryNode({ id, name, arrayChild, dragMode }: primaryNode) {
   const { attributes, listeners, setNodeRef, transform, transition } =
-    useSortable({ id })
+    useSortable({ id, disabled: dragMode })
 
   return (
     <div
       ref={setNodeRef}
       className={`h-full `}
       style={{
-        // transform: CSS.Transform.toString(transform),
-        // transition: transition,
-        paddingLeft: `${depth * 20}px`, // Indenta según la profundidad
+        transform: CSS.Transform.toString({
+          scaleX: transform?.scaleX || 1,
+          scaleY: 1,
+          x: transform?.x || 0,
+          y: transform?.y || 0
+        }),
+        transition: transition,
+        // paddingLeft: `${20}px`, // Indenta según la profundidad
         margin: '',
         background: '#f9f9f9',
         cursor: 'grab',
@@ -28,28 +42,49 @@ function PrimaryNode({ id, name, depth, children, items }) {
       {...attributes}
       {...listeners}
     >
-      <Title2 className='select-none'>{name}</Title2>
+      <div className='flex items-center justify-between '>
+        <section className='flex justify-start items-center bg-yellow-50 flex-1'>
+          <div>
+            <ArrowDown />
+          </div>
+          <Title2 className='select-none'>{name}</Title2>
+          <div className='select-none'>
+            (
+            {arrayChild.length == 0
+              ? 'Categoría vacía'
+              : `${arrayChild.length} productos`}
+            )
+          </div>
+        </section>
+        <section>
+          <button
+            onClick={() => console.log('hola')}
+            className='select-none bg-green-100 w-10 h-full flex-complete hover:bg-red-400'
+          >
+            ...
+          </button>
+        </section>
+      </div>
 
       {/* Si tiene hijos, renderiza un SortableContext para esos hijos */}
-      <div
-        className={`${''} w-full`}
-      >
+      <div className={`${''} w-full`}>
         <SortableContext
-          items={items.filter((e) => e.parentId == id)}
+          items={arrayChild}
           strategy={verticalListSortingStrategy}
         >
-          {items
-            .filter((e) => e.parentId == id)
-            .map((child, index) => (
-              <SecondaryNode
-                key={'c-' + child.id}
-                id={child.id}
-                name={child.name}
-                depth={child.depth}
-                index={index}
-                parentId={id}
-              />
-            ))}
+          {arrayChild.map((food, index) => (
+            <SecondaryNode
+              key={'c-' +food.id_cat+'-' +food.id}
+              id={food.id}
+              name={food.name}
+              img={food.img}
+              state={food.state}
+              price={food.price}
+              index={index}
+              parentId={id}
+              dragMode={dragMode}
+            />
+          ))}
         </SortableContext>
       </div>
     </div>

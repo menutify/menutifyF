@@ -1,7 +1,3 @@
-import { createPortal } from 'react-dom'
-import { useState } from 'react'
-import PrimaryNode from './PrimaryNode'
-import { useDataGlobalContext } from '@/Context/GlobalContext'
 import {
   DndContext,
   DragOverlay,
@@ -12,21 +8,23 @@ import {
   DragEndEvent
 } from '@dnd-kit/core'
 import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable'
+import { createPortal } from 'react-dom'
+import { useState } from 'react'
+import PrimaryNode from './PrimaryNode'
+import { useDataGlobalContext } from '@/Context/GlobalContext'
 import {
   getMouseTarget,
-  getNewChildsId,
+  
   ItemIsIncludeInArray,
   securityFunction,
-  setChangeToArray,
-  setChangeToTreeArray
+  setChangeToArray
 } from './utilities'
-import { Button } from '@/components/ui/button'
 
 // Componente principal
 const Tree = () => {
-  const { categories, setCategories } = useDataGlobalContext()
+  const { categories, setCategories, foods, setFoods } = useDataGlobalContext()
 
-  const [dragMode, setDragMode] = useState(true)
+    // const [childVisible, setChildVisible] = useState(true)
   const [mouseOffset, setMouseOffset] = useState({ x: 0, y: 0, transform: 0 })
 
   // Configurar sensores para el arrastre
@@ -38,6 +36,7 @@ const Tree = () => {
   }
 
   const handleDragEnd = ({ active, over }: DragEndEvent) => {
+    // setChildVisible(true)
     //si el destino no existe en el contexto
     if (!over) {
       return
@@ -55,9 +54,8 @@ const Tree = () => {
       return
     }
 
-    const activeIsFather = securityFunction(active.id, 'number', 0,'c')
-    const activeIsChild = securityFunction(active.id, 'string', 1,'c')
-    const overIsFather = securityFunction(over.id, 'number', 0,'c')
+    const activeIsFather = securityFunction(active.id, 'number', 'c', 0)
+    const activeIsChild = securityFunction(active.id, 'string', 'c', 1)
     //verificamos que el padre no quiera meterse el contenedor de los hijos
     if (activeIsFather && !ItemIsIncludeInArray(targetArray, active.id)) {
       console.log('Padre -> hijo')
@@ -65,7 +63,7 @@ const Tree = () => {
     }
 
     //si un hijo se quiere meter el contenedor de los padres
-    if (activeIsChild && overIsFather) {
+    if (activeIsChild && activeIsFather) {
       console.log('Hijo -> Padre')
       return
     }
@@ -79,11 +77,8 @@ const Tree = () => {
       //estando aqui solo llega un hijo
 
       //obtenemos el id de los hijos
-      console.log({ active, over })
-      const [activeChildId, overChildId, parentId] = getNewChildsId(
-        active.id,
-        over.id
-      )
+      const activeChildId = active.id.split('-')[1] as string[]
+      const overChildId = over.id.split('-')[1]
 
       //bloquar intercambio de hijos
       if (!ItemIsIncludeInArray(targetArray, activeChildId)) {
@@ -91,19 +86,7 @@ const Tree = () => {
         return
       }
       //actualizamos el array
-
-      setCategories((prev) => {
-        const updateData = [...prev]
-
-        const parentIndex = categories.findIndex((e) => e.id == parentId)
-
-        updateData[parentIndex].foods = setChangeToTreeArray(
-          updateData[parentIndex].foods,
-          activeChildId,
-          overChildId
-        )
-        return updateData
-      })
+      setFoods(setChangeToArray(foods, activeChildId, overChildId))
     }
   }
 
@@ -113,45 +96,42 @@ const Tree = () => {
       collisionDetection={rectIntersection}
       onDragStart={handleDragStart}
       onDragEnd={handleDragEnd}
-
       // onDragMove={(e) => console.log({ e })}
     >
-      <div className='flex flex-col gap-3 bg-red-200 p-4'>
-        <Button onClick={() => setDragMode(!dragMode)}>
-          {dragMode ? 'Editar orden' : 'Guardar'}
-        </Button>
+      <div className='flex flex-col gap-3 bg-red-100 p-4'>
         {/* El contexto para los nodos principales (padres) */}
         <SortableContext
           items={categories}
           strategy={verticalListSortingStrategy}
         >
-          {categories.map((categorie) => (
+          {categories.map((node) => (
             <PrimaryNode
-              key={categorie.id}
-              id={categorie.id}
-              name={categorie.name}
-              arrayChild={categorie.foods}
-              dragMode={dragMode}
+            key={node.id}
+              {...node}
+              items={foods}
+             
             />
           ))}
         </SortableContext>
 
         {createPortal(
           <DragOverlay>
-            <div
-              style={{
-                padding: '3px',
-                position: 'absolute',
-                // pointerEvents: 'none',
-                left: `${mouseOffset.x}px`,
-                top: `${mouseOffset.y}px`,
-                transform: `translate(-${mouseOffset.transform}%, -${mouseOffset.transform}%)`, // Centra el elemento en el mouse
-                zIndex: 9999
-              }}
-              className='h-full flex w-full bg-[#aa543244] flex-complete cursor-grabbing focus:cursor-grabbing  '
-            >
-              MOVE
-            </div>
+            
+              <div
+                style={{
+                  padding: '3px',
+                  position: 'absolute',
+                  pointerEvents: 'none',
+                  left: `${mouseOffset.x}px`,
+                  top: `${mouseOffset.y}px`,
+                  transform: `translate(-${mouseOffset.transform}%, -${mouseOffset.transform}%)`, // Centra el elemento en el mouse
+                  zIndex: 9999
+                }}
+                className='h-full flex w-full bg-[#aa543244] flex-complete '
+              >
+                MOVE
+              </div>
+            
           </DragOverlay>,
           document.body
         )}

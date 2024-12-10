@@ -15,14 +15,14 @@ export interface AppContextType {
   setProduct: React.Dispatch<React.SetStateAction<object>>
   restaurant: Restaurant
   setRestaurant: React.Dispatch<React.SetStateAction<Restaurant>>
-  categories: object[]
-  setCategories: React.Dispatch<React.SetStateAction<object[]>>
+  categories: Categories[]
+  setCategories: React.Dispatch<React.SetStateAction<Categories[]>>
   foods: object[]
   setFoods: React.Dispatch<React.SetStateAction<object[]>>
 }
 
 export interface User {
-  id: number | null
+  id: string | null
   isNew: boolean | null
   email: string | null
   subActive: boolean | null
@@ -55,4 +55,22 @@ export interface googleCredentials {
   clientId: string
   credential: string
   select_by: string
+}
+
+export interface Categories {
+  id: number
+  id_menu: number
+  name: string
+  pos: number
+  foods: FoodOrderList[]
+}
+
+export interface FoodOrderList {
+  id: number
+  id_cat: number
+  name: string
+  img: string
+  state:boolean
+  price: number
+  pos: number
 }
