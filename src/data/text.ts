@@ -1,3 +1,5 @@
+import information from '@/assets/createMenu/information.svg'
+
 export const logText = {
   title: 'Ingresa a Menutify',
   parr1: 'Crea y comparte el menu de tu restaurant, todo en un solo lugar.',
@@ -66,6 +68,8 @@ export const caPayment = {
 }
 
 export const restaurantData = {
+  modal_name: 'Nombre del local',
+  modal_name_ph: 'Añade el nombre de tu local',
   modal_address: 'Dirección de tu negocio',
   modal_address_ph: 'Añade tu dirección',
   modal_number: 'Número de tu negocio',
@@ -79,4 +83,22 @@ export const restaurantData = {
   modal_exit: 'Salir',
   modal_currency: 'Tipo de moneda',
   modal_currency_text: 'Selecciona el tipo de moneda de tu preferencia'
+}
+
+export const foodData = {
+  title1: 'Crear nuevo plato',
+  information: information,
+  parr1: 'Crea un nuevo plato para agregar a tu menú',
+  subtitle1: 'Titulo del plato',
+  ph1: 'Por ejemplo: Pizza Muzzarella',
+  subtitle2: 'Selecciona una categoría',
+  imgTitle: 'Añade una imagen a tu plato',
+  imgSubtitle: 'Esta imagen aparecera junto con la información de tu plato.',
+  imgButton: 'Seleccionar Imagen',
+  subtitle3: 'Agrega una breve descripción',
+  ph2: 'Por ejemplo: Pizza de masa fina, cubierta con una capa de muzzarella y un toque de orégano.',
+  toggle: 'Destacar platillo',
+  subtitle4: 'Agrega el precio al platillo',
+  ph3: '0.00',
+  saveButton: 'Agregar nuevo platillo a mi menú'
 }

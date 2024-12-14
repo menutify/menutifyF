@@ -1,9 +1,13 @@
-import { Button } from '@/components/ui/button'
 import { useDataGlobalContext } from '@/Context/GlobalContext'
 import { useSortable } from '@dnd-kit/sortable'
+import upDownSVG from '@/assets/createMenu/updown.svg'
+import starSVG from '@/assets/createMenu/star.svg'
 import { CSS } from '@dnd-kit/utilities'
+import { createPortal } from 'react-dom'
+import ModalFood from './ModalFood'
 import { useState } from 'react'
-
+import DeleteModal from './DeleteModal'
+import foodSVG from '@/assets/createMenu/food.svg'
 interface secondaryNode {
   id: number
   name: string
@@ -12,7 +16,7 @@ interface secondaryNode {
   price: number
   index: number
   parentId: number
-  dragMode: boolean
+  star: boolean | string
 }
 
 function SecondaryNode({
@@ -23,30 +27,23 @@ function SecondaryNode({
   price,
   index,
   parentId,
-  dragMode
+  star
 }: secondaryNode) {
   // const { setFoods } = useDataGlobalContext()
-  const { attributes, listeners, setNodeRef } = useSortable({
-    id: 'c-' + parentId + '-' + id,
-    disabled: dragMode
+  const {
+    attributes,
+    listeners,
+    setDroppableNodeRef,
+    setDraggableNodeRef,
+    transform,
+    transition
+  } = useSortable({
+    id: 'c-' + parentId + '-' + id
   })
 
-  const { categories, setCategories } = useDataGlobalContext()
-
-  const deleteFood = () => {
-    console.log('delete')
-    setCategories((prev) => {
-      const update = [...prev]
-
-      const parentIndex = update.findIndex((e) => e.id === parentId)
-
-      update[parentIndex].foods.splice(index, 1)
-
-      update[parentIndex].foods.forEach((e, i) => (e.pos = i))
-
-      return update
-    })
-  }
+  const { setCategories } = useDataGlobalContext()
+  const [visibleModal, setVisibleModal] = useState(false)
+  const [visibleDeleteModal, setVisibleDeleteModal] = useState(false)
 
   const changeState = () => {
     console.log('change')
@@ -55,7 +52,7 @@ function SecondaryNode({
 
       const parentIndex = update.findIndex((e) => e.id === parentId)
 
-      update[parentIndex].foods[index].state = !state
+      update[parentIndex].details.foods[index].state = !state
 
       return update
     })
@@ -64,51 +61,90 @@ function SecondaryNode({
   return (
     <div
       id={'c-' + parentId + '-' + id}
-      ref={setNodeRef}
-      className={`h-14 flex justify-between items-center p-1 cursor-grab transition-all duration-300 ${
+      ref={setDroppableNodeRef}
+      className={`h-14 flex justify-between items-center p-1 cursor-grab ${
         state ? 'bg-white' : 'bg-[#0002]'
       }`}
       style={{
+        transform: CSS.Transform.toString(transform),
+        transition: transition,
         margin: '',
 
         cursor: 'grab',
         position: 'relative',
         border: '1px solid #ccc'
       }}
-      {...attributes}
-      {...listeners}
     >
       <section className='h-full flex items-center gap-2 select-none'>
-        <picture className='h-full'>
-          <img className='h-full' src={img} alt='' />
+        <picture className='h-full w-10 overflow-hidden'>
+          <img
+            className='h-full w-full object-cover'
+            src={img === '' ? foodSVG : img}
+            alt=''
+          />
         </picture>
         <div>
           <p>{name}</p>
           <p>${price}</p>
         </div>
+        <picture className='w-5 h-5 flex-complete'>
+          {star ? <img src={starSVG} alt='' /> : <></>}
+        </picture>
       </section>
-      <section className={`flex gap-2 items-center `}>
-        <div
-          className={`transition-all ease-linear duration-300 w-8 h-4 border rounded-lg flex relative before:flex before:absolute before:top-0 before:h-3.5 before:w-3.5 before:bg-gray-400 before:z-10 before:rounded-full before:transition-all before:duration-300 ${
-            state
-              ? 'before:left-0 bg-green-300'
-              : 'before:left-full before:-translate-x-3.5 bg-red-400'
-          }`}
-          onClick={changeState}
-        ></div>
-        <button
-          onClick={() => console.log('hola')}
-          className='select-none bg-blue-100 w-8 h-full flex-complete hover:bg-red-400'
-        >
-          E
-        </button>
-        <button
-          onClick={deleteFood}
-          className='select-none bg-red-100 w-8 h-full flex-complete hover:bg-red-400'
-        >
-          x
-        </button>
+      <section className={`flex gap-2 items-center h-full `}>
+        <>
+          <div
+            className={`transition-all ease-linear duration-300 w-8 h-4 border rounded-lg flex relative before:flex before:absolute before:top-0 before:h-3.5 before:w-3.5 before:bg-gray-400 before:z-10 before:rounded-full before:transition-all before:duration-300 ${
+              state
+                ? 'before:left-0 bg-green-300'
+                : 'before:left-full before:-translate-x-3.5 bg-red-400'
+            }`}
+            onClick={changeState}
+          ></div>
+          <button
+            onClick={() => setVisibleModal(true)}
+            className='select-none bg-red-100 w-8 h-full flex-complete hover:bg-red-400'
+          >
+            E
+          </button>
+          <button
+            onClick={() => setVisibleDeleteModal(true)}
+            className='select-none bg-red-100 w-8 h-full flex-complete hover:bg-red-400'
+          >
+            x
+          </button>
+          <picture
+            ref={setDraggableNodeRef}
+            {...attributes}
+            {...listeners}
+            className='h-full flex items-center select-none'
+          >
+            <img className='h-2/4' src={upDownSVG} alt='' />
+          </picture>
+        </>
       </section>
+      {visibleModal &&
+        createPortal(
+          <ModalFood
+            action='edit'
+            visibilityModal={setVisibleModal}
+            childId={id}
+            parentId={parentId}
+            indexChild={index}
+          />,
+          document.body
+        )}
+      {visibleDeleteModal &&
+        createPortal(
+          <DeleteModal
+            id={id}
+            visibilityModal={setVisibleDeleteModal}
+            index={index}
+            type='food'
+            parentId={parentId}
+          />,
+          document.body
+        )}
     </div>
   )
 }

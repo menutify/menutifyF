@@ -9,9 +9,9 @@ import { routesApi, routesPath } from '@/data/routes'
 import { caAccount, caPayment } from '@/data/text'
 import FormContainer from '@/components/my/FormContainer'
 import { Label } from '@radix-ui/react-label'
-import InputTel from '@/components/my/InputTel'
+import InputTel from '@/Components/my/InputTel'
 import phoneCodes from '@/data/phoneCodes'
-import FormFieldCheckbox from '@/components/my/FormFieldCheckbox'
+import FormFieldCheckbox from '@/Components/my/FormFieldCheckbox'
 
 const defaultValueForm = {
   name: '',
@@ -54,7 +54,7 @@ function FormCreateAccount() {
   return (
     <FormContainer
       formOptions={formOptions}
-      error={error}
+      error={error && true}
       isPending={isPending}
       functionSubmit={onSubmit}
       textButton={caAccount.button1}

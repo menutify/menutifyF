@@ -5,9 +5,11 @@ import { useEffect } from 'react'
 import callAPI from '../utils/callApi'
 import { routesApi } from '../data/routes'
 import { useDataGlobalContext } from '../Context/GlobalContext'
+import { Categories } from '@/types'
 
 function Dashboard() {
-  const { restaurant, setRestaurant } = useDataGlobalContext()
+  const { setMenu, setRestaurant, restaurant, setCategories } =
+    useDataGlobalContext()
 
   useEffect(() => {
     const getDataRestaurant = async () => {
@@ -17,16 +19,45 @@ function Dashboard() {
         return
       }
 
-      const { respRest } = data
+      const { respRest, respMenu } = data
+
       setRestaurant({
-        ...respRest,
-        domain: respRest.domain == null ? respRest.id : respRest.domain,
-        state: !respRest.address || !respRest.currency ? 0 : 1,
-        s_color: respRest.s_color == '' ? '#FF5733' : respRest.s_color
+        ...respRest
       })
+
+      setMenu({
+        ...respMenu,
+        s_color: respMenu.s_color === '' ? '#FF5733' : respMenu.s_color
+      })
+
+      if (respMenu.id) {
+        console.log(respMenu.id)
+        const { data, error, msg } = await callAPI.getData(
+          `${routesApi.catCascade}/${respMenu.id}`
+        )
+        if (error) {
+          alert(msg)
+          return
+        }
+
+        const changeArray = data.allCategories.map((value) => {
+          const { food, categoriesDetail, ...alldata } = value
+
+          return {
+            ...alldata,
+            details: { ...categoriesDetail, foods: [...food] }
+          }
+        })
+
+        console.log({ changeArray })
+
+        setCategories(changeArray)
+      }
     }
 
-    getDataRestaurant()
+    if (restaurant.id === -1) {
+      getDataRestaurant()
+    }
   }, [])
 
   return (

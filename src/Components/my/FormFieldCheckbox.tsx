@@ -1,4 +1,3 @@
-import React from 'react'
 import {
   FormControl,
   FormField,
@@ -8,7 +7,7 @@ import {
 } from '../ui/form'
 import { Checkbox } from '../ui/checkbox'
 
-function FormFieldCheckbox({ form, name }) {
+function FormFieldCheckbox({ form, name = '', className = '' }) {
   return (
     <FormField
       control={form.control}
@@ -18,6 +17,8 @@ function FormFieldCheckbox({ form, name }) {
           <div className='flex flex-row items-start space-x-3 space-y-1'>
             <FormControl>
               <Checkbox
+                style={{ color: '#000' }}
+                className={`${className}`}
                 checked={field.value}
                 onCheckedChange={field.onChange}
               />

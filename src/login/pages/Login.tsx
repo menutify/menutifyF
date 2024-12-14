@@ -1,15 +1,13 @@
 import { Link } from 'react-router-dom'
 import FormLogin from '../layouts/FormLogin'
 import { routesPath } from '../../data/routes'
-import Parr from '@/components/my/Parr'
-import Title2 from '@/components/my/Title2'
+import Parr from '@/Components/my/Parr'
+import Title2 from '@/Components/my/Title2'
 import { logText } from '@/data/text'
 import GoogleAndFaceSession from '../layouts/GoogleAndFaceSession'
-import Separator from '@/components/my/Separator'
-import MyCard from '@/components/my/MyCard'
-import Logo from '@/components/my/Logo'
-
-import FacebookLoginComponent from '../layouts/FacebookLoginComponent'
+import Separator from '@/Components/my/Separator'
+import MyCard from '@/Components/my/MyCard'
+import Logo from '@/Components/my/Logo'
 
 const Login = () => {
   return (

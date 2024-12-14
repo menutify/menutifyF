@@ -31,12 +31,16 @@ export const routesApi = {
   logout: '/login/logout',
   sendEmail: '/auth/sendemail',
   repassword: '/auth/reset-password',
-  verifyAccount: '/create-account/verify ',
+  verifyAccount: '/create-account/verify',
   caCreate: '/create-account/create ',
   caCreateCustomer: '/create-account/create-customer',
   caStripePayment: '/create-account/create-payment-stripe',
   caComplete: '/create-account/complete',
-  logoRestaurant: '/restaurant/resturant-logo'
-  ,restaurant:'/restaurant'
- 
+  logoRestaurant: '/restaurant/resturant-logo',
+  restaurant: '/restaurant',
+  menu: '/menu',
+  cat: '/cat',
+  food: '/cat/food',
+  
+  catCascade: '/cat/cascade_categories'
 }

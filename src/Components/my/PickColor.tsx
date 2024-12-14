@@ -1,45 +1,43 @@
 import { useDataGlobalContext } from '@/Context/GlobalContext'
 import React from 'react'
 
-const colors = [
-  '#FF5733', // Bright Orange
-  '#33FF57', // Bright Green
-  '#5733FF', // Bright Purple
-  '#FF33A1', // Bright Pink
-  '#33A1FF', // Bright Blue
-  '#A1FF33', // Bright Lime
-  '#FF3333', // Bright Red
-  '#FFA133', // Bright Amber
-  '#33FFF5' // Bright Cyan
-]
-
 function PickColor() {
-  const { restaurant, setRestaurant } = useDataGlobalContext()
-
+  const colors = React.useMemo(
+    () => [
+      '#FF5733', // Bright Orange
+      '#33FF57', // Bright Green
+      '#5733FF', // Bright Purple
+      '#FF33A1', // Bright Pink
+      '#33A1FF', // Bright Blue
+      '#A1FF33', // Bright Lime
+      '#FF3333', // Bright Red
+      '#FFA133', // Bright Amber
+      '#33FFF5' // Bright Cyan
+    ],
+    []
+  )
+  const { menu, setMenu } = useDataGlobalContext()
   const handleColorPicker = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setRestaurant({ ...restaurant, s_color: e.target.value })
+    setMenu({ ...menu, s_color: e.target.value, changed: true })
   }
 
   const handleClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    
     if (e.target.id) {
       if (e.target.id.length < 7) return
 
-      setRestaurant({ ...restaurant, s_color: e.target.id })
-
-      
+      setMenu({ ...menu, s_color: e.target.id, changed: true })
     }
     return
   }
 
   return (
     <div className='flex gap-0.5 md:gap-3 flex-wrap' onClick={handleClick}>
-      {colors.map((col, i) => (
+      {colors.map((col) => (
         <div
           key={col}
           className='block w-8 h-8 md:w-12 md:h-12 p-1 rounded-full bg-white border-2'
           style={{
-            borderColor: `${col == restaurant.s_color ? col : 'transparent'}`
+            borderColor: `${col == menu.s_color ? col : 'transparent'}`
           }}
         >
           <span
@@ -52,16 +50,14 @@ function PickColor() {
       <div
         className='flex  w-8 h-8 md:w-12 md:h-12  rounded-full bg-white p-1 border-2 '
         style={{
-          borderColor: `${
-            restaurant.s_color ? restaurant.s_color : 'transparent'
-          }`
+          borderColor: `${menu.s_color ? menu.s_color : 'transparent'}`
         }}
       >
         <label
-        htmlFor='pickerColor'
+          htmlFor='pickerColor'
           className='block w-full h-full rounded-full'
           style={{
-            backgroundColor: `${restaurant.s_color}`
+            backgroundColor: `${menu.s_color}`
           }}
         ></label>
         <input

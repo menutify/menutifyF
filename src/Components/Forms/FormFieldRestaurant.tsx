@@ -10,16 +10,20 @@ import { Input } from '../ui/input'
 import oeSVG from '@/assets/all/openeye.svg'
 import ceSVG from '@/assets/all/closeeye.svg'
 import { useState } from 'react'
+import { Textarea } from '../ui/textarea'
+import { Select, SelectTrigger, SelectValue } from '../ui/select'
 
 function FormFieldRestaurant({
   form,
   title = '',
-  ph,
-  name,
-
+  ph = '',
+  name = '',
+  children = <></>,
   formDesc = '',
   type = 'text',
-  className = ''
+  className = '',
+  defaultSelectValue = '',
+  selectDisable = false
 }) {
   const [seePass, setSeePass] = useState(false)
 
@@ -28,7 +32,7 @@ function FormFieldRestaurant({
       control={form.control}
       name={name}
       render={({ field }) => (
-        <FormItem className={className + 'relative '}>
+        <FormItem className={'relative ' + className}>
           <FormLabel>{title}</FormLabel>
           {type == 'password' ? (
             <span
@@ -40,23 +44,41 @@ function FormFieldRestaurant({
           ) : (
             <></>
           )}
-          <FormControl>
-            {type == 'password' ? (
-              <Input
-                className='h-10 text-base  border-border_input_color placeholder:text-base '
-                placeholder={ph}
-                {...field}
-                type={seePass ? 'text' : type}
-              />
-            ) : (
-              <Input
-                className='h-10 text-base  border-border_input_color placeholder:text-base'
-                placeholder={ph}
-                {...field}
-                type={type}
-              />
-            )}
-          </FormControl>
+          <Select
+            disabled={selectDisable}
+            
+            onValueChange={field.onChange}
+            defaultValue={field.value || ''}
+          >
+            <FormControl>
+              {type == 'password' ? (
+                <Input
+                  className='h-10 text-base  border-border_input_color placeholder:text-base '
+                  placeholder={ph}
+                  {...field}
+                  type={seePass ? 'text' : type}
+                />
+              ) : type == 'textarea' ? (
+                <Textarea
+                  className='resize-none h-32 md:text-base border-border_input_color'
+                  placeholder={ph}
+                  {...field}
+                />
+              ) : type == 'select' ? (
+                <SelectTrigger className='w-full'>
+                  <SelectValue placeholder='Selecciona una categoria' />
+                </SelectTrigger>
+              ) : (
+                <Input
+                  className='h-10 text-base  border-border_input_color placeholder:text-base'
+                  placeholder={ph}
+                  {...field}
+                  type={type}
+                />
+              )}
+            </FormControl>
+            {children}
+          </Select>
           <FormDescription>{formDesc}</FormDescription>
           <FormMessage />
         </FormItem>

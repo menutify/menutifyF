@@ -1,4 +1,4 @@
-import { number, z } from 'zod'
+import { z } from 'zod'
 
 const msg = {
   minCaracter: 'Contraseña debe contener mas de 4 caracteres',
@@ -13,6 +13,8 @@ export const emailValidator = z
   .email('Debe ser un correo valido')
   .trim()
   .min(8, { message: msg.minCaracter })
+  .trim()
+  .max(40)
   .trim()
   .refine((e) => !/\s/.test(e), { message: msg.noSpace })
 
@@ -29,12 +31,16 @@ export const passwordValidator = z
   .regex(/^[A-Z]/, { message: 'Debe comenzar con una letra mayúscula.' }) // Comenzar con mayúscula
   .regex(/\d/, { message: 'Debe contener al menos un número.' }) // Contener al menos un número
   .regex(/[^\w\s]/, { message: 'Debe contener al menos un símbolo.' })
+  .max(40)
+  .trim()
   .regex(/^\S*$/, { message: 'No puede contener espacios.' })
 
 export const nameValidator = z
   .string()
   .trim()
   .min(8, { message: msg.min8Caracter })
+  .trim()
+  .max(40)
   .trim()
   .refine((e) => !/\d/.test(e), { message: msg.noNumbers })
 
@@ -53,7 +59,30 @@ export const dniValidator = z
 
 export const domainValidator = z
   .string()
-  .min(5, { message: 'Debe tener al menos 5 caracteres.' })
+  .min(1, { message: 'Debe tener al menos 1 caracteres.' })
   .max(25, { message: 'Debe tener menos de 25 caracteres.' })
   .regex(/^\S*$/, { message: 'No puede contener espacios.' })
   .trim()
+
+export const descValidator = z
+  .string()
+  .min(0, {
+    message: 'Bio must be at least 10 characters.'
+  })
+  .max(160, {
+    message: 'Bio must not be longer than 30 characters.'
+  })
+
+export const checkValidator = z
+  .boolean()
+  .default(false)
+  .refine((val) => val === true, {
+    message: 'Aceptar los terminos y condiciones'
+  })
+
+  export const nameFoodValidator=z.string()
+  .trim()
+  .min(1, { message: msg.min8Caracter })
+  .trim()
+  .max(40)
+  

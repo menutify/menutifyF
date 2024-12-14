@@ -19,6 +19,8 @@ export interface AppContextType {
   setCategories: React.Dispatch<React.SetStateAction<Categories[]>>
   foods: object[]
   setFoods: React.Dispatch<React.SetStateAction<object[]>>
+  menu: Menu
+  setMenu: React.Dispatch<React.SetStateAction<Menu>>
 }
 
 export interface User {
@@ -29,19 +31,29 @@ export interface User {
 }
 
 export interface Restaurant {
-  id: number | null
+  id: number
+  name: string
+  desc: string
   address: string
   number: string
   currency: string
   send_method: string
   hour: string[]
   days: number[]
+  logo_url: string
+  state: boolean
+  changed: boolean
+}
+
+export interface Menu {
+  id: number
+  id_restaurant: number
   f_color: boolean
   s_color: string
   domain: string
-  logo_url: string
   header_url: string
-  state: number
+  state: boolean
+  changed: boolean
 }
 
 export interface handleSubmit {
@@ -60,17 +72,32 @@ export interface googleCredentials {
 export interface Categories {
   id: number
   id_menu: number
-  name: string
   pos: number
-  foods: FoodOrderList[]
+  details: CategoriesDetails
 }
 
-export interface FoodOrderList {
+export interface CategoriesDetails {
+  id?: number
+  id_cat?: number
+  name: string
+  desc?: string
+  foods: Food[]
+}
+
+export interface Food {
   id: number
   id_cat: number
+  state: boolean
+  pos: number
+  foodDetail: FoodDetails
+}
+
+export interface FoodDetails {
+  id?: number
+  id_food?: number
+  desc?: string
+  star: boolean | string
   name: string
   img: string
-  state:boolean
   price: number
-  pos: number
 }

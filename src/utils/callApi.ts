@@ -48,6 +48,21 @@ const postDataForm = async (url, body, headers = {}) => {
 
 const patchDataForm = async (url, body, headers = {}) => {
   try {
+    const { data } = await axiosInstance.patchForm(url, body, {
+      headers,
+      withCredentials: true
+    })
+
+    return data
+  } catch (e) {
+    console.log({ errorInPostForm: e })
+
+    return e.response.data
+  }
+}
+
+const patchData = async (url, body, headers = {}) => {
+  try {
     const { data } = await axiosInstance.patch(url, body, {
       headers,
       withCredentials: true
@@ -61,11 +76,27 @@ const patchDataForm = async (url, body, headers = {}) => {
   }
 }
 
+const deleteData = async (url, headers = {}) => {
+  try {
+    const { data } = await axiosInstance.delete(url, {
+      headers,
+      withCredentials: true
+    })
+
+    return data
+  } catch (e) {
+    console.log({ errorInPostForm: e })
+
+    return e.response.data
+  }
+}
 
 const callAPI = {
   getData,
   postData,
-  postDataForm,patchDataForm
+  postDataForm,
+  patchDataForm,
+  patchData,deleteData
 }
 
 export default callAPI

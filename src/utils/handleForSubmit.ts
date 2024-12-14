@@ -47,7 +47,6 @@ const HandleFormSubmit = () => {
     return data
   }
 
-
   const handleSubmitForm = async (
     path: string,
     body: Record<string, any>,
@@ -72,34 +71,86 @@ const HandleFormSubmit = () => {
     return data
   }
 
+  const handlePatchFormSubmit = async (
+    path: string,
+    body: Record<string, any>,
+    header: Record<string, string> = {}
+  ): Promise<Record<string, any> | boolean> => {
+    setIsPending(true)
+
+    const {
+      data,
+      error: apiError,
+      msg
+    } = await callAPI.patchDataForm(path, body, header)
+
+    if (apiError) {
+      setError({ error: true, msg })
+      setIsPending(false)
+      return false
+    }
+
+    setIsPending(false)
+    //retornar datos de la APi
+    return data
+  }
+
   const handlePatchSubmit = async (
     path: string,
     body: Record<string, any>,
     header: Record<string, string> = {}
   ): Promise<Record<string, any> | boolean> => {
     setIsPending(true)
-  
+
     const {
       data,
       error: apiError,
       msg
-    } = await callAPI.patchDataForm(path, body, header)
-  
+    } = await callAPI.patchData(path, body, header)
+
     if (apiError) {
       setError({ error: true, msg })
       setIsPending(false)
       return false
     }
-  
+
     setIsPending(false)
     //retornar datos de la APi
     return data
   }
 
+  const handleDelete = async (
+    path: string,
+    header: Record<string, string> = {}
+  ): Promise<Record<string, any> | boolean> => {
+    setIsPending(true)
 
-  return { handleSubmit,handlePatchSubmit,handleSubmitForm, error, isPending }
+    const {
+      data,
+      error: apiError,
+      msg
+    } = await callAPI.deleteData(path, header)
+
+    if (apiError) {
+      setError({ error: true, msg })
+      setIsPending(false)
+      return false
+    }
+
+    setIsPending(false)
+    //retornar datos de la APi
+    return data
+  }
+
+  return {
+    handleSubmit,
+    handlePatchFormSubmit,
+    handleSubmitForm,
+    error,
+    isPending,
+    handlePatchSubmit,
+    handleDelete
+  }
 }
-
-
 
 export default HandleFormSubmit

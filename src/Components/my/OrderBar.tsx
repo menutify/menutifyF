@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useMemo } from 'react'
 
 function OrderBar({
   state = 0,
@@ -11,24 +11,25 @@ function OrderBar({
 }) {
   const [options, setOptions] = useState<number[][]>([])
 
-  useEffect(() => {
-    const arrayOption = (number: number) => {
-      //from: crea un arreglo y que ira dentro de ese arreglo
-      const data = Array.from({ length: number }, () => Array(number).fill(0))
-      for (let i = 0; i < number; i++) {
-        for (let j = 0; j < number; j++) {
-          if (i === j) {
-            data[i][j] = 1
-          } else {
-            data[i][j] = 0
-          }
+  const arrayOption = useMemo(() => {
+    //from: crea un arreglo y que ira dentro de ese arreglo
+    const data = Array.from({ length: 3 }, () => Array(3).fill(0))
+
+    for (let i = 0; i < 3; i++) {
+      for (let j = 0; j < 3; j++) {
+        if (i === j) {
+          data[i][j] = 1
+        } else {
+          data[i][j] = 0
         }
       }
-      // console.log(data)
-      return data
     }
+    // console.log(data)
+    return data
+  }, [])
 
-    setOptions(arrayOption(indexLen))
+  useEffect(() => {
+    setOptions(arrayOption)
   }, [indexLen])
 
   const isValidState = options[state] !== undefined

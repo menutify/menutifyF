@@ -52,6 +52,10 @@ a {
   background-color: red;
 }
 
+select{
+  width: 100%;
+}
+
 /* --------------------- */
 .nsm7Bb-HzV7m-LgbsSe-bN97Pc-sM5MNb .nsm7Bb-HzV7m-LgbsSe {
   background-color: red !important;

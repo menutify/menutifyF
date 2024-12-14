@@ -4,7 +4,7 @@ import penSVG from '@/assets/all/pen.svg'
 import Title3 from './Title3'
 import ModalRestaurant from '@/Dashboard/restaurant/components/ModalRestaurant'
 import { useDataGlobalContext } from '@/Context/GlobalContext'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 function InputDashboard({ logoInput, ph, title, className = '', name = 'x' }) {
   const [value, setValue] = useState('')
@@ -17,7 +17,7 @@ function InputDashboard({ logoInput, ph, title, className = '', name = 'x' }) {
   return (
     <Card
       id='myinputcomponent'
-      className={` flex flex-col md:min-w-[170px] md:gap-2 p-3 md:py-4 md:px-6 h-16 md:h-24 min-w-10 ${className}`}
+      className={` flex flex-col md:min-w-[170px] md:gap-2 p-3 md:py-4 md:px-6 h-16 md:h-auto min-w-10 ${className}`}
     >
       <div className='flex justify-between'>
         <Title3>{title}</Title3>

@@ -9,7 +9,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem
 } from '@/Components/ui/sidebar'
-import logoVSG from '@/assets/logo.svg'
+import logoSVG from '@/assets/logo.svg'
 import menuSVG from '@/assets/sidebar/menu.svg'
 import addSVG from '@/assets/sidebar/add.svg'
 import settingsSVG from '@/assets/sidebar/settings.svg'
@@ -18,18 +18,18 @@ import userSVG from '@/assets/sidebar/user.svg'
 import logoutSVG from '@/assets/sidebar/logout.svg'
 import crownSVG from '@/assets/sidebar/crown.svg'
 import { Card } from '../Components/ui/card'
-import Title2 from '../components/my/Title2'
-import Parr from '../components/my/Parr'
+import Title2 from '../Components/my/Title2'
+import Parr from '../Components/my/Parr'
 import { Button } from '../components/ui/button'
 import { useDataGlobalContext } from '../Context/GlobalContext'
 import callAPI from '../utils/callApi'
 import { routesApi, routesPath } from '../data/routes'
 import { useNavigate, useLocation } from 'react-router-dom'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 
 export function AppSidebar() {
   const { restaurant, setUser } = useDataGlobalContext()
-  const [pathURL, setPathURL] = useState('restaurant')
+  const [unEstado, setUnEstado] = useState(-1)
   const navigate = useNavigate()
   const location = useLocation()
 
@@ -45,61 +45,69 @@ export function AppSidebar() {
   }
 
   useEffect(() => {
-    const path = location.pathname.split('/').pop()
-    if (!path) return
-    if (path == 'dashboard') return
-    setPathURL(path)
-  }, [location])
+    const miPath = location.pathname
+    console.log(miPath)
+    if (miPath.startsWith('/dashboard/create')) setUnEstado(1)
+    if (miPath.startsWith('/dashboard/restaurant')) setUnEstado(3)
+  }, [])
 
-  useEffect(() => {
-    console.log(restaurant)
-  }, [restaurant.state])
+  
 
-  const items = [
-    {
-      title: 'Mis menús',
-      url: restaurant.state === 1 ? routesPath.seeMenu : routesPath.restaurant,
-      ico: menuSVG
-    },
-    {
-      title: 'Crear menú',
-      url:
-        restaurant.state === 1 ? routesPath.createMenu : routesPath.restaurant,
-      ico: addSVG
-    },
-    {
-      title: 'Ajustes de menú',
-      url:
-        restaurant.state === 1
-          ? routesPath.settingsMenu
-          : routesPath.restaurant,
-      ico: settingsSVG
-    },
-    {
-      title: 'Restaurante',
-      url: routesPath.restaurant,
-      ico: shopSVG,
-      state: pathURL == 'restaurant' ? true : false
-    },
-    {
-      title: 'Cuenta',
-      url: restaurant.state === 1 ? routesPath.account : routesPath.restaurant,
-      ico: userSVG
-    }
-  ]
+  const items = useMemo(
+    () => [
+      {
+        title: 'Mis menús',
+        url:
+          restaurant.state === true
+            ? routesPath.seeMenu
+            : routesPath.restaurant,
+        ico: menuSVG
+      },
+      {
+        title: 'Crear menú',
+        url:
+          restaurant.state === true
+            ? routesPath.createMenu
+            : routesPath.restaurant,
+        ico: addSVG
+      },
+      {
+        title: 'Ajustes de menú',
+        url:
+          restaurant.state === true
+            ? routesPath.settingsMenu
+            : routesPath.restaurant,
+        ico: settingsSVG
+      },
+      {
+        title: 'Restaurante',
+        url: routesPath.restaurant,
+        ico: shopSVG
+      },
+      {
+        title: 'Cuenta',
+        url:
+          restaurant.state === true
+            ? routesPath.account
+            : routesPath.restaurant,
+        ico: userSVG
+      }
+    ],
+    []
+  )
 
   return (
     <Sidebar className=''>
-      <div
+      {/* <div
         className={`${
-          restaurant.state === 1 ? 'hidden' : 'block'
+          restaurant.state === true ? 'hidden' : 'block'
         } w-full h-full absolute bg-[#0001] z-50 `}
-      ></div>
+      ></div> */}
       <SidebarContent>
         <SidebarGroup className='grid grid-rows-[5%_15%_1fr_40%] gap-2 md:grid-rows-[5%_20%_1fr_40%] h-[100%] text-sb_text py-4  '>
           <SidebarHeader>
             <div className='h-full px-5'>
-              <img className='h-full' src={logoVSG} alt='' />
+              <img className='h-full' src={logoSVG} alt='' />
             </div>
           </SidebarHeader>
           <SidebarGroupLabel className='flex-complete flex-col  gap-2 h-full  '>
@@ -118,29 +126,32 @@ export function AppSidebar() {
           </SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
-              {items.map((item) => (
+              {items.map((item, index) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton
+                    onClick={() => setUnEstado(index)}
                     asChild
                     size={'lg'}
                     className={`${
-                      item.state ? 'bg-sb_hover' : ''
-                    } rounded-none hover:rounded-none  ${
-                      restaurant.state === 1
-                        ? 'hover:bg-sb_hover'
-                        : item.state
-                        ? 'hover:bg-sb_hover'
-                        : 'hover:bg-transparent'
-                    }  hover:text-sb_text h-full relative`}
+                      unEstado === index && restaurant.state
+                        ? 'bg-sb_hover'
+                        : ''
+                    } focus:bg-red-500 selection:bg-red-50 rounded-none hover:rounded-none  hover:text-sb_text h-full relative  ${
+                      !restaurant.state
+                        ? index != 3
+                          ? 'before:absolute before:block before:top-0 before:left-0 before:w-full before:h-full blur-sm hover:bg-transparent '
+                          : 'bg-sb_bg hover:bg-sb_bg'
+                        : ''
+                    }`}
                   >
-                    <div className='h-full '>
+                    <div className='h-full select-none '>
                       <picture className=' w-5  flex-complete'>
                         <img src={item.ico} alt='' />
                       </picture>
                       <button
                         onClick={() => navigate(item.url)}
-                        className='px-0 text-start cursor-pointer  font-bold text-lg w-full'
-                        disabled={restaurant.state != 1 ? true : false}
+                        className='px-0 text-start cursor-pointer  font-bold text-lg w-full select-none '
+                        disabled={restaurant.state ? false : true}
                       >
                         <span>{item.title}</span>
                       </button>

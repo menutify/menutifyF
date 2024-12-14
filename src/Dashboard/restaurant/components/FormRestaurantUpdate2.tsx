@@ -11,7 +11,7 @@ function FormRestaurantUpdate2() {
         ...restaurant,
         days: prev.days.includes(day)
           ? prev.days.filter((d) => d !== day)
-          : [...prev.days, day]
+          : [...prev.days, day],changed:true
       }
     })
   }

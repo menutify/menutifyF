@@ -9,7 +9,7 @@ function FormRestaurantUpdate3() {
 
   const handleCurrencyChange = (event:React.ChangeEvent<HTMLSelectElement>) => {
     const index = event.target.value; // Capturamos el índice seleccionado
-    setRestaurant({...restaurant,currency:index});
+    setRestaurant({...restaurant,currency:index,changed:true});
   };
 
   return (
