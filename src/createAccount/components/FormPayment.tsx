@@ -105,7 +105,8 @@ function FormPayment() {
                   {state ? ' Continuar' : 'Volver'}
                 </Button>
               </div>
-            ) : (
+            ) : null}
+            <div style={{ display: modal ? 'none' : 'block' }}>
               <CardPayment
                 customization={{
                   visual: {
@@ -117,7 +118,7 @@ function FormPayment() {
                 initialization={{ amount: import.meta.env.VITE_PRICE_MP }}
                 onSubmit={onSubmit}
               />
-            )}
+            </div>
           </div>
           {/* <Button
             className='bg-primary_color w-full '
