@@ -3,8 +3,9 @@ import axios from 'axios'
 
 // Crear una instancia de Axios
 const axiosInstance = axios.create({
-  baseURL: import.meta.env.VITE_APIPATH + 'api' // Ajusta según tu API
+  baseURL: import.meta.env.VITE_APIPATH + ' api' // Ajusta según tu API
   // baseURL: 'https://dirty-meals-write.loca.lt/api'
+  //algo mas
 })
 
 // Interceptor para manejar respuestas
