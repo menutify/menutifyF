@@ -3,7 +3,7 @@ import axios from 'axios'
 
 // Crear una instancia de Axios
 const axiosInstance = axios.create({
-  baseURL: 'http://localhost:3000/api' // Ajusta según tu API
+  baseURL: import.meta.env.VITE_APIPATH+'/api' // Ajusta según tu API
   // baseURL: 'https://dirty-meals-write.loca.lt/api'
 })
 
