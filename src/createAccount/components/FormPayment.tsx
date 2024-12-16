@@ -42,7 +42,8 @@ function FormPayment() {
         {
           ...e,
           user
-        }
+        },
+        { withCredentials: true }
       )
 
       const { data } = respData
