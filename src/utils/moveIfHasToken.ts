@@ -21,7 +21,7 @@ const moveIfHasToken = async (navigate, setUser, location) => {
 
   //en este punto ya tenemos la data
   setUser(data)
-  // console.log(data)
+  console.log(data)
   // si hay token y es nuevo mandame a payment
   if (data.isNew && !data.subActive) {
     console.log(msg)

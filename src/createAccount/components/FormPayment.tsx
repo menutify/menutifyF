@@ -35,7 +35,7 @@ function FormPayment() {
   const { user } = useDataGlobalContext()
 
   const onSubmit = async (e: ICardPaymentFormData<ICardPaymentBrickPayer>) => {
-    // console.log(e)
+    console.log({ e, user })
     try {
       const { data: respData } = await axiosInstance.post(
         '/payment/create-payment',
@@ -46,7 +46,7 @@ function FormPayment() {
       )
 
       const { data } = respData
-
+      console.log({ data })
       if (!data) return
 
       const { status, status_detail } = data as dataPayment
