@@ -29,13 +29,13 @@ const HandleFormSubmit = () => {
     header: Record<string, string> = {}
   ): Promise<Record<string, any> | boolean> => {
     setIsPending(true)
-
+    console.log({ path, body, header })
     const {
       data,
       error: apiError,
       msg
     } = await callAPI.postData(path, body, header)
-
+    console.log({ data, error, msg })
     if (apiError) {
       setError({ error: true, msg })
       setIsPending(false)
