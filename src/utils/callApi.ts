@@ -12,7 +12,10 @@ const getData = async (url, headers = {}) => {
     return data
   } catch (e) {
     // console.log({ errorInGet: e })
-    return e.response.data
+    if (typeof e === 'object' && e !== null && 'response' in e) {
+      const error = e as { response: { data: { error: boolean; msg: string } } };
+      return error.response.data; // Ahora TypeScript sabe qué tipo tiene
+    }
   }
 }
 
@@ -27,7 +30,10 @@ const postData = async (url, body, headers = {}) => {
   } catch (e) {
     // console.log({ errorInGet: e })
 
-    return e.response.data
+    if (typeof e === 'object' && e !== null && 'response' in e) {
+      const error = e as { response: { data: { error: boolean; msg: string } } };
+      return error.response.data; // Ahora TypeScript sabe qué tipo tiene
+    }
   }
 }
 
@@ -42,7 +48,10 @@ const postDataForm = async (url, body, headers = {}) => {
   } catch (e) {
     console.log({ errorInPostForm: e })
 
-    return e.response.data
+    if (typeof e === 'object' && e !== null && 'response' in e) {
+      const error = e as { response: { data: { error: boolean; msg: string } } };
+      return error.response.data; // Ahora TypeScript sabe qué tipo tiene
+    }
   }
 }
 
@@ -57,7 +66,10 @@ const patchDataForm = async (url, body, headers = {}) => {
   } catch (e) {
     console.log({ errorInPostForm: e })
 
-    return e.response.data
+    if (typeof e === 'object' && e !== null && 'response' in e) {
+      const error = e as { response: { data: { error: boolean; msg: string } } };
+      return error.response.data; // Ahora TypeScript sabe qué tipo tiene
+    }
   }
 }
 
@@ -72,7 +84,10 @@ const patchData = async (url, body, headers = {}) => {
   } catch (e) {
     console.log({ errorInPostForm: e })
 
-    return e.response.data
+    if (typeof e === 'object' && e !== null && 'response' in e) {
+      const error = e as { response: { data: { error: boolean; msg: string } } };
+      return error.response.data; // Ahora TypeScript sabe qué tipo tiene
+    }
   }
 }
 
@@ -87,7 +102,10 @@ const deleteData = async (url, headers = {}) => {
   } catch (e) {
     console.log({ errorInPostForm: e })
 
-    return e.response.data
+    if (typeof e === 'object' && e !== null && 'response' in e) {
+      const error = e as { response: { data: { error: boolean; msg: string } } };
+      return error.response.data; // Ahora TypeScript sabe qué tipo tiene
+    }
   }
 }
 

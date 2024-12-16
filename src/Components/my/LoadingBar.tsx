@@ -1,12 +1,11 @@
 import { useDataGlobalContext } from '@/Context/GlobalContext'
-import React, { useEffect, useState } from 'react'
-import { useLocation } from 'react-router-dom'
+import  { useEffect, useState } from 'react'
 
 function LoadingBar() {
   const { loading: loading } = useDataGlobalContext()
   const [progress, setProgress] = useState(0)
   const [shouldAnimate, setShouldAnimate] = useState(true)
-  const location = useLocation()
+  
   useEffect(() => {
     if (loading) {
       // Inicia la barra de progreso y la detiene al 90%

@@ -4,12 +4,12 @@ import HandleFormSubmit from '../../utils/handleForSubmit'
 import { routesApi, routesPath } from '../../data/routes'
 import { useDataGlobalContext } from '../../Context/GlobalContext'
 import { User } from '@/types'
-import { Button } from '@/components/ui/button'
+import { Button } from '@/Components/ui/button'
 import { caAccount } from '@/data/text'
-import Title2 from '@/components/my/Title2'
-import Parr from '@/components/my/Parr'
-import Logo from '@/components/my/Logo'
-import MyCard from '@/components/my/MyCard'
+import Title2 from '@/Components/my/Title2'
+import Parr from '@/Components/my/Parr'
+import Logo from '@/Components/my/Logo'
+import MyCard from '@/Components/my/MyCard'
 
 function ReadyAccount() {
   const navigate = useNavigate()
@@ -55,7 +55,7 @@ function ReadyAccount() {
       >
         {caAccount.button2}
       </Button >
-      {error.error && <p className='error'>{error.msg}</p>}
+      {error.error ? <p className='error'>{error.msg}</p>:<></>}
       {/* <button onClick={logOut}>Cerrar sesion</button> */}
     </MyCard>
   )

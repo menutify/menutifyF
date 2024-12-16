@@ -3,9 +3,9 @@ import FormFieldCheckbox from '@/Components/my/FormFieldCheckbox'
 import Parr from '@/Components/my/Parr'
 import Title2 from '@/Components/my/Title2'
 import Title3 from '@/Components/my/Title3'
-import { Button } from '@/components/ui/button'
+import { Button } from '@/Components/ui/button'
 import { Card } from '@/Components/ui/card'
-import { Form } from '@/components/ui/form'
+import { Form } from '@/Components/ui/form'
 import { SelectItem } from '@/Components/ui/select'
 import { useDataGlobalContext } from '@/Context/GlobalContext'
 import { foodData } from '@/data/text'
@@ -46,7 +46,7 @@ function ModalFood({
 }: ModalFood) {
   const { categories, setCategories, menu, restaurant } = useDataGlobalContext()
 
-  const [chargeImgURL, setChargeImgURL] = useState('')
+  const [chargeImgURL, setChargeImgURL] = useState<string>('')
   const [chargeImageFile, setChargeImageFile] = useState<File>()
 
   // Valores predeterminados
@@ -163,6 +163,8 @@ function ModalFood({
     })
 
     if (!data) return
+
+    const resp = data as Food
     if (!isPending) {
       setCategories((prev) => {
         const updatedCategories = prev.map((category) => {
@@ -170,14 +172,14 @@ function ModalFood({
             // Crear el nuevo objeto Food
 
             const newFood: Food = {
-              id: data.resp.id,
+              id: resp.id,
               id_cat: parseInt(cat),
-              pos: data.resp.pos,
+              pos: resp.pos,
               state: true,
               foodDetail: {
-                id: data.resp.foodDetail.id,
-                id_food: data.resp.id,
-                img: data.resp.foodDetail.img,
+                id: resp.foodDetail.id,
+                id_food: resp.id,
+                img: resp.foodDetail.img,
                 price: parseFloat(price),
                 name,
                 desc,
@@ -211,8 +213,9 @@ function ModalFood({
       const reader = new FileReader()
       reader.onload = (e) => {
         setChargeImageFile(file)
-
-        setChargeImgURL(e.target?.result)
+        if (e.target?.result && typeof e.target?.result == 'string') {
+          setChargeImgURL(e.target?.result)
+        }
       }
       reader.readAsDataURL(file)
     }
@@ -245,7 +248,6 @@ function ModalFood({
               title={foodData.subtitle2}
               type='select'
               className='relative w-full'
-              defaultSelectValue={defaultValues.cat}
               selectDisable={action === 'edit' && true}
             >
               <SelectContent className='bg-yellow-50 w-full '>

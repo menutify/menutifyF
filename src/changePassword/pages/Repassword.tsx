@@ -1,9 +1,9 @@
-import Parr from '@/components/my/Parr'
+import Parr from '@/Components/my/Parr'
 import FormRepassword from '../layouts/FormRepassword'
 import { repasText } from '@/data/text'
-import Title2 from '@/components/my/Title2'
-import MyCard from '@/components/my/MyCard'
-import Logo from '@/components/my/Logo'
+import Title2 from '@/Components/my/Title2'
+import MyCard from '@/Components/my/MyCard'
+import Logo from '@/Components/my/Logo'
 function Repassword() {
   return (
     <MyCard>

@@ -1,4 +1,4 @@
-import { Button } from '@/components/ui/button'
+import { Button } from '@/Components/ui/button'
 import { restaurantData } from '@/data/text'
 import { useEffect, useMemo, useState } from 'react'
 import FormRestaurantUpdate from './FormRestaurantUpdate'
@@ -22,7 +22,7 @@ interface ModalRestaurant {
 }
 
 function ModalRestaurant({ imgSVG, name, className = '' }: ModalRestaurant) {
-  const { menu, restaurant, setRestaurant } = useDataGlobalContext()
+  const { menu, restaurant } = useDataGlobalContext()
   const [modalVisible, setModalVisible] = useState(false)
   const location = useLocation()
 

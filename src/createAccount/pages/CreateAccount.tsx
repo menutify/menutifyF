@@ -1,18 +1,13 @@
-import Title2 from '@/components/my/Title2'
-import GoogleLoginComponent from '../../login/layouts/GoogleLoginComponent'
-import Parr from '@/components/my/Parr'
+import Title2 from '@/Components/my/Title2'
+import Parr from '@/Components/my/Parr'
 import { caAccount, logText } from '@/data/text'
-import { Button } from '@/components/ui/button'
 import FormCreateAccount from '../components/FormCreateAccount'
-import ProgressBar from '@/components/my/ProgressBar'
+import ProgressBar from '@/Components/my/ProgressBar'
 import GoogleAndFaceSession from '@/login/layouts/GoogleAndFaceSession'
-import Separator from '@/components/my/Separator'
-import MyCard from '@/components/my/MyCard'
-import Logo from '@/components/my/Logo'
-import { useEffect } from 'react'
-import { useDataGlobalContext } from '@/Context/GlobalContext'
-// import FacebookLoginComponent from '../../login/layouts/FacebookLoginComponent'
-// import FormCreateAccount from '../components/FormCreateAccount'
+import Separator from '@/Components/my/Separator'
+import MyCard from '@/Components/my/MyCard'
+import Logo from '@/Components/my/Logo'
+
 
 function CreateAccount() {
   

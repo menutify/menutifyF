@@ -104,8 +104,8 @@ export const setChildToOtherFamily = (
       ...activeData
     })
   } else {
-        // Si es hijo -> padre, agregamosel nuevo objeto al array existente
-    overParentsFoods.push({ ...activeData, id_cat: parseInt(overId) })
+    // Si es hijo -> padre, agregamosel nuevo objeto al array existente
+    overParentsFoods.push({ ...activeData, id_cat: parseInt(overId + '') })
   }
 
   // Actualizar las posiciones del padre sobre

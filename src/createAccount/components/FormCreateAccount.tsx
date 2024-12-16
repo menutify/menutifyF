@@ -2,12 +2,12 @@ import { useNavigate } from 'react-router-dom'
 import HandleFormSubmit from '../../utils/handleForSubmit'
 
 import { z } from 'zod'
-import FormFieldComponent from '@/components/Forms/FormFieldComponent'
+import FormFieldComponent from '@/Components/Forms/FormFieldComponent'
 import useFormHook from '@/hooks/useFormHook'
 import { caAccountFormScheme } from '@/utils/formScheme'
 import { routesApi, routesPath } from '@/data/routes'
 import { caAccount, caPayment } from '@/data/text'
-import FormContainer from '@/components/my/FormContainer'
+import FormContainer from '@/Components/my/FormContainer'
 import { Label } from '@radix-ui/react-label'
 import InputTel from '@/Components/my/InputTel'
 import phoneCodes from '@/data/phoneCodes'
@@ -54,7 +54,7 @@ function FormCreateAccount() {
   return (
     <FormContainer
       formOptions={formOptions}
-      error={error && true}
+      error={error}
       isPending={isPending}
       functionSubmit={onSubmit}
       textButton={caAccount.button1}

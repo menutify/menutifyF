@@ -1,6 +1,6 @@
-import OrderBar from './OrderBar'
-import Title2 from './Title2'
-import Parr from './Parr'
+import OrderBar from '../../Components/my/OrderBar'
+import Title2 from '../../Components/my/Title2'
+import Parr from '../../Components/my/Parr'
 import { useEffect, useRef, useState } from 'react'
 import { carrouselData } from '@/data/carrouselData'
 

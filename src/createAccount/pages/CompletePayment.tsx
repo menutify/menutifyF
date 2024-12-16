@@ -1,12 +1,12 @@
-import Logo from '@/components/my/Logo'
-import MyCard from '@/components/my/MyCard'
-import Parr from '@/components/my/Parr'
-import ProgressBar from '@/components/my/ProgressBar'
-import Title2 from '@/components/my/Title2'
-import { Button } from '@/components/ui/button'
+import Logo from '@/Components/my/Logo'
+import MyCard from '@/Components/my/MyCard'
+import Parr from '@/Components/my/Parr'
+import ProgressBar from '@/Components/my/ProgressBar'
+import Title2 from '@/Components/my/Title2'
+import { Button } from '@/Components/ui/button'
 import { useDataGlobalContext } from '@/Context/GlobalContext'
 import { routesApi, routesPath } from '@/data/routes'
-import { caAccount, caPayment } from '@/data/text'
+import { caAccount } from '@/data/text'
 import callAPI from '@/utils/callApi'
 import HandleFormSubmit from '@/utils/handleForSubmit'
 
@@ -51,7 +51,7 @@ function CompletePayment() {
       <Parr className='text-parr_color_1'>{caAccount.parr4}</Parr>
 
       <ProgressBar state={3} className={'mt-2 mb-3'} />
-      {error.error && <p className='error'>{error.msg}</p>}
+      {error.error ? <p className='error'>{error.msg}</p> : <></>}
       <Button
         onClick={moveToDashboard}
         className='bg-primary_color w-full h-9 mt-2'

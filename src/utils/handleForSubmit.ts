@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import callAPI from './callApi'
-import { handleSubmit } from '@/types'
+
 // import validateInputData from './validateFormInputData'
 /**
  * HandleFormSubmit se encarga de validar y obtener los errores

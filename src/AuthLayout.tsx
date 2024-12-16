@@ -1,6 +1,6 @@
 import { Outlet } from 'react-router-dom'
 import logo from './assets/logo.svg'
-import MyCarrousel from './components/my/MyCarrousel'
+import MyCarrousel from './Components/my/MyCarrousel'
 
 function AuthLayout() {
   

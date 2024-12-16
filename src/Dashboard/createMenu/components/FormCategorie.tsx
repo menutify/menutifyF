@@ -1,15 +1,18 @@
 import FormFieldRestaurant from '@/Components/Forms/FormFieldRestaurant'
 import Title2 from '@/Components/my/Title2'
-import { Button } from '@/components/ui/button'
+import { Button } from '@/Components/ui/button'
 import { Card } from '@/Components/ui/card'
-import { Form } from '@/components/ui/form'
+import { Form } from '@/Components/ui/form'
 import { useDataGlobalContext } from '@/Context/GlobalContext'
 import { routesApi } from '@/data/routes'
 import { restaurantData } from '@/data/text'
 import useFormHook from '@/hooks/useFormHook'
+import { Categories } from '@/types'
 import { categoriesScheme } from '@/utils/formScheme'
 import HandleFormSubmit from '@/utils/handleForSubmit'
 import { Dispatch, SetStateAction, useEffect, useState } from 'react'
+
+
 
 interface FormCategorie {
   action: string
@@ -37,8 +40,7 @@ function FormCategorie({ action, visibilityModal, index }: FormCategorie) {
     formOptions.reset(defaultValuesForm)
   }, [defaultValuesForm])
 
-  const { error, isPending, handleSubmit, handlePatchSubmit } =
-    HandleFormSubmit()
+  const { isPending, handleSubmit, handlePatchSubmit } = HandleFormSubmit()
 
   const createNewItem = async (values: Record<string, string>) => {
     const { name, desc } = values
@@ -53,17 +55,19 @@ function FormCategorie({ action, visibilityModal, index }: FormCategorie) {
       return
     }
 
+    const resp = data as Categories
+
     if (!isPending) {
       setCategories((prev) => {
         const update = [...prev]
 
         const newObject = {
-          id: data.resp.id,
-          pos: data.resp.pos,
+          id: resp.id,
+          pos: resp.pos,
           id_menu: menu.id,
           details: {
-            id: data.resp.details.id,
-            id_cat: data.resp.id,
+            id: resp.details.id,
+            id_cat: resp.id,
             name,
             desc,
             foods: []
@@ -95,7 +99,6 @@ function FormCategorie({ action, visibilityModal, index }: FormCategorie) {
     if (!data) return
 
     if (!isPending) {
-
       setCategories((prev) => {
         return prev.map((cat, i) => {
           if (i === index) {

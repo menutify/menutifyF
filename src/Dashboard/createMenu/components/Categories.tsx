@@ -1,6 +1,6 @@
 import { createPortal } from 'react-dom'
 import PrimaryNode from './PrimaryNode'
-import { useDataGlobalContext} from '@/Context/GlobalContext'
+import { useDataGlobalContext } from '@/Context/GlobalContext'
 import {
   DndContext,
   DragOverlay,
@@ -47,12 +47,13 @@ const Tree = () => {
     const activeCurrent = over.data.current
 
     const overCurrent = over.data.current
-    if (!overCurrent) {
+    if (!overCurrent || !activeCurrent) {
       console.log('no existe el componente')
       return
     }
 
     //array target
+
     const activeItems = activeCurrent.sortable.items
     const overItems = overCurrent.sortable.items
 
@@ -98,8 +99,8 @@ const Tree = () => {
       //local
       setCategories(setChangeToArray(categories, active.id, over.id))
     } else {
-      const ActiveId = parseInt(active.id.split('-')[2])
-      const newParentActiveId = parseInt(active.id.split('-')[1])
+      const ActiveId = parseInt((active.id + '').split('-')[2])
+      const newParentActiveId = parseInt((active.id + '').split('-')[1])
 
       const activeIndex = categories
         .filter((e) => e.id == newParentActiveId)[0]
@@ -223,21 +224,18 @@ const Tree = () => {
           items={categories}
           strategy={verticalListSortingStrategy}
         >
-          
-            {categories.map((categorie, i) => {
-              return (
-                <PrimaryNode
-                  key={categorie.id}
-                  id={categorie.id}
-                  name={categorie.details.name}
-                  arrayChild={categorie.details.foods}
-                  index={i}
-                  isPending={isPending}
-                />
-              )
-            })}
-          
-  
+          {categories.map((categorie, i) => {
+            return (
+              <PrimaryNode
+                key={categorie.id}
+                id={categorie.id}
+                name={categorie.details.name}
+                arrayChild={categorie.details.foods}
+                index={i}
+                isPending={isPending}
+              />
+            )
+          })}
         </SortableContext>
 
         {createPortal(

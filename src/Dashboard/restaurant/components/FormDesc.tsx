@@ -1,5 +1,5 @@
-import Title2 from '@/components/my/Title2'
-import { Button } from '@/components/ui/button'
+import Title2 from '@/Components/my/Title2'
+import { Button } from '@/Components/ui/button'
 import { useDataGlobalContext } from '@/Context/GlobalContext'
 import { useState } from 'react'
 

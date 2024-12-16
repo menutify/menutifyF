@@ -1,5 +1,5 @@
 import penSVG from '@/assets/all/pen.svg'
-import Parr from '@/components/my/Parr'
+import Parr from '@/Components/my/Parr'
 import { useDataGlobalContext } from '@/Context/GlobalContext'
 import ModalRestaurant from './ModalRestaurant'
 

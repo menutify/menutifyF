@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import FormFieldComponent from '@/components/Forms/FormFieldComponent'
+import FormFieldComponent from '@/Components/Forms/FormFieldComponent'
 
 import { loginFormScheme } from '@/utils/formScheme'
 import useFormHook from '@/hooks/useFormHook'
@@ -8,7 +8,7 @@ import { useDataGlobalContext } from '@/Context/GlobalContext'
 import HandleFormSubmit from '@/utils/handleForSubmit'
 import { routesApi, routesPath } from '@/data/routes'
 import { logText } from '@/data/text'
-import FormContainer from '@/components/my/FormContainer'
+import FormContainer from '@/Components/my/FormContainer'
 import { User } from '@/types'
 
 const defaultValueForm = {

@@ -1,5 +1,5 @@
 
-import Parr from './Parr'
+import Parr from '../my/Parr'
 
 function Separator({ text='separator', className = '' }) {
   return (

@@ -47,7 +47,7 @@ function SecondaryNode({
     disabled: isPending || isPendingSubmit
   })
 
-  const { setCategories, categories } = useDataGlobalContext()
+  const { setCategories } = useDataGlobalContext()
   const [visibleModal, setVisibleModal] = useState(false)
   const [visibleDeleteModal, setVisibleDeleteModal] = useState(false)
   const changeState = async () => {

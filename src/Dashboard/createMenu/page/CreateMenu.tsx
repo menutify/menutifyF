@@ -1,6 +1,6 @@
 import Parr from '@/Components/my/Parr'
 import Title3 from '@/Components/my/Title3'
-import { Button } from '@/components/ui/button'
+import { Button } from '@/Components/ui/button'
 import { Card } from '@/Components/ui/card'
 import { Outlet } from 'react-router-dom'
 import { useDataGlobalContext, useMenuContext } from '@/Context/GlobalContext'

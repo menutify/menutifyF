@@ -22,12 +22,10 @@ function PickColor() {
   }
 
   const handleClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    if (e.target.id) {
-      if (e.target.id.length < 7) return
-
-      setMenu({ ...menu, s_color: e.target.id, changed: true })
+    const target = e.target as HTMLElement;
+    if (target.id && target.id.length >= 7) {
+      setMenu({ ...menu, s_color: target.id, changed: true });
     }
-    return
   }
 
   return (

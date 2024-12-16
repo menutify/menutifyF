@@ -20,7 +20,10 @@ function InputImage({
     if (imageContent) {
       setImageDataContainer(imageContent)
       const reader = new FileReader()
-      reader.onload = (e) => setImgContainer(e.target?.result)
+      reader.onload = (e) =>{ 
+        
+        if(e.target?.result && typeof e.target.result =='string'){setImgContainer(e.target?.result)}
+      }
       reader.readAsDataURL(imageContent)
       if (type === 'logo') {
         setRestaurant((prev) => ({ ...prev, changed: true }))

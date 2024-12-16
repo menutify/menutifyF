@@ -5,8 +5,8 @@ import {
   FormItem,
   FormLabel,
   FormMessage
-} from '../ui/form'
-import { Input } from '../ui/input'
+} from '../../Components/ui/form'
+import { Input } from '../../Components/ui/input'
 import oeSVG from '@/assets/all/openeye.svg'
 import ceSVG from '@/assets/all/closeeye.svg'
 import { useState } from 'react'
@@ -22,7 +22,6 @@ function FormFieldRestaurant({
   formDesc = '',
   type = 'text',
   className = '',
-  defaultSelectValue = '',
   selectDisable = false
 }) {
   const [seePass, setSeePass] = useState(false)

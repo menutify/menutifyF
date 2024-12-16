@@ -2,14 +2,12 @@ import { useNavigate, useParams } from 'react-router-dom'
 import HandleFormSubmit from '../../utils/handleForSubmit'
 
 import { z } from 'zod'
-import { Button } from '@/components/ui/button'
-import { Form } from '@/components/ui/form'
-import FormFieldComponent from '@/components/Forms/FormFieldComponent'
+import FormFieldComponent from '@/Components/Forms/FormFieldComponent'
 import useFormHook from '@/hooks/useFormHook'
 import { repasswordConfirmFormScheme } from '@/utils/formScheme'
 import { routesApi, routesPath } from '@/data/routes'
 import { logText, repasText } from '@/data/text'
-import FormContainer from '@/components/my/FormContainer'
+import FormContainer from '@/Components/my/FormContainer'
 
 const defaultValueForm = {
   password: '',

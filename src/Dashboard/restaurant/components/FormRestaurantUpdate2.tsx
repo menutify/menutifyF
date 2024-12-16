@@ -1,5 +1,4 @@
-import Title2 from '@/components/my/Title2'
-import { Button } from '@/components/ui/button'
+import Title2 from '@/Components/my/Title2'
 import { useDataGlobalContext } from '@/Context/GlobalContext'
 
 function FormRestaurantUpdate2() {

@@ -1,9 +1,8 @@
 import Title2 from '@/Components/my/Title2'
-import { Button } from '@/components/ui/button'
+import { Button } from '@/Components/ui/button'
 import { Card } from '@/Components/ui/card'
 import { useDataGlobalContext } from '@/Context/GlobalContext'
 import { routesApi } from '@/data/routes'
-import axiosInstance from '@/utils/axiosConfig'
 import HandleFormSubmit from '@/utils/handleForSubmit'
 import { Dispatch, SetStateAction } from 'react'
 

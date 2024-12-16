@@ -7,7 +7,6 @@ import { useEffect, useState } from 'react'
 
 function InputDashboardType2({
   logoInput,
-  ph,
   title,
   className = '',
   name = 'x'

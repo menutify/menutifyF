@@ -81,6 +81,13 @@ export interface Categories {
   details: CategoriesDetails
 }
 
+export interface Categories2 {
+  id: number
+  id_menu: number
+  pos: number
+  foodDetail: CategoriesDetails
+}
+
 export interface CategoriesDetails {
   id?: number
   id_cat?: number
@@ -96,6 +103,15 @@ export interface Food {
   pos: number
   foodDetail: FoodDetails
 }
+
+export interface Food {
+  id: number
+  id_cat: number
+  state: boolean
+  pos: number
+  foodDetail: FoodDetails
+}
+
 
 export interface FoodDetails {
   id?: number

@@ -1,5 +1,5 @@
-import Parr from '@/components/my/Parr';
-import Title2 from '@/components/my/Title2';
+import Parr from '@/Components/my/Parr';
+import Title2 from '@/Components/my/Title2';
 import { useDataGlobalContext } from '@/Context/GlobalContext';
 import { restaurantData } from '@/data/text';
 

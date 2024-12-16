@@ -3,13 +3,13 @@ import FormPayment from '../components/FormPayment'
 import callAPI from '../../utils/callApi'
 import { routesApi, routesPath } from '../../data/routes'
 import { useDataGlobalContext } from '../../Context/GlobalContext'
-import { Button } from '@/components/ui/button'
-import Title2 from '@/components/my/Title2'
-import Parr from '@/components/my/Parr'
+import { Button } from '@/Components/ui/button'
+import Title2 from '@/Components/my/Title2'
+import Parr from '@/Components/my/Parr'
 import { caPayment } from '@/data/text'
 import ProgressBar from '@/Components/my/ProgressBar'
-import Logo from '@/components/my/Logo'
-import MyCard from '@/components/my/MyCard'
+import Logo from '@/Components/my/Logo'
+import MyCard from '@/Components/my/MyCard'
 
 function Payment() {
   const navigate = useNavigate()
