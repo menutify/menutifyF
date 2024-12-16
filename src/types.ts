@@ -23,6 +23,11 @@ export interface AppContextType {
   setMenu: React.Dispatch<React.SetStateAction<Menu>>
 }
 
+export interface CreateMenuContextType {
+  search: string
+  setSearch: React.Dispatch<React.SetStateAction<string>>
+}
+
 export interface User {
   id: string | null
   isNew: boolean | null

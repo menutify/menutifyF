@@ -3,7 +3,7 @@ import Title3 from '@/Components/my/Title3'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/Components/ui/card'
 import { Outlet } from 'react-router-dom'
-import { useDataGlobalContext } from '@/Context/GlobalContext'
+import { useDataGlobalContext, useMenuContext } from '@/Context/GlobalContext'
 import { useState } from 'react'
 import ModalFood from '../components/ModalFood'
 import { createPortal } from 'react-dom'
@@ -12,6 +12,7 @@ import FormCategorie from '../components/FormCategorie'
 
 function CreateMenu() {
   const { categories, setFoods } = useDataGlobalContext()
+  const { setSearch } = useMenuContext()
   const [visibleFoodModal, setVisibleFoodModal] = useState(false)
   const [visibleCategoryModal, setVisibleCategoryModal] = useState(false)
 
@@ -40,9 +41,15 @@ function CreateMenu() {
               <button onClick={() => setVisibleFoodModal(true)}>+</button>
             </div>
           </div>
+          {/* INPUT SEARCH */}
           <input
             type='text'
-            className='bg-white h-10 w-full  border border-gray-500'
+            className='bg-orange-300 h-10 w-full  border border-gray-500'
+            onChange={(e) => {
+              e.preventDefault()
+              console.log(e.target.value)
+              setSearch(e.target.value)
+            }}
           />
         </div>
         <div className='w-full flex-1 bg-yellow-50'>

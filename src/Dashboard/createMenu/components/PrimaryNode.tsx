@@ -26,22 +26,17 @@ import FormCategorie from './FormCategorie'
 import { createPortal } from 'react-dom'
 import { useState } from 'react'
 import DeleteModal from './DeleteModal'
+import { useMenuContext } from '@/Context/GlobalContext'
 
 interface primaryNode {
   id: number
   name: string
   arrayChild: Food[]
   index: number
-
+  isPending: boolean
 }
 
-function PrimaryNode({
-  id,
-  name,
-  arrayChild,
-  index,
- 
-}: primaryNode) {
+function PrimaryNode({ id, name, arrayChild, index, isPending }: primaryNode) {
   const [visibleCategoryModal, setVisibleCategoryModal] = useState(false)
   const [visibleDeleteModal, setVisibleDeleteModal] = useState(false)
   const {
@@ -51,7 +46,8 @@ function PrimaryNode({
     transition,
     setDraggableNodeRef,
     setDroppableNodeRef
-  } = useSortable({ id })
+  } = useSortable({ id, disabled: isPending })
+  const { search } = useMenuContext()
 
   return (
     <AccordionItem
@@ -71,7 +67,6 @@ function PrimaryNode({
         // paddingLeft: `${20}px`, // Indenta según la profundidad
         margin: '',
         background: '#f9f9f9',
-        cursor: 'grab',
 
         border: '1px solid #ccc'
       }}
@@ -108,7 +103,7 @@ function PrimaryNode({
             </DropdownMenuContent>
           </DropdownMenu>
           <picture
-            className='h-6 w-6 flex items-center select-none '
+            className='h-6 w-6 flex items-center select-none cursor-grab'
             {...attributes}
             {...listeners}
             ref={setDraggableNodeRef}
@@ -124,19 +119,42 @@ function PrimaryNode({
           items={arrayChild}
           strategy={verticalListSortingStrategy}
         >
-          {arrayChild.map((food, index) => (
-            <SecondaryNode
-              key={'c-' + food.id_cat + '-' + food.id}
-              id={food.id}
-              name={food.foodDetail.name}
-              img={food.foodDetail.img}
-              price={food.foodDetail.price}
-              state={food.state}
-              index={index}
-              parentId={id}
-              star={food.foodDetail.star}
-            />
-          ))}
+          {search.length == 0
+            ? arrayChild.map((food, I) => (
+                <SecondaryNode
+                  key={'c-' + food.id_cat + '-' + food.id}
+                  id={food.id}
+                  name={food.foodDetail.name}
+                  img={food.foodDetail.img}
+                  price={food.foodDetail.price}
+                  state={food.state}
+                  index={I}
+                  parentId={id}
+                  star={food.foodDetail.star}
+                  isPending={isPending}
+                />
+              ))
+            : arrayChild.map((food) => {
+                if (food.foodDetail.name.toLowerCase().startsWith(search.toLowerCase())) {
+                  const indexChild = arrayChild.findIndex(
+                    (e) => e.id == food.id
+                  )
+                  return (
+                    <SecondaryNode
+                      key={'c-' + food.id_cat + '-' + food.id}
+                      id={food.id}
+                      name={food.foodDetail.name}
+                      img={food.foodDetail.img}
+                      price={food.foodDetail.price}
+                      state={food.state}
+                      index={indexChild}
+                      parentId={id}
+                      star={food.foodDetail.star}
+                      isPending={true}
+                    />
+                  )
+                }
+              })}
         </SortableContext>
       </AccordionContent>
       {visibleCategoryModal &&

@@ -41,6 +41,11 @@ export const routesApi = {
   menu: '/menu',
   cat: '/cat',
   food: '/cat/food',
-  
-  catCascade: '/cat/cascade_categories'
+  foodDrag: '/cat/food/drag',
+  catCascade: '/cat/cascade_categories',
+  dragcc: '/drag/drag_cc',
+  dragcp: '/drag/drag_cp',
+  dragccg: '/drag/drag_ccg',
+  dragpp: '/drag/drag_pp',
+  state:'/cat/food/state'
 }

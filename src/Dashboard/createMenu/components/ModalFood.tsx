@@ -146,7 +146,7 @@ function ModalFood({
     })
 
     if (!isPending) {
-    visibilityModal(false)
+      visibilityModal(false)
     }
   }
 
@@ -302,6 +302,7 @@ function ModalFood({
               form={formOptions}
               name={'star'}
               className='text-black md:text-black'
+              value='Destacar platillo'
             />
             <FormFieldRestaurant
               form={formOptions}

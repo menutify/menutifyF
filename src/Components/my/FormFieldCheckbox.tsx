@@ -7,7 +7,7 @@ import {
 } from '../ui/form'
 import { Checkbox } from '../ui/checkbox'
 
-function FormFieldCheckbox({ form, name = '', className = '' }) {
+function FormFieldCheckbox({ form, name = '', className = '', value = '' }) {
   return (
     <FormField
       control={form.control}
@@ -17,16 +17,20 @@ function FormFieldCheckbox({ form, name = '', className = '' }) {
           <div className='flex flex-row items-start space-x-3 space-y-1'>
             <FormControl>
               <Checkbox
-                style={{ color: '#000' }}
+                style={{ color: name === 'star' ? '#000' : 'auto' }}
                 className={`${className}`}
                 checked={field.value}
                 onCheckedChange={field.onChange}
               />
             </FormControl>
             <div className='space-y-1 leading-none'>
-              <FormLabel className='text-[#777]'>
-                Acepto los <a href='#'>terminos y condiciones</a>
-              </FormLabel>
+              {name === 'star' ? (
+                <FormLabel className='text-[#777]'>{value}</FormLabel>
+              ) : (
+                <FormLabel className='text-[#777]'>
+                  Acepto los <a href='#'>terminos y condiciones</a>
+                </FormLabel>
+              )}
             </div>
           </div>
 

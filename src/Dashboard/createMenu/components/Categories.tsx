@@ -1,6 +1,6 @@
 import { createPortal } from 'react-dom'
 import PrimaryNode from './PrimaryNode'
-import { useDataGlobalContext } from '@/Context/GlobalContext'
+import { useDataGlobalContext} from '@/Context/GlobalContext'
 import {
   DndContext,
   DragOverlay,
@@ -20,10 +20,13 @@ import {
   setChildToOtherFamily
 } from './utilities'
 import { Accordion } from '@/Components/ui/accordion'
+import HandleFormSubmit from '@/utils/handleForSubmit'
+import { routesApi } from '@/data/routes'
 
 // Componente principal
 const Tree = () => {
-  const { categories, setCategories } = useDataGlobalContext()
+  const { categories, setCategories, menu } = useDataGlobalContext()
+  const { isPending, handlePatchSubmit } = HandleFormSubmit()
 
   // Configurar sensores para el arrastre
   const sensors = useSensors(useSensor(PointerSensor))
@@ -32,7 +35,7 @@ const Tree = () => {
     //cambiar posicion de contenedor seleccionado en portal
   }
 
-  const handleDragEnd = ({ active, over }: DragEndEvent) => {
+  const handleDragEnd = async ({ active, over }: DragEndEvent) => {
     //si el destino no existe en el contexto
     console.log({ active, over })
     if (!over) {
@@ -41,20 +44,23 @@ const Tree = () => {
     }
 
     //si el componente destino no existe
-    const targetComponent = over.data.current
-    if (!targetComponent) {
+    const activeCurrent = over.data.current
+
+    const overCurrent = over.data.current
+    if (!overCurrent) {
       console.log('no existe el componente')
       return
     }
 
     //array target
-    const targetArray = targetComponent.sortable.items
+    const activeItems = activeCurrent.sortable.items
+    const overItems = overCurrent.sortable.items
 
     //si los componentes son iguales no hacer nada
     // console.log(active.id)
     // console.log(active.data.current.sortable.items)
     // console.log(over.id)
-    // console.log(targetArray)
+    // console.log(overItems)
 
     if (active.id === over.id) {
       console.log('nada')
@@ -65,22 +71,58 @@ const Tree = () => {
     const activeIsChild = securityFunction(active.id, 'string', 1, 'c')
     const overIsFather = securityFunction(over.id, 'number', 0, 'c')
     //verificamos que el padre no quiera meterse el contenedor de los hijos
-    if (activeIsFather && !ItemIsIncludeInArray(targetArray, active.id)) {
+    if (activeIsFather && !ItemIsIncludeInArray(overItems, active.id)) {
       console.log('Padre -> hijo')
       return
     }
 
     //intercambio de padres
     //verificamos que el item seleccionado pertenezca al array padres
-    if (activeIsFather && ItemIsIncludeInArray(targetArray, active.id)) {
+    if (activeIsFather && ItemIsIncludeInArray(overItems, active.id)) {
       console.log('Padre -> Padre')
+      // api
+      const activeIndex = activeItems.indexOf(active.id)
+      const overIndex = overItems.indexOf(over.id)
+
+      let direction = 'asc'
+      if (activeIndex > overIndex) direction = 'desc'
+
+      const data = await handlePatchSubmit(`${routesApi.dragpp}/${active.id}`, {
+        direction,
+        activeIndex,
+        overIndex,
+        idMenu: menu.id
+      })
+
+      if (!data) return
+      //local
       setCategories(setChangeToArray(categories, active.id, over.id))
     } else {
       const ActiveId = parseInt(active.id.split('-')[2])
       const newParentActiveId = parseInt(active.id.split('-')[1])
+
+      const activeIndex = categories
+        .filter((e) => e.id == newParentActiveId)[0]
+        .details.foods.findIndex((f) => f.id === ActiveId)
+
       // si un hijo se quiere meter el contenedor de los padres
       if (activeIsChild && overIsFather) {
         console.log('Hijo -> Padre')
+
+        const lengthFoodsOfNewCat = categories.filter((e) => e.id == over.id)[0]
+          .details.foods.length
+
+        const data = await handlePatchSubmit(
+          `${routesApi.dragcp}/${ActiveId}`,
+          {
+            lengthFoodsOfNewCat,
+            activeIndex,
+            activeCatId: newParentActiveId,
+            overCatId: over.id
+          }
+        )
+
+        if (!data) return
 
         setCategories((prev) =>
           setChildToOtherFamily(prev, ActiveId, over.id, newParentActiveId)
@@ -94,9 +136,27 @@ const Tree = () => {
       const [activeChildId, overChildId, parentActiveId, parentOverId] =
         getNewChildsId(active.id, over.id)
 
+      const overIndex = categories
+        .filter((e) => e.id == parentOverId)[0]
+        .details.foods.findIndex((f) => f.id === overChildId)
+
       //bloquar intercambio de hijos
-      if (!ItemIsIncludeInArray(targetArray, activeChildId)) {
+      if (!ItemIsIncludeInArray(overItems, activeChildId)) {
         console.log('[Hijo1] -> [Hijo2]')
+        //bd
+        const data = await handlePatchSubmit(
+          `${routesApi.dragccg}/${ActiveId}`,
+          {
+            activeIndex,
+            overIndex,
+            activeCatId: parentActiveId,
+            overCatId: parentOverId
+          }
+        )
+
+        if (!data) return
+
+        //local
         setCategories((prev) => {
           console.log('entramos')
           return setChildToOtherFamily(
@@ -113,6 +173,23 @@ const Tree = () => {
 
       console.log('Hijo1 -> Hijo2')
 
+      //db
+
+      let direction = 'asc'
+      if (activeIndex > overIndex) direction = 'desc'
+
+      const data = await handlePatchSubmit(
+        `${routesApi.dragcc}/${ActiveId}?direction=${direction}`,
+        {
+          activeIndex,
+          overIndex,
+          activeCatId: newParentActiveId
+        }
+      )
+
+      if (!data) return
+
+      //local
       setCategories((prev) => {
         const updateData = [...prev]
 
@@ -146,17 +223,21 @@ const Tree = () => {
           items={categories}
           strategy={verticalListSortingStrategy}
         >
-          {categories.map((categorie, i) => {
-            return (
-              <PrimaryNode
-                key={categorie.id}
-                id={categorie.id}
-                name={categorie.details.name}
-                arrayChild={categorie.details.foods}
-                index={i}
-              />
-            )
-          })}
+          
+            {categories.map((categorie, i) => {
+              return (
+                <PrimaryNode
+                  key={categorie.id}
+                  id={categorie.id}
+                  name={categorie.details.name}
+                  arrayChild={categorie.details.foods}
+                  index={i}
+                  isPending={isPending}
+                />
+              )
+            })}
+          
+  
         </SortableContext>
 
         {createPortal(
