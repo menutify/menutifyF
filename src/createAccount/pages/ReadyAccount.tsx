@@ -42,9 +42,7 @@ function ReadyAccount() {
   return (
     <MyCard>
       <Logo />
-      <Title2 className=''>
-        {fail ? caAccount.title4 : caAccount.title3}
-      </Title2>
+      <Title2 className=''>{fail ? caAccount.title4 : caAccount.title3}</Title2>
       <Parr className='text-parr_color_1'>
         {fail ? caAccount.parr3 : caAccount.parr2}
       </Parr>
@@ -54,8 +52,8 @@ function ReadyAccount() {
         disabled={isPending ? true : false}
       >
         {caAccount.button2}
-      </Button >
-      {error.error ? <p className='error'>{error.msg}</p>:<></>}
+      </Button>
+      {error.error ? <p className='error'>{error.msg}</p> : <></>}
       {/* <button onClick={logOut}>Cerrar sesion</button> */}
     </MyCard>
   )

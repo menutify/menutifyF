@@ -1,7 +1,7 @@
 import FormFieldRestaurant from '@/Components/Forms/FormFieldRestaurant'
 import Title2 from '@/Components/my/Title2'
-import { Button } from '@/components/ui/button'
-import { Form } from '@/components/ui/form'
+import { Button } from '@/Components/ui/button'
+import { Form } from '@/Components/ui/form'
 import { useDataGlobalContext } from '@/Context/GlobalContext'
 import { restaurantData } from '@/data/text'
 import useFormHook from '@/hooks/useFormHook'
@@ -18,7 +18,6 @@ function FormRestaurantUpdate({
 
   const formOptions = useFormHook(scheme, value || {})
 
-  
   async function onSubmit(values: Record<string, string>) {
     if (name === 'domain') {
       setMenu({

@@ -3,8 +3,8 @@ import { Slot } from '@radix-ui/react-slot'
 import { VariantProps, cva } from 'class-variance-authority'
 import { useIsMobile } from '@/hooks/use-mobile'
 import { cn } from '@/lib/utils'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
+import { Button } from '@/Components/ui/button'
+import { Input } from '@/Components/ui/input'
 import { Separator } from '@/Components/ui/separator'
 import { Sheet, SheetContent } from '@/Components/ui/sheet'
 import { Skeleton } from '@/Components/ui/skeleton'
@@ -15,7 +15,6 @@ import {
   TooltipTrigger
 } from '@/Components/ui/tooltip'
 import menuSVG from '@/assets/all/menu.svg'
-import { useDataGlobalContext } from '@/Context/GlobalContext'
 const SIDEBAR_COOKIE_NAME = 'sidebar:state'
 const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7
 const SIDEBAR_WIDTH = '16rem'
@@ -275,7 +274,9 @@ const SidebarTrigger = React.forwardRef<
       }}
       {...props}
     >
-      <div className='flex h-6 '><img src={menuSVG} alt="" /></div>
+      <div className='flex h-6 '>
+        <img src={menuSVG} alt='' />
+      </div>
       <span className='ml-8 text-xl'>Dashboard</span>
     </Button>
   )
@@ -431,7 +432,7 @@ const SidebarGroupLabel = React.forwardRef<
 >(({ className, asChild = false, ...props }, ref) => {
   const Comp = asChild ? Slot : 'div'
 
-  const {restaurant} = useDataGlobalContext()
+  
 
   return (
     <Comp
@@ -565,7 +566,6 @@ const SidebarMenuButton = React.forwardRef<
         {...props}
       >
         {props.children}
-        
       </Comp>
     )
 
@@ -761,5 +761,6 @@ export {
   SidebarRail,
   SidebarSeparator,
   SidebarTrigger,
+  // eslint-disable-next-line react-refresh/only-export-components
   useSidebar
 }

@@ -9,7 +9,7 @@ function InputDashboardType2({
   logoInput,
   title,
   className = '',
-  name = 'x'
+  name = 'x',ph=''
 }) {
   const { restaurant } = useDataGlobalContext()
   const [value, setValue] = useState('')
@@ -35,7 +35,7 @@ function InputDashboardType2({
           name={name}
           className='bg-white h-4 text-xs md:text-xl md:h-full w-full placeholder:text-sb_bg focus:outline-none'
           type='text'
-          placeholder={'Añade una descripción'}
+          placeholder={ph}
           value={value}
           disabled
         />

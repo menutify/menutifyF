@@ -62,9 +62,9 @@ function Dashboard() {
 
   return (
     <SidebarProvider
-      style={{
-        '--sidebar-width': '14rem'
-      }}
+    style={{
+      '--sidebar-width': '14rem',
+    } as React.CSSProperties}
     >
       <AppSidebar />
       <SidebarTrigger className='  fixed top-0 left-0 sm:bg-white z-50 md:z-0 sm:w-10 w-full bg-sb_bg flex rounded-none justify-start h-[4.5rem] hover:bg-sb_bg ' />

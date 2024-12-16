@@ -1,7 +1,7 @@
 import InputDashboard from '@/Components/my/InputDashboard'
 import Title2 from '@/Components/my/Title2'
 import { Card } from '@/Components/ui/card'
-import { Button } from '@/components/ui/button'
+import { Button } from '@/Components/ui/button'
 import InputImage from '@/Components/my/InputImage'
 import Title3 from '@/Components/my/Title3'
 import RadioButton from '@/Components/my/RadioButton'
@@ -29,7 +29,7 @@ function Restaurant() {
 
   const submitData = async () => {
     try {
-      const promises = []
+      const promises: Promise<boolean | Record<string, any>>[] = []
 
       if (restaurant.changed === true) {
         promises.push(
@@ -70,7 +70,7 @@ function Restaurant() {
         ) {
           const data = results[0]
 
-          const { myUrl } = data
+          const { myUrl } = data as { myUrl: string }
           console.log(myUrl)
           setRestaurant({
             ...restaurant,
@@ -82,7 +82,7 @@ function Restaurant() {
 
         if (menu.changed === true && results[1]) {
           const data = results[1]
-          const { myUrl } = data
+          const { myUrl } = data as { myUrl: string }
           setMenu({ ...menu, changed: false, header_url: myUrl })
         }
       }

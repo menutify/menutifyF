@@ -10,7 +10,7 @@ function FormDesc({ visibilityModal }) {
 
   const setDataToContext = () => {
     if (getData.length < 255) {
-      setRestaurant((prev) => ({ ...prev, desc: getData,changed:true }))
+      setRestaurant((prev) => ({ ...prev, desc: getData, changed: true }))
       visibilityModal(false)
       return
     }

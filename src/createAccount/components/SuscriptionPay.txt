@@ -1,11 +1,11 @@
 import HandleFormSubmit from '@/utils/handleForSubmit'
 import useFormHook from '@/hooks/useFormHook'
 import { caPaymentFormScheme } from '@/utils/formScheme'
-import { Form } from '@/components/ui/form'
+import { Form } from '@/Components/ui/form'
 import FormFieldComponent from '@/components/Forms/FormFieldComponent'
 import { z } from 'zod'
 import { caPayment } from '@/data/text'
-import { Button } from '@/components/ui/button'
+import { Button } from '@/Components/ui/button'
 
 
 import mpLogo from '@/assets/createAccount/mp.svg'

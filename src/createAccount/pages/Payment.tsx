@@ -28,8 +28,10 @@ function Payment() {
 
   return (
     <MyCard className='mt-20 overflow-x-hidden '>
-      <span className='absolute top-20 left-40 text-white '>5287 3383 1025 3304	</span>
-      
+      <span className='absolute top-20 left-40 text-white '>
+        5287 3383 1025 3304{' '}
+      </span>
+
       <Logo />
       <Title2 className=''>{caPayment.title1}</Title2>
       <Parr className='text-parr_color_1'>{caPayment.parr1}</Parr>

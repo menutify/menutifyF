@@ -36,7 +36,7 @@ function OrderBar({
 
   return (
     <div className='h-4 w-full  justify-center items-center relative flex  gap-6 '>
-      {options.map((e, i) => (
+      {options.map((_, i) => (
         <span
           key={`elkake${i}`}
           onClick={() => func(i)}

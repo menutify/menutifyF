@@ -12,8 +12,6 @@ import { categoriesScheme } from '@/utils/formScheme'
 import HandleFormSubmit from '@/utils/handleForSubmit'
 import { Dispatch, SetStateAction, useEffect, useState } from 'react'
 
-
-
 interface FormCategorie {
   action: string
   visibilityModal: Dispatch<SetStateAction<boolean>>
