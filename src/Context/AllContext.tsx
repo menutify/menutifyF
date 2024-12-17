@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Context } from './GlobalContext'
 import { Categories, Menu, ReactComponent, Restaurant, User } from '@/types'
-import { categorieInitialData, menuInitialData, restaurantInicialData } from '@/data/initialStateData'
+import {  menuInitialData, restaurantInicialData } from '@/data/initialStateData'
 
 const AllContext = ({ children }: ReactComponent) => {
   const [user, setUser] = useState<User>({
@@ -18,7 +18,7 @@ const AllContext = ({ children }: ReactComponent) => {
   )
   const [menu, setMenu] = useState<Menu>(menuInitialData)
   const [portalVisible, setPortalVisible] = useState(false)
-  const [categories, setCategories] = useState<Categories[]>(categorieInitialData)
+  const [categories, setCategories] = useState<Categories[]>([])
   const [apiPetition, setApiPetition] = useState(false)
   const options = {
     loading,
