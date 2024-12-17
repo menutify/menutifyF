@@ -53,7 +53,7 @@ function FormCategorie({ action, visibilityModal, index }: FormCategorie) {
       return
     }
 
-    const resp = data as Categories
+    const { resp } = data as { resp: Categories }
 
     if (!isPending) {
       setCategories((prev) => {

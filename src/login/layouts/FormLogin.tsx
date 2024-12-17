@@ -26,9 +26,9 @@ function FormLogin() {
 
   async function onSubmit(values: z.infer<typeof loginFormScheme>) {
     // const { email, password } = values
-    console.log('entramos')
+    
     const data = await handleSubmit(routesApi.login, values)
-
+    
     if (!data) return
 
     setUser(data as User)

@@ -164,22 +164,23 @@ function ModalFood({
 
     if (!data) return
 
-    const resp = data as Food
+    const { resp } = data as { resp: Food }
+    const foodDetail = resp.foodDetail
     if (!isPending) {
       setCategories((prev) => {
         const updatedCategories = prev.map((category) => {
           if (category.id === parseInt(cat)) {
             // Crear el nuevo objeto Food
-
+            console.log({ resp, foodDetail })
             const newFood: Food = {
               id: resp.id,
               id_cat: parseInt(cat),
               pos: resp.pos,
               state: true,
               foodDetail: {
-                id: resp.foodDetail.id,
+                id: foodDetail.id,
                 id_food: resp.id,
-                img: resp.foodDetail.img,
+                img: foodDetail.img,
                 price: parseFloat(price),
                 name,
                 desc,

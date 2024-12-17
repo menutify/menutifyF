@@ -1,6 +1,5 @@
 import Parr from '@/Components/my/Parr'
 import Title3 from '@/Components/my/Title3'
-import { Button } from '@/Components/ui/button'
 import { Card } from '@/Components/ui/card'
 import { Outlet } from 'react-router-dom'
 import { useDataGlobalContext, useMenuContext } from '@/Context/GlobalContext'
@@ -8,24 +7,19 @@ import { useState } from 'react'
 import ModalFood from '../components/ModalFood'
 import { createPortal } from 'react-dom'
 import FormCategorie from '../components/FormCategorie'
+import QrCode from '@/Components/my/QrCode'
 // import Test from '../components/test'
 
 function CreateMenu() {
-  const { categories, setFoods } = useDataGlobalContext()
+  const { categories } = useDataGlobalContext()
   const { setSearch } = useMenuContext()
   const [visibleFoodModal, setVisibleFoodModal] = useState(false)
   const [visibleCategoryModal, setVisibleCategoryModal] = useState(false)
+  const [handleVisualitation, setHandleVisualitation] = useState(false)
 
   // Test()
-
-  const addNewFood = () => {
-    setFoods((prev) => [
-      ...prev,
-      { id: 'g', parentId: 3, name: 'Hijo 7', pos: 1 }
-    ])
-  }
   return (
-    <div className='flex justify-center items-center h-full w-full p-2 gap-2'>
+    <div className='flex-complete flex-col md:flex-row w-full h-full p-2 gap-2 mt-0'>
       <Card className='flex-1 flex-complete flex-col h-full w-full bg-gray-200 gap-3'>
         <div className='w-full flex flex-col gap-2'>
           <Title3>Empieza a crear tu nuevo menu</Title3>
@@ -56,46 +50,104 @@ function CreateMenu() {
           <Outlet />
         </div>
       </Card>
-      <Card className='flex-1 flex-complete flex-col h-full w-full bg-gray-600'>
-        <div className='kanban-board'>
-          <strong>Rank your favorite flavors</strong>
-          <br />
+      <Card
+        className={`${
+          handleVisualitation ? 'flex' : 'hidden md:flex'
+        } fixed md:relative md:flex-1 top-0 left-0  items-center justify-center w-full h-full bg-opacity-40 bg-green-500 md:bg-gray-200 `}
+      >
+        <div className='fixed w-[96%] h-[77%] max-h-[700px] flex flex-col max-w-md overflow-y-auto bg-gray-600 rounded-2xl shadow-lg md:max-h-[90%] md:max-w-[270px] lg:max-w-[400px] md:top-1/2 md:-translate-y-1/2 border-8 border-gray-600'>
+          {/* Título o botón para cerrar */}
 
-          <br />
-          <ul className='bg-yellow-100 w-[400px]'>
-            {categories.map((todo) => {
-              return (
-                <li
-                  id={`cat-${todo.id}`}
-                  className='kanban-item p-2 flex flex-col gap-4 bg-red-300 m-2'
-                  key={todo.id + 'flores'}
-                >
-                  <h2>
-                    id Padre:{todo.id} -- index:{todo.pos}
-                  </h2>
-                  <p>id-----name----index---state</p>
-                  <ul>
-                    {todo.details.foods.map((e) => {
-                      return (
+          {/* Contenido principal */}
+          <div>
+            <ul className='bg-yellow-100 rounded-xl'>
+              {categories.map((todo) => {
+                return (
+                  <li
+                    id={`cat-${todo.id}`}
+                    className='p-2 flex flex-col gap-4 bg-red-300'
+                    key={todo.id + 'flores'}
+                  >
+                    <h2>
+                      id Padre:{todo.id} -- index:{todo.pos}
+                    </h2>
+                    <p>id-----name----index---state</p>
+                    <ul>
+                      {todo.details.foods.map((e) => (
                         <li key={e.id + 'azucar'}>
                           {e.id} --- {e.foodDetail.name} --- {e.pos} ------
                           {e.state ? '1' : '0'} --- {e.id_cat}
                         </li>
-                      )
-                    })}
-                  </ul>
-                </li>
-              )
-            })}
-            <Button className='w-full' onClick={addNewFood}>
-              addCate
-            </Button>
-            <Button className='w-full' onClick={addNewFood}>
-              addFood
-            </Button>
-          </ul>
+                      ))}
+                    </ul>
+                  </li>
+                )
+              })}{categories.map((todo) => {
+                return (
+                  <li
+                    id={`cat-${todo.id}`}
+                    className='p-2 flex flex-col gap-4 bg-red-300'
+                    key={todo.id + 'flores'}
+                  >
+                    <h2>
+                      id Padre:{todo.id} -- index:{todo.pos}
+                    </h2>
+                    <p>id-----name----index---state</p>
+                    <ul>
+                      {todo.details.foods.map((e) => (
+                        <li key={e.id + 'azucar'}>
+                          {e.id} --- {e.foodDetail.name} --- {e.pos} ------
+                          {e.state ? '1' : '0'} --- {e.id_cat}
+                        </li>
+                      ))}
+                    </ul>
+                  </li>
+                )
+              })}{categories.map((todo) => {
+                return (
+                  <li
+                    id={`cat-${todo.id}`}
+                    className='p-2 flex flex-col gap-4 bg-red-300'
+                    key={todo.id + 'flores'}
+                  >
+                    <h2>
+                      id Padre:{todo.id} -- index:{todo.pos}
+                    </h2>
+                    <p>id-----name----index---state</p>
+                    <ul>
+                      {todo.details.foods.map((e) => (
+                        <li key={e.id + 'azucar'}>
+                          {e.id} --- {e.foodDetail.name} --- {e.pos} ------
+                          {e.state ? '1' : '0'} --- {e.id_cat}
+                        </li>
+                      ))}
+                    </ul>
+                  </li>
+                )
+              })}
+              <QrCode />
+            </ul>
+          </div>
         </div>
       </Card>
+      <div className='fixed bottom-0 left-0 w-full h-[74px] bg-red-200 md:hidden flex justify-around items-center'>
+        <a
+          href=''
+          target='_blank'
+          className='text-sm border border-[#0005] p-3 rounded-lg bg-yellow-100 w-1/5 flex-complete'
+        >
+          Link
+        </a>
+        <button
+          onClick={() => setHandleVisualitation(!handleVisualitation)}
+          className='text-sm border border-[#0005] p-3 rounded-lg bg-yellow-100 w-2/5 flex-complete'
+        >
+          {handleVisualitation ? 'Cerrar' : 'Visualizar'}
+        </button>
+        <button className='text-sm border border-[#0005] p-3 rounded-lg bg-yellow-100 w-1/5 flex-complete'>
+          QR
+        </button>
+      </div>
       {visibleFoodModal &&
         createPortal(
           <ModalFood action='create' visibilityModal={setVisibleFoodModal} />,

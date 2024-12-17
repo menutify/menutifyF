@@ -21,6 +21,8 @@ export interface AppContextType {
   setFoods: React.Dispatch<React.SetStateAction<object[]>>
   menu: Menu
   setMenu: React.Dispatch<React.SetStateAction<Menu>>
+  setApiPetition: React.Dispatch<React.SetStateAction<boolean>>
+  apiPetition: boolean
 }
 
 export interface CreateMenuContextType {
@@ -63,7 +65,7 @@ export interface Menu {
 
 export interface handleSubmit {
   path: string
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+
   body: Record<string, any>
   header: Record<string, string>
 }
@@ -104,18 +106,9 @@ export interface Food {
   foodDetail: FoodDetails
 }
 
-export interface Food {
-  id: number
-  id_cat: number
-  state: boolean
-  pos: number
-  foodDetail: FoodDetails
-}
-
-
 export interface FoodDetails {
-  id?: number
-  id_food?: number
+  id: number
+  id_food: number
   desc?: string
   star: boolean | string
   name: string

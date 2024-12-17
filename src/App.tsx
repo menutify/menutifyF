@@ -36,9 +36,11 @@ import Restaurant from './Dashboard/restaurant/page/Restaurant'
 import Component from './Component'
 import CreateMenu from './Dashboard/createMenu/page/CreateMenu'
 import Categories from './Dashboard/createMenu/components/Categories'
+import { createPortal } from 'react-dom'
+import Loading from './Components/my/Loading'
 
 function App() {
-  const { setUser, setLoading, loading } = useDataGlobalContext()
+  const { setUser, setLoading, loading, apiPetition } = useDataGlobalContext()
 
   //rrd
   const navigate = useNavigate()
@@ -119,6 +121,13 @@ function App() {
           <Route path={routesPath.account} element={<Component />} />
         </Route>
       </Routes>
+      {apiPetition &&
+        createPortal(
+          <div className='fixed top-0 left-0 z-50 flex-complete w-full h-full bg-[#0005]'>
+            <Loading />
+          </div>,
+          document.body
+        )}
     </>
   )
 }

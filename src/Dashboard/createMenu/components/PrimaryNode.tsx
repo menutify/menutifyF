@@ -7,7 +7,6 @@ import {
 import SecondaryNode from './SecondaryNode'
 import { CSS } from '@dnd-kit/utilities'
 import { Food } from '@/types'
-import { ArrowDown } from 'lucide-react'
 import upDownSVG from '@/assets/createMenu/updown.svg'
 import {
   AccordionContent,
@@ -71,17 +70,14 @@ function PrimaryNode({ id, name, arrayChild, index, isPending }: primaryNode) {
         border: '1px solid #ccc'
       }}
     >
-      <div className='flex items-center justify-between h-14  bg-yellow-100 px-1'>
+      <div className='flex items-center justify-between h-auto  bg-yellow-100 px-1 flex-wrap'>
         <AccordionTrigger className='flex justify-start items-center flex-1 h-full hover:no-underline'>
-          <div>
-            <ArrowDown />
-          </div>
           <Title2 className='select-none no-underline '>{name}</Title2>
 
           <p className='select-none no-underline'>
             (
             {arrayChild.length == 0
-              ? 'Categoría vacía'
+              ? 'vacía'
               : `${arrayChild.length} productos`}
             )
           </p>

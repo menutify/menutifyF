@@ -92,8 +92,8 @@ function Restaurant() {
   }
 
   return (
-    <div className='flex flex-col md:flex-row relative md:pt-20 py-20'>
-      <div className='fixed z-40 md:z-0 md:absolute bottom-0 left-0 md:top-0 md:right-0 md:items-end justify-center items-center flex w-full h-20 bg-white flex-col'>
+    <div className='flex flex-col md:flex-row relative md:pt-20'>
+      <div className='fixed z-40 md:z-0 md:absolute bottom-0 left-0 md:top-0 md:right-0 md:items-end justify-center items-center flex w-full h-[72px] bg-white flex-col' style={{borderTop:'.2px solid #0003'}}>
         <Button
           className={`${
             isPending ? 'bg-white' : 'bg-border_input_color'
@@ -107,7 +107,7 @@ function Restaurant() {
           )}
         </Button>
       </div>
-      <section className='flex-1 flex flex-col items-center md:p-2'>
+      <section className='flex-1 flex flex-col items-center p-2'>
         <Card className='w-full p-3 md:p-6 flex flex-col gap-4'>
           <Title2 className='text-xl md:text-3xl'>Datos del restaurante</Title2>
           <div className='flex flex-col gap-2 md:gap-4 '>
@@ -166,7 +166,7 @@ function Restaurant() {
           </div>
         </Card>
       </section>
-      <section className='md:min-w-[475px] flex-1 flex flex-col items-center mt-2 md:mt-0 md:p-2 '>
+      <section className='md:min-w-[475px] flex-1 flex flex-col items-center mt-2 md:mt-0 p-2 '>
         <Card className='w-full  p-3 md:p-6 flex flex-col gap-6 '>
           <Title2 className='text-xl md:text-3xl'>Personaliza tu menú</Title2>
           <div className='flex mb-3 gap-2'>

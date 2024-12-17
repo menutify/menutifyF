@@ -19,7 +19,7 @@ const AllContext = ({ children }: ReactComponent) => {
   const [menu, setMenu] = useState<Menu>(menuInitialData)
   const [portalVisible, setPortalVisible] = useState(false)
   const [categories, setCategories] = useState<Categories[]>(categorieInitialData)
-
+  const [apiPetition, setApiPetition] = useState(false)
   const options = {
     loading,
     setLoading,
@@ -36,7 +36,9 @@ const AllContext = ({ children }: ReactComponent) => {
     menu,
     setMenu,
     portalVisible,
-    setPortalVisible
+    setPortalVisible,
+    setApiPetition,
+    apiPetition
   }
 
   return <Context.Provider value={options}>{children}</Context.Provider>

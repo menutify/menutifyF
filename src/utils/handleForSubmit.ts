@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import callAPI from './callApi'
+import { useDataGlobalContext } from '@/Context/GlobalContext'
 
 // import validateInputData from './validateFormInputData'
 /**
@@ -12,6 +13,7 @@ import callAPI from './callApi'
 const HandleFormSubmit = () => {
   const [error, setError] = useState({ error: false, msg: '' })
   const [isPending, setIsPending] = useState(false)
+  const { setApiPetition } = useDataGlobalContext()
 
   // valicion + submitData
   /**
@@ -30,11 +32,14 @@ const HandleFormSubmit = () => {
   ): Promise<Record<string, any> | boolean> => {
     setIsPending(true)
     console.log({ path, body, header })
+
+    setApiPetition(true)
     const {
       data,
       error: apiError,
       msg
     } = await callAPI.postData(path, body, header)
+    setApiPetition(false)
     console.log({ data, error, msg })
     if (apiError) {
       setError({ error: true, msg })
@@ -53,13 +58,13 @@ const HandleFormSubmit = () => {
     header: Record<string, string> = {}
   ): Promise<Record<string, any> | boolean> => {
     setIsPending(true)
-
+    setApiPetition(true)
     const {
       data,
       error: apiError,
       msg
     } = await callAPI.postDataForm(path, body, header)
-
+    setApiPetition(false)
     if (apiError) {
       setError({ error: true, msg })
       setIsPending(false)
@@ -77,13 +82,13 @@ const HandleFormSubmit = () => {
     header: Record<string, string> = {}
   ): Promise<Record<string, any> | boolean> => {
     setIsPending(true)
-
+    setApiPetition(true)
     const {
       data,
       error: apiError,
       msg
     } = await callAPI.patchDataForm(path, body, header)
-
+    setApiPetition(false)
     if (apiError) {
       setError({ error: true, msg })
       setIsPending(false)
@@ -101,13 +106,13 @@ const HandleFormSubmit = () => {
     header: Record<string, string> = {}
   ): Promise<Record<string, any> | boolean> => {
     setIsPending(true)
-
+    setApiPetition(true)
     const {
       data,
       error: apiError,
       msg
     } = await callAPI.patchData(path, body, header)
-
+    setApiPetition(false)
     if (apiError) {
       setError({ error: true, msg })
       setIsPending(false)
@@ -124,13 +129,13 @@ const HandleFormSubmit = () => {
     header: Record<string, string> = {}
   ): Promise<Record<string, any> | boolean> => {
     setIsPending(true)
-
+    setApiPetition(true)
     const {
       data,
       error: apiError,
       msg
     } = await callAPI.deleteData(path, header)
-
+    setApiPetition(false)
     if (apiError) {
       setError({ error: true, msg })
       setIsPending(false)
