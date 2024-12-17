@@ -1,6 +1,6 @@
 import { createPortal } from 'react-dom'
 import PrimaryNode from './PrimaryNode'
-import { useDataGlobalContext } from '@/Context/GlobalContext'
+import { useDataGlobalContext, useMenuContext } from '@/Context/GlobalContext'
 import {
   DndContext,
   DragOverlay,
@@ -27,7 +27,7 @@ import { routesApi } from '@/data/routes'
 const Tree = () => {
   const { categories, setCategories, menu } = useDataGlobalContext()
   const { isPending, handlePatchSubmit } = HandleFormSubmit()
-
+const { search } = useMenuContext()
   // Configurar sensores para el arrastre
   const sensors = useSensors(useSensor(PointerSensor))
 
@@ -224,7 +224,8 @@ const Tree = () => {
           items={categories}
           strategy={verticalListSortingStrategy}
         >
-          {categories.map((categorie, i) => {
+          {search.length == 0
+            ? categories.map((categorie, i) => {
             return (
               <PrimaryNode
                 key={categorie.id}
@@ -235,7 +236,26 @@ const Tree = () => {
                 isPending={isPending}
               />
             )
-          })}
+          })
+        
+        :categories.map((categorie) => {
+          if (categorie.details.name.toLowerCase().startsWith(search.toLowerCase())) {
+            const index = categories.findIndex(
+              (e) => e.id == categorie.id
+            )
+          return (
+            <PrimaryNode
+              key={categorie.id}
+              id={categorie.id}
+              name={categorie.details.name}
+              arrayChild={categorie.details.foods}
+              index={index}
+              isPending={isPending}
+              forceDisableDrag={true}
+            />
+          )}
+        })
+        }
         </SortableContext>
 
         {createPortal(

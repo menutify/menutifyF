@@ -25,17 +25,23 @@ import FormCategorie from './FormCategorie'
 import { createPortal } from 'react-dom'
 import { useState } from 'react'
 import DeleteModal from './DeleteModal'
-import { useMenuContext } from '@/Context/GlobalContext'
-
 interface primaryNode {
   id: number
   name: string
   arrayChild: Food[]
   index: number
   isPending: boolean
+  forceDisableDrag?: boolean
 }
 
-function PrimaryNode({ id, name, arrayChild, index, isPending }: primaryNode) {
+function PrimaryNode({
+  id,
+  name,
+  arrayChild,
+  index,
+  isPending,
+  forceDisableDrag = false
+}: primaryNode) {
   const [visibleCategoryModal, setVisibleCategoryModal] = useState(false)
   const [visibleDeleteModal, setVisibleDeleteModal] = useState(false)
   const {
@@ -45,8 +51,7 @@ function PrimaryNode({ id, name, arrayChild, index, isPending }: primaryNode) {
     transition,
     setDraggableNodeRef,
     setDroppableNodeRef
-  } = useSortable({ id, disabled: isPending })
-  const { search } = useMenuContext()
+  } = useSortable({ id, disabled: isPending || forceDisableDrag })
 
   return (
     <AccordionItem
@@ -115,42 +120,20 @@ function PrimaryNode({ id, name, arrayChild, index, isPending }: primaryNode) {
           items={arrayChild}
           strategy={verticalListSortingStrategy}
         >
-          {search.length == 0
-            ? arrayChild.map((food, I) => (
-                <SecondaryNode
-                  key={'c-' + food.id_cat + '-' + food.id}
-                  id={food.id}
-                  name={food.foodDetail.name}
-                  img={food.foodDetail.img}
-                  price={food.foodDetail.price}
-                  state={food.state}
-                  index={I}
-                  parentId={id}
-                  star={food.foodDetail.star}
-                  isPending={isPending}
-                />
-              ))
-            : arrayChild.map((food) => {
-                if (food.foodDetail.name.toLowerCase().startsWith(search.toLowerCase())) {
-                  const indexChild = arrayChild.findIndex(
-                    (e) => e.id == food.id
-                  )
-                  return (
-                    <SecondaryNode
-                      key={'c-' + food.id_cat + '-' + food.id}
-                      id={food.id}
-                      name={food.foodDetail.name}
-                      img={food.foodDetail.img}
-                      price={food.foodDetail.price}
-                      state={food.state}
-                      index={indexChild}
-                      parentId={id}
-                      star={food.foodDetail.star}
-                      isPending={true}
-                    />
-                  )
-                }
-              })}
+          {arrayChild.map((food, I) => (
+            <SecondaryNode
+              key={'c-' + food.id_cat + '-' + food.id}
+              id={food.id}
+              name={food.foodDetail.name}
+              img={food.foodDetail.img}
+              price={food.foodDetail.price}
+              state={food.state}
+              index={I}
+              parentId={id}
+              star={food.foodDetail.star}
+              isPending={isPending}
+            />
+          ))}
         </SortableContext>
       </AccordionContent>
       {visibleCategoryModal &&
