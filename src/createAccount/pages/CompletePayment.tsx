@@ -7,7 +7,6 @@ import { Button } from '@/Components/ui/button'
 import { useDataGlobalContext } from '@/Context/GlobalContext'
 import { routesApi, routesPath } from '@/data/routes'
 import { caAccount } from '@/data/text'
-import callAPI from '@/utils/callApi'
 import HandleFormSubmit from '@/utils/handleForSubmit'
 
 import { useNavigate } from 'react-router-dom'
@@ -15,17 +14,6 @@ import { useNavigate } from 'react-router-dom'
 function CompletePayment() {
   const navigate = useNavigate()
   const { setUser, user } = useDataGlobalContext()
-
-  const logOut = async () => {
-    setUser({
-      id: null,
-      isNew: null,
-      email: null,
-      subActive: null
-    })
-    await callAPI.getData(routesApi.logout)
-    navigate(routesPath.login)
-  }
 
   const { handleSubmit, error, isPending } = HandleFormSubmit()
   const moveToDashboard = async () => {
@@ -49,7 +37,6 @@ function CompletePayment() {
       <Logo />
       <Title2 className=''>{caAccount.title5}</Title2>
       <Parr className='text-parr_color_1'>{caAccount.parr4}</Parr>
-
       <ProgressBar state={3} className={'mt-2 mb-3'} />
       {error.error ? <p className='error'>{error.msg}</p> : <></>}
       <Button
@@ -59,9 +46,6 @@ function CompletePayment() {
         disabled={isPending ? true : false}
       >
         {caAccount.button2}
-      </Button>
-      <Button onClick={logOut} className='bg-ph_color_1 font-medium'>
-        Cerrar sesión
       </Button>
     </MyCard>
   )

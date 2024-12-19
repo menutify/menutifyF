@@ -61,12 +61,7 @@ function PrimaryNode({
       className={`h-full`}
       style={{
         textDecoration: 'none',
-        transform: CSS.Transform.toString({
-          scaleX: transform?.scaleX || 1,
-          scaleY: 1,
-          x: transform?.x || 0,
-          y: transform?.y || 0
-        }),
+        transform: CSS.Transform.toString(transform),
         transition: transition,
         // paddingLeft: `${20}px`, // Indenta según la profundidad
         margin: '',

@@ -48,6 +48,8 @@ export const phoneValidator = z
   .string()
   .trim()
   .min(10, { message: 'El número de teléfono debe tener al menos 10 dígitos.' })
+  .trim()
+  .max(11)
 // .regex(/^\d{3}-\d{3}-\d{4}$/, {
 //   message: 'El número de teléfono debe seguir el formato XXX-XXX-XXXX.',
 // })
@@ -70,7 +72,7 @@ export const descValidator = z
     message: 'Bio must be at least 10 characters.'
   })
   .max(160, {
-    message: 'Bio must not be longer than 30 characters.'
+    message: 'Bio must not be longer than 160 characters.'
   })
 
 export const checkValidator = z

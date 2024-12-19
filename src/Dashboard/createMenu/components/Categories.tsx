@@ -26,8 +26,8 @@ import { routesApi } from '@/data/routes'
 // Componente principal
 const Tree = () => {
   const { categories, setCategories, menu } = useDataGlobalContext()
-  const { isPending, handlePatchSubmit } = HandleFormSubmit()
-const { search } = useMenuContext()
+  const { isPending, handleDragPatchSubmit } = HandleFormSubmit()
+  const { search } = useMenuContext()
   // Configurar sensores para el arrastre
   const sensors = useSensors(useSensor(PointerSensor))
 
@@ -37,7 +37,7 @@ const { search } = useMenuContext()
 
   const handleDragEnd = async ({ active, over }: DragEndEvent) => {
     //si el destino no existe en el contexto
-    console.log({ active, over })
+    // console.log({ active, over })
     if (!over) {
       console.log('no hay destirno')
       return
@@ -88,16 +88,22 @@ const { search } = useMenuContext()
       let direction = 'asc'
       if (activeIndex > overIndex) direction = 'desc'
 
-      const data = await handlePatchSubmit(`${routesApi.dragpp}/${active.id}`, {
-        direction,
-        activeIndex,
-        overIndex,
-        idMenu: menu.id
-      })
-
-      if (!data) return
       //local
       setCategories(setChangeToArray(categories, active.id, over.id))
+
+      const data = await handleDragPatchSubmit(
+        `${routesApi.dragpp}/${active.id}`,
+        {
+          direction,
+          activeIndex,
+          overIndex,
+          idMenu: menu.id
+        }
+      )
+
+      if (!data) return
+      console.log('ok')
+
     } else {
       const ActiveId = parseInt((active.id + '').split('-')[2])
       const newParentActiveId = parseInt((active.id + '').split('-')[1])
@@ -110,10 +116,15 @@ const { search } = useMenuContext()
       if (activeIsChild && overIsFather) {
         console.log('Hijo -> Padre')
 
+        if (newParentActiveId == over.id) return
+
         const lengthFoodsOfNewCat = categories.filter((e) => e.id == over.id)[0]
           .details.foods.length
 
-        const data = await handlePatchSubmit(
+        setCategories((prev) =>
+          setChildToOtherFamily(prev, ActiveId, over.id, newParentActiveId)
+        )
+        const data = await handleDragPatchSubmit(
           `${routesApi.dragcp}/${ActiveId}`,
           {
             lengthFoodsOfNewCat,
@@ -122,12 +133,8 @@ const { search } = useMenuContext()
             overCatId: over.id
           }
         )
-
         if (!data) return
-
-        setCategories((prev) =>
-          setChildToOtherFamily(prev, ActiveId, over.id, newParentActiveId)
-        )
+        console.log('ok')
         return
       }
       //estando aqui solo llega un hijo
@@ -145,17 +152,6 @@ const { search } = useMenuContext()
       if (!ItemIsIncludeInArray(overItems, activeChildId)) {
         console.log('[Hijo1] -> [Hijo2]')
         //bd
-        const data = await handlePatchSubmit(
-          `${routesApi.dragccg}/${ActiveId}`,
-          {
-            activeIndex,
-            overIndex,
-            activeCatId: parentActiveId,
-            overCatId: parentOverId
-          }
-        )
-
-        if (!data) return
 
         //local
         setCategories((prev) => {
@@ -168,6 +164,20 @@ const { search } = useMenuContext()
             parentOverId
           )
         })
+
+        const data = await handleDragPatchSubmit(
+          `${routesApi.dragccg}/${ActiveId}`,
+          {
+            activeIndex,
+            overIndex,
+            activeCatId: parentActiveId,
+            overCatId: parentOverId
+          }
+        )
+
+        if (!data) return
+        console.log('ok')
+
         return
       }
       //actualizamos el array
@@ -179,7 +189,7 @@ const { search } = useMenuContext()
       let direction = 'asc'
       if (activeIndex > overIndex) direction = 'desc'
 
-      const data = await handlePatchSubmit(
+      const data = await handleDragPatchSubmit(
         `${routesApi.dragcc}/${ActiveId}?direction=${direction}`,
         {
           activeIndex,
@@ -226,36 +236,39 @@ const { search } = useMenuContext()
         >
           {search.length == 0
             ? categories.map((categorie, i) => {
-            return (
-              <PrimaryNode
-                key={categorie.id}
-                id={categorie.id}
-                name={categorie.details.name}
-                arrayChild={categorie.details.foods}
-                index={i}
-                isPending={isPending}
-              />
-            )
-          })
-        
-        :categories.map((categorie) => {
-          if (categorie.details.name.toLowerCase().startsWith(search.toLowerCase())) {
-            const index = categories.findIndex(
-              (e) => e.id == categorie.id
-            )
-          return (
-            <PrimaryNode
-              key={categorie.id}
-              id={categorie.id}
-              name={categorie.details.name}
-              arrayChild={categorie.details.foods}
-              index={index}
-              isPending={isPending}
-              forceDisableDrag={true}
-            />
-          )}
-        })
-        }
+                return (
+                  <PrimaryNode
+                    key={categorie.id}
+                    id={categorie.id}
+                    name={categorie.details.name}
+                    arrayChild={categorie.details.foods}
+                    index={i}
+                    isPending={isPending}
+                  />
+                )
+              })
+            : categories.map((categorie) => {
+                if (
+                  categorie.details.name
+                    .toLowerCase()
+                    .includes(search.toLowerCase())
+                ) {
+                  const index = categories.findIndex(
+                    (e) => e.id == categorie.id
+                  )
+                  return (
+                    <PrimaryNode
+                      key={categorie.id}
+                      id={categorie.id}
+                      name={categorie.details.name}
+                      arrayChild={categorie.details.foods}
+                      index={index}
+                      isPending={isPending}
+                      forceDisableDrag={true}
+                    />
+                  )
+                }
+              })}
         </SortableContext>
 
         {createPortal(

@@ -79,7 +79,12 @@ export const createFoodScheme = z.object({
   star: z.boolean().default(false),
   price: z
     .string()
-    .regex(/^\d+(\.\d{1,2})?$/, { message: 'Solo puede contener 2 decimales' }) // Asegura que el DNI contiene solo números
-    .min(1, { message: 'Debe colocar el precio' })
-    .max(15, { message: 'El maximo son 15 caracteres' })
+    .regex(/^\d{1,13}(\.\d{1,2})?$/, {
+      message:
+        'El precio puede tener hasta 13 dígitos enteros y 2 decimales, sin espacios'
+    }) // Asegura enteros hasta 13 dígitos y opcionales 2 decimales
+    .min(1, { message: 'Debe colocar el precio' }) // No acepta vacío
+    .refine((value) => !/\s/.test(value), {
+      message: 'El precio no debe contener espacios'
+    }) // Verifica que no haya espacios // No acepta vacío
 })

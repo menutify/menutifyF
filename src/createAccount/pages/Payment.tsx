@@ -18,7 +18,7 @@ function Payment() {
   const { setUser, user } = useDataGlobalContext()
 
   useEffect(() => {
-    const socket = io('http://localhost:3000', {
+    const socket = io(import.meta.env.VITE_APIPATH, {
       withCredentials: true, // Si estás usando cookies o credenciales
       transports: ['websocket', 'polling'],
       query: { user_id: user.id }, // Asegúrate de permitir ambos transportes
@@ -76,7 +76,7 @@ function Payment() {
       subActive: null
     })
     await callAPI.getData(routesApi.logout)
-    navigate(routesPath.login)
+    window.location.href = routesPath.login
   }
 
   return (

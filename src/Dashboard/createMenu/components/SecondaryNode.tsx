@@ -2,7 +2,6 @@ import { useDataGlobalContext } from '@/Context/GlobalContext'
 import { useSortable } from '@dnd-kit/sortable'
 import upDownSVG from '@/assets/createMenu/updown.svg'
 import starSVG from '@/assets/createMenu/star.svg'
-import { CSS } from '@dnd-kit/utilities'
 import { createPortal } from 'react-dom'
 import ModalFood from './ModalFood'
 import { useState } from 'react'
@@ -40,8 +39,7 @@ function SecondaryNode({
     listeners,
     setDroppableNodeRef,
     setDraggableNodeRef,
-    transform,
-    transition
+    
   } = useSortable({
     id: 'c-' + parentId + '-' + id,
     disabled: isPending || isPendingSubmit
@@ -76,8 +74,7 @@ function SecondaryNode({
         state ? 'bg-white' : 'bg-[#0002]'
       }`}
       style={{
-        transform: CSS.Transform.toString(transform),
-        transition: transition,
+        
         margin: '',
 
         position: 'relative',

@@ -124,6 +124,30 @@ const HandleFormSubmit = () => {
     return data
   }
 
+  const handleDragPatchSubmit = async (
+    path: string,
+    body: Record<string, any>,
+    header: Record<string, string> = {}
+  ): Promise<Record<string, any> | boolean> => {
+    setIsPending(true)
+   
+    const {
+      data,
+      error: apiError,
+      msg
+    } = await callAPI.patchData(path, body, header)
+   
+    if (apiError) {
+      setError({ error: true, msg })
+      setIsPending(false)
+      return false
+    }
+
+    setIsPending(false)
+    //retornar datos de la APi
+    return data
+  }
+
   const handleDelete = async (
     path: string,
     header: Record<string, string> = {}
@@ -154,7 +178,7 @@ const HandleFormSubmit = () => {
     error,
     isPending,
     handlePatchSubmit,
-    handleDelete
+    handleDelete,handleDragPatchSubmit
   }
 }
 
