@@ -4,18 +4,17 @@ import { caPaymentFormScheme } from '@/utils/formScheme'
 import { Form } from '@/Components/ui/form'
 import { CardPayment } from '@mercadopago/sdk-react'
 import { useDataGlobalContext } from '@/Context/GlobalContext'
-import { useEffect, useReducer } from 'react'
+import { useReducer } from 'react'
 import {
   ICardPaymentBrickPayer,
   ICardPaymentFormData
 } from '@mercadopago/sdk-react/bricks/cardPayment/type'
-import checkSVG from '@/assets/payment/check.svg'
+import loadingPaySVG from '@/assets/payment/loadingpay.svg'
 import errorSVG from '@/assets/payment/error.svg'
 import { Button } from '@/Components/ui/button'
 import Parr from '@/Components/my/Parr'
 import axiosInstance from '@/utils/axiosConfig'
-import { routesPath } from '@/data/routes'
-import { useNavigate } from 'react-router-dom'
+
 import axios from 'axios'
 
 const defaultValueForm = {
@@ -66,77 +65,44 @@ function paymentReducer(
 function FormPayment() {
   const [paymentState, dispatch] = useReducer(paymentReducer, initialState)
   const formOptions = useFormHook(caPaymentFormScheme, defaultValueForm)
-  const navigate = useNavigate()
+ 
   const { setApiPetition } = useDataGlobalContext()
-
-  useEffect(() => {
-    // socket.on('paymentStatus', (status) => {
-    //   if (status.status === 'GIAKERUZ IO approved') {
-    //     dispatch({ type: 'SET_STATE', state: true })
-    //     dispatch({ type: 'SET_MSG', msg: status.status })
-    //     alert('¡Pago aprobado! Acceso concedido.')
-    //   } else {
-    //     dispatch({ type: 'SET_STATE', state: false })
-    //     dispatch({ type: 'SET_MSG', msg: status.status_detail })
-    //     alert('Pago rechazado. Inténtalo nuevamente.')
-    //   }
-    // })
-
-    return () => {
-      // socket.off('paymentCreated')
-      // socket.off('paymentStatus')
-      // socket.disconnect()
-    }
-  }, [])
 
   const onSubmit = async (e: ICardPaymentFormData<ICardPaymentBrickPayer>) => {
     // console.log(e)
     try {
       setApiPetition(true)
-      const { data: respData } = await axiosInstance.post(
-        '/payment/create-payment',
-        e,
-        { withCredentials: true }
-      )
+      const { data } = await axiosInstance.post('/payment/create-payment', e, {
+        withCredentials: true
+      })
       setApiPetition(false)
 
-      const { data } = respData
-      // console.log({ data })
-      if (!data) return
+      dispatch({ type: 'SET_MODAL', modal: true })
+      if (data.error) {
+        dispatch({ type: 'SET_STATE', state: false })
+        dispatch({
+          type: 'SET_MSG',
+          msg: data.msg
+        })
+        return
+      }
 
-      console.log('sockets')
-      // Conecta al WebSocket solo mientras esperas confirmación
-      // socket.on('paymentCreated', (payment) => {
-      //   console.log('Pago creado: ', payment.paymentId)
-      // })
+      const { status, status_detail } = data.data as dataPayment
 
-      // // Escucha cambios en el estado del pago
-      // socket.on('paymentStatus', (status) => {
-      //   if (status.status === 'GIAKERUZ IO approved') {
-      //     alert('¡Pago aprobado! Acceso concedido.')
-      //     // Redirige o actualiza la interfaz
-      //   } else {
-      //     alert('Pago rechazado. Inténtalo nuevamente.')
-      //   }
-      // })
+      if (status != 'approved') {
+        dispatch({ type: 'SET_STATE', state: false })
+        dispatch({
+          type: 'SET_MSG',
+          msg: status_detail
+        })
+        return
+      }
 
-      // const { status, status_detail } = data as dataPayment
-      // dispatch({ type: 'SET_MODAL', modal: true })
-      // console.log({ status, status_detail })
-      // if (status === 'rejected') {
-      //   dispatch({ type: 'SET_STATE', state: false })
-      //   dispatch({
-      //     type: 'SET_MSG',
-      //     msg: status_detail
-      //   })
-      //   return
-      // }
-
-      // dispatch({ type: 'SET_STATE', state: true })
-      // dispatch({
-      //   type: 'SET_MSG',
-      //   msg: status_detail
-      // })
+      dispatch({ type: 'SET_STATE', state: true })
+      dispatch({
+        type: 'SET_MSG',
+        msg: status_detail
+      })
 
       //rest.data{
       //   error: false,
@@ -159,10 +125,6 @@ function FormPayment() {
     }
   }
 
-  const continueRegister = () => {
-    navigate(routesPath.completePayment)
-  }
-
   const goBack = () => {
     dispatch({ type: 'SET_MODAL', modal: false })
   }
@@ -179,20 +141,24 @@ function FormPayment() {
               <div className='w-full gap-4 pb-4 h-full flex flex-col justify-center items-center'>
                 <Parr>
                   {paymentState.state
-                    ? 'Se pago correctamente'
+                    ? 'Se esta procesando el Pago'
                     : 'Hubo un error en el pago'}
                 </Parr>
                 <span className='text-[#666666]'>Cod: {paymentState.msg}</span>
                 <div className='w-[20%]'>
-                  <img src={paymentState.state ? checkSVG : errorSVG} alt='' />
+                  <img
+                    src={paymentState.state ? loadingPaySVG : errorSVG}
+                    alt=''
+                  />
                 </div>
-
-                <Button
-                  className='bg-ph_color_1 mt-3 h-10 w-full'
-                  onClick={paymentState.state ? continueRegister : goBack}
-                >
-                  {paymentState.state ? ' Continuar' : 'Volver'}
-                </Button>
+                {!paymentState.state && (
+                  <Button
+                    className='bg-ph_color_1 mt-3 h-10 w-full'
+                    onClick={goBack}
+                  >
+                    Volver
+                  </Button>
+                )}
               </div>
             ) : null}
             <div style={{ display: paymentState.modal ? 'none' : 'block' }}>
