@@ -10,10 +10,40 @@ import { caPayment } from '@/data/text'
 import ProgressBar from '@/Components/my/ProgressBar'
 import Logo from '@/Components/my/Logo'
 import MyCard from '@/Components/my/MyCard'
+import { io } from 'socket.io-client'
+import { useEffect } from 'react'
 
 function Payment() {
   const navigate = useNavigate()
-  const { setUser } = useDataGlobalContext()
+  const { setUser, user } = useDataGlobalContext()
+
+  useEffect(() => {
+    const socket = io('http://localhost:3000', {
+      withCredentials: true, // Si estás usando cookies o credenciales
+      transports: ['websocket', 'polling'],
+      query: { user_id: user.id } // Asegúrate de permitir ambos transportes
+    })
+    
+    socket.connect()
+
+    socket.on('connect', () => {
+      console.log('conectado')
+    })
+
+    socket.on('paymentIOCreated', (payment) => {
+      console.log('Pago creado:', payment)
+    })
+
+    socket.on('paymentStatus',(data)=>{
+      console.log('Pago completado',data)
+    })
+
+    return () => {
+      // socket.off('paymentIOCreated')
+      // socket.off('paymentStatus')
+      socket.disconnect()
+    }
+  }, [user])
 
   const logOut = async () => {
     setUser({

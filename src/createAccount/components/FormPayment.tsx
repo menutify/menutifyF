@@ -4,7 +4,7 @@ import { caPaymentFormScheme } from '@/utils/formScheme'
 import { Form } from '@/Components/ui/form'
 import { CardPayment } from '@mercadopago/sdk-react'
 import { useDataGlobalContext } from '@/Context/GlobalContext'
-import { useState } from 'react'
+import { useEffect, useReducer } from 'react'
 import {
   ICardPaymentBrickPayer,
   ICardPaymentFormData
@@ -16,6 +16,7 @@ import Parr from '@/Components/my/Parr'
 import axiosInstance from '@/utils/axiosConfig'
 import { routesPath } from '@/data/routes'
 import { useNavigate } from 'react-router-dom'
+import axios from 'axios'
 
 const defaultValueForm = {
   email: ''
@@ -26,50 +27,135 @@ interface dataPayment {
   status_detail: string
 }
 
+interface PaymentState {
+  modal: boolean
+  state: boolean
+  msg: string
+}
+
+const initialState: PaymentState = {
+  modal: false,
+  state: false,
+  msg: ''
+}
+
+type PaymentAction =
+  | { type: 'SET_MODAL'; modal: boolean }
+  | { type: 'SET_STATE'; state: boolean }
+  | { type: 'SET_MSG'; msg: string }
+  | { type: 'RESET' }
+
+function paymentReducer(
+  state: PaymentState,
+  action: PaymentAction
+): PaymentState {
+  switch (action.type) {
+    case 'SET_MODAL':
+      return { ...state, modal: action.modal }
+    case 'SET_STATE':
+      return { ...state, state: action.state }
+    case 'SET_MSG':
+      return { ...state, msg: action.msg }
+    case 'RESET':
+      return initialState
+    default:
+      return state
+  }
+}
+
 function FormPayment() {
-  const [modal, setModal] = useState(false)
-  const [state, setState] = useState(false)
-  const [msg, setMsg] = useState('')
+  const [paymentState, dispatch] = useReducer(paymentReducer, initialState)
   const formOptions = useFormHook(caPaymentFormScheme, defaultValueForm)
   const navigate = useNavigate()
-  const { user } = useDataGlobalContext()
+  const { setApiPetition } = useDataGlobalContext()
+
+  useEffect(() => {
+    // socket.on('paymentStatus', (status) => {
+    //   if (status.status === 'GIAKERUZ IO approved') {
+    //     dispatch({ type: 'SET_STATE', state: true })
+    //     dispatch({ type: 'SET_MSG', msg: status.status })
+    //     alert('¡Pago aprobado! Acceso concedido.')
+    //   } else {
+    //     dispatch({ type: 'SET_STATE', state: false })
+    //     dispatch({ type: 'SET_MSG', msg: status.status_detail })
+    //     alert('Pago rechazado. Inténtalo nuevamente.')
+    //   }
+    // })
+
+    return () => {
+      // socket.off('paymentCreated')
+      // socket.off('paymentStatus')
+      // socket.disconnect()
+    }
+  }, [])
 
   const onSubmit = async (e: ICardPaymentFormData<ICardPaymentBrickPayer>) => {
-    console.log({ e, user })
+    // console.log(e)
     try {
+      setApiPetition(true)
       const { data: respData } = await axiosInstance.post(
         '/payment/create-payment',
-        {
-          ...e,
-          user
-        },
+        e,
         { withCredentials: true }
       )
+      setApiPetition(false)
 
       const { data } = respData
-      console.log({ data })
+      // console.log({ data })
       if (!data) return
 
-      const { status, status_detail } = data as dataPayment
-      setModal(true)
-      console.log({ status, status_detail })
-      if (status === 'rejected') {
-        setState(false)
-        setMsg(status_detail)
-        return
-      }
+      console.log('sockets')
+      // Conecta al WebSocket solo mientras esperas confirmación
+      // socket.on('paymentCreated', (payment) => {
+      //   console.log('Pago creado: ', payment.paymentId)
+      // })
 
-      setState(true)
-      setMsg(status_detail)
+      // // Escucha cambios en el estado del pago
+      // socket.on('paymentStatus', (status) => {
+      //   if (status.status === 'GIAKERUZ IO approved') {
+      //     alert('¡Pago aprobado! Acceso concedido.')
+      //     // Redirige o actualiza la interfaz
+      //   } else {
+      //     alert('Pago rechazado. Inténtalo nuevamente.')
+      //   }
+      // })
+
+      // const { status, status_detail } = data as dataPayment
+      // dispatch({ type: 'SET_MODAL', modal: true })
+      // console.log({ status, status_detail })
+      // if (status === 'rejected') {
+      //   dispatch({ type: 'SET_STATE', state: false })
+      //   dispatch({
+      //     type: 'SET_MSG',
+      //     msg: status_detail
+      //   })
+      //   return
+      // }
+
+      // dispatch({ type: 'SET_STATE', state: true })
+      // dispatch({
+      //   type: 'SET_MSG',
+      //   msg: status_detail
+      // })
 
       //rest.data{
       //   error: false,
       // data: { email, id, id_pay },
       //msg: 'Pago correctamente procesado'
       // }
-    } catch (error) {
-      console.log(error)
-      return
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error)) {
+        dispatch({ type: 'SET_MODAL', modal: true })
+        dispatch({ type: 'SET_STATE', state: false })
+        dispatch({
+          type: 'SET_MSG',
+          msg: error.response?.data?.msg || 'Error desconocido'
+        })
+        setApiPetition(false)
+        console.log(error)
+        return
+      }
+      console.error('Error inesperado:', error)
     }
   }
 
@@ -78,7 +164,7 @@ function FormPayment() {
   }
 
   const goBack = () => {
-    setModal(false)
+    dispatch({ type: 'SET_MODAL', modal: false })
   }
 
   return (
@@ -89,25 +175,27 @@ function FormPayment() {
           className='space-y-2 flex flex-col '
         >
           <div className='overflow-hidden'>
-            {modal ? (
+            {paymentState.modal ? (
               <div className='w-full gap-4 pb-4 h-full flex flex-col justify-center items-center'>
                 <Parr>
-                  {state ? 'Se pago correctamente' : 'Hubo un error en el pago'}
+                  {paymentState.state
+                    ? 'Se pago correctamente'
+                    : 'Hubo un error en el pago'}
                 </Parr>
-                <span className='text-[#666666]'>Cod: {msg}</span>
+                <span className='text-[#666666]'>Cod: {paymentState.msg}</span>
                 <div className='w-[20%]'>
-                  <img src={state ? checkSVG : errorSVG} alt='' />
+                  <img src={paymentState.state ? checkSVG : errorSVG} alt='' />
                 </div>
 
                 <Button
                   className='bg-ph_color_1 mt-3 h-10 w-full'
-                  onClick={state ? continueRegister : goBack}
+                  onClick={paymentState.state ? continueRegister : goBack}
                 >
-                  {state ? ' Continuar' : 'Volver'}
+                  {paymentState.state ? ' Continuar' : 'Volver'}
                 </Button>
               </div>
             ) : null}
-            <div style={{ display: modal ? 'none' : 'block' }}>
+            <div style={{ display: paymentState.modal ? 'none' : 'block' }}>
               <CardPayment
                 customization={{
                   visual: {
