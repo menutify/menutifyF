@@ -11,7 +11,7 @@ function QRComponent({ domain = '' }) {
     image: algosvg,
     dotsOptions: {
       color: '#000',
-      type: 'rounded'
+      type: 'classy'
     },
     imageOptions: {
       crossOrigin: 'anonymous',
