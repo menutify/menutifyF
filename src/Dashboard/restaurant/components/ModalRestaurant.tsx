@@ -5,7 +5,7 @@ import FormRestaurantUpdate from './FormRestaurantUpdate'
 import FormRestaurantUpdate2 from './FormRestaurantUpdate2'
 import { Card } from '@/Components/ui/card'
 import FormRestaurantUpdate3 from './FormRestaurantUpdate3'
-import { useLocation } from 'react-router-dom'
+// import { useLocation } from 'react-router-dom'
 import FormDesc from './FormDesc'
 import {
   domainMethod,
@@ -24,7 +24,7 @@ interface ModalRestaurant {
 function ModalRestaurant({ imgSVG, name, className = '' }: ModalRestaurant) {
   const { menu, restaurant } = useDataGlobalContext()
   const [modalVisible, setModalVisible] = useState(false)
-  const location = useLocation()
+  // const location = useLocation()
 
   const closeModalInBackground = (
     e: React.MouseEvent<HTMLElement, MouseEvent>
@@ -83,6 +83,7 @@ function ModalRestaurant({ imgSVG, name, className = '' }: ModalRestaurant) {
   const [defaultValueForm, setDefaultValueForm] = useState(arrayValueForm[0])
 
   useEffect(() => {
+    
     if (name === 'number') {
       setDefaultValueForm(arrayValueForm[1])
     } else if (name === 'send_method') {
@@ -104,29 +105,28 @@ function ModalRestaurant({ imgSVG, name, className = '' }: ModalRestaurant) {
       </picture>
       <div
         id='modal'
-        className='fixed w-screen z-20 h-full top-0 left-0 overflow-y-hidden flex-complete bg-[#0001]'
+        className='fixed w-screen z-50 h-full top-0 left-0 overflow-y-hidden flex-complete bg-[#0001]'
         onClick={closeModalInBackground}
       >
         <Card className='max-w-[500px]  w-1/2 min-w-[350px] p-4 bg-white rounded-xl flex-complete flex-col gap-2'>
-          {location.pathname === '/dashboard/restaurant' &&
-            (name == 'currency' || name == 'hour' ? (
-              name == 'hour' ? (
-                <FormRestaurantUpdate2 />
-              ) : (
-                <FormRestaurantUpdate3 />
-              )
-            ) : name == 'desc' ? (
-              <FormDesc visibilityModal={setModalVisible} />
+          {name == 'currency' || name == 'hour' ? (
+            name == 'hour' ? (
+              <FormRestaurantUpdate2 />
             ) : (
-              <FormRestaurantUpdate
-                visibilityModal={setModalVisible}
-                name={name}
-                ph={defaultValueForm.ph}
-                scheme={defaultValueForm.scheme}
-                title={defaultValueForm.title}
-                value={defaultValueForm.value}
-              />
-            ))}
+              <FormRestaurantUpdate3 />
+            )
+          ) : name == 'desc' ? (
+            <FormDesc visibilityModal={setModalVisible} />
+          ) : (
+            <FormRestaurantUpdate
+              visibilityModal={setModalVisible}
+              name={name}
+              ph={defaultValueForm.ph}
+              scheme={defaultValueForm.scheme}
+              title={defaultValueForm.title}
+              value={defaultValueForm.value}
+            />
+          )}
 
           <Button
             className='bg-sb_bg w-full'

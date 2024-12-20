@@ -21,7 +21,7 @@ export const menuInitialData: Menu = {
   id_restaurant: -1,
   f_color: false,
   s_color: '#FF5733',
-  domain: 'example',
+  domain: '',
   header_url: '',
   state: false,
   changed: false

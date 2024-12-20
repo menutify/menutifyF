@@ -1,6 +1,7 @@
 import {
   Sidebar,
   SidebarContent,
+  SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
   SidebarGroupLabel,
@@ -9,17 +10,18 @@ import {
   SidebarMenuButton,
   SidebarMenuItem
 } from '@/Components/ui/sidebar'
-import logoSVG from '@/assets/logo.svg'
 import menuSVG from '@/assets/sidebar/menu.svg'
 import shopSVG from '@/assets/sidebar/shop1.svg'
 import userSVG from '@/assets/sidebar/user.svg'
 import logoutSVG from '@/assets/sidebar/logout.svg'
-import crownSVG from '@/assets/sidebar/crown.svg'
+import helpSVG from '@/assets/sidebar/help.svg'
 import { useDataGlobalContext } from '../Context/GlobalContext'
 import callAPI from '../utils/callApi'
 import { routesApi, routesPath } from '../data/routes'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { useEffect, useMemo, useState } from 'react'
+import Text from '@/Components/my/Text'
+import { ArrowRight } from 'lucide-react'
 
 export function AppSidebar() {
   const { restaurant, setUser } = useDataGlobalContext()
@@ -41,123 +43,159 @@ export function AppSidebar() {
   useEffect(() => {
     const miPath = location.pathname
     console.log(miPath)
-    if (miPath.startsWith('/dashboard/create')) setUnEstado(1)
-    if (miPath.startsWith('/dashboard/restaurant')) setUnEstado(3)
+    if (miPath.startsWith('/dashboard/create')) setUnEstado(0)
+    if (miPath.startsWith('/dashboard/restaurant')) setUnEstado(1)
   }, [])
 
   const items = useMemo(
     () => [
-      {
-        title: 'Editar menú',
-        url:
-          restaurant.state === true
-            ? routesPath.createMenu
-            : routesPath.restaurant,
-        ico: menuSVG
-      },
-      {
-        title: 'Restaurante',
-        url: routesPath.restaurant,
-        ico: shopSVG
-      },
-      {
-        title: 'Cuenta',
-        url:
-          restaurant.state === true
-            ? routesPath.account
-            : routesPath.restaurant,
-        ico: userSVG
-      }
+      [
+        {
+          title: 'Editar menú',
+          url: routesPath.createMenu,
+          ico: menuSVG,
+          pos: 0
+        },
+        {
+          title: 'Restaurante',
+          url: routesPath.restaurant,
+          ico: shopSVG,
+          pos: 1
+        }
+      ],
+      [
+        {
+          title: 'Cuenta',
+          url:
+            restaurant.state === true
+              ? routesPath.account
+              : routesPath.restaurant,
+          ico: userSVG,
+          pos: 2
+        },
+        {
+          title: '¿Necesitas ayuda?',
+          url:
+            restaurant.state === true
+              ? routesPath.account
+              : routesPath.restaurant,
+          ico: helpSVG,
+          pos: 3
+        }
+      ]
     ],
     []
   )
 
+  const selectNavFromSB = (url, pos) => {
+    setUnEstado(pos)
+    navigate(url)
+  }
+
   return (
-    <Sidebar className=''>
-      {/* <div
-        className={`${
-          restaurant.state === true ? 'hidden' : 'block'
-        } w-full h-full absolute bg-[#0001] z-50 `}
-      ></div> */}
+    <Sidebar>
+      <SidebarHeader className='h-[80px] flex-complete p-4 px-5'>
+        <div className='h-full w-full flex gap-3'>
+          <div className='h-full  '>
+            <img
+              className='h-full rounded-xl'
+              src={restaurant.logo_url ? restaurant.logo_url : shopSVG}
+              alt=''
+            />
+          </div>
+          <div className='flex flex-col justify-between'>
+            <Text className='font-bold tracking-wider'>Angel's Pizzas</Text>
+            <Text className='font-extralight tracking-widest'>Restaurante</Text>
+          </div>
+        </div>
+      </SidebarHeader>
       <SidebarContent>
-        <SidebarGroup className='grid grid-rows-[5%_15%_1fr_10%] gap-2 md:grid-rows-[5%_20%_1fr_10%] h-[100%] text-sb_text py-4  '>
-          <SidebarHeader>
-            <div className='h-full px-5'>
-              <img className='h-full' src={logoSVG} alt='' />
-            </div>
-          </SidebarHeader>
-          <SidebarGroupLabel className='flex-complete flex-col  gap-2 h-full  '>
-            {/* <Title2 className=''>Mi tienda</Title2> */}
-            <div className='h-40 w-40 '>
-              <img
-                className='h-full rounded-xl'
-                src={restaurant.logo_url ? restaurant.logo_url : shopSVG}
-                alt=''
-              />
-            </div>
-            <span className='w-16 h-5 bg-sb_hover font-normal text-sb_text rounded-md flex-complete text-sm gap-1'>
-              <img className='h-3/5' src={crownSVG} alt='' />
-              PRO
-            </span>
-          </SidebarGroupLabel>
+        <SidebarGroup>
           <SidebarGroupContent>
             <SidebarMenu>
-              {items.map((item, index) => (
+              <SidebarGroupLabel className='text-base text-gray-500 px-5'>
+                Creación de menú
+              </SidebarGroupLabel>
+              {items[0].map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton
-                    onClick={() => setUnEstado(index)}
+                    onClick={() => selectNavFromSB(item.url, item.pos)}
                     asChild
                     size={'lg'}
                     className={`${
-                      unEstado === index && restaurant.state
-                        ? 'bg-sb_hover'
-                        : ''
-                    } focus:bg-red-500 selection:bg-red-50 rounded-none hover:rounded-none  hover:text-sb_text h-full relative  ${
-                      !restaurant.state
-                        ? index != 3
-                          ? 'before:absolute before:block before:top-0 before:left-0 before:w-full before:h-full blur-sm hover:bg-transparent '
-                          : 'bg-sb_bg hover:bg-sb_bg'
-                        : ''
-                    }`}
+                      unEstado === item.pos ? 'bg-sidebar-accent' : ''
+                    } focus:bg-red-500 selection:bg-red-50 rounded-none hover:rounded-none  hover:text-sb_text h-full relative select-none cursor-pointer py-0`}
                   >
-                    <div className='h-full select-none '>
-                      <picture className=' w-5  flex-complete'>
-                        <img src={item.ico} alt='' />
-                      </picture>
-                      <button
-                        onClick={() => navigate(item.url)}
-                        className='px-0 text-start cursor-pointer  font-bold text-lg w-full select-none '
-                        disabled={restaurant.state ? false : true}
-                      >
-                        <span>{item.title}</span>
-                      </button>
+                    <div className='w-full h-full flex justify-between items-center '>
+                      <div className=' flex-complete gap-2 '>
+                        <picture className=' w-5  flex-complete'>
+                          <img src={item.ico} alt='' />
+                        </picture>
+                        <Text className='text-lg'>{item.title}</Text>
+                      </div>
+                      <span className='h-2/5 w-10 '>
+                        {unEstado === item.pos && (
+                          <ArrowRight className='h-full' />
+                        )}
+                      </span>
+                    </div>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              ))}
+              <SidebarGroupLabel className='text-base text-gray-500 px-5'>
+                Ajustes
+              </SidebarGroupLabel>
+              {items[1].map((item) => (
+                <SidebarMenuItem key={item.title}>
+                  <SidebarMenuButton
+                    onClick={() => selectNavFromSB(item.url, item.pos)}
+                    asChild
+                    size={'lg'}
+                    className={`${
+                      unEstado === item.pos ? 'bg-sidebar-accent' : ''
+                    } focus:bg-red-500 selection:bg-red-50 rounded-none hover:rounded-none  hover:text-sb_text h-full relative select-none cursor-pointer py-0`}
+                  >
+                    <div className='w-full h-full flex justify-between items-center '>
+                      <div className=' flex-complete gap-2 '>
+                        <picture className=' w-5  flex-complete'>
+                          <img src={item.ico} alt='' />
+                        </picture>
+                        <Text className='text-lg'>{item.title}</Text>
+                      </div>
+                      <span className='h-2/5 w-10 '>
+                        {unEstado === item.pos && (
+                          <ArrowRight className='h-full' />
+                        )}
+                      </span>
                     </div>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}
             </SidebarMenu>
           </SidebarGroupContent>
-          <SidebarGroupContent className='flex justify-end h-full flex-col overflow-hidden items-center '>
-            <SidebarMenuButton
-              asChild
-              size={'lg'}
-              className='hover:rounded-none hover:bg-sb_hover hover:text-sb_text relative '
-            >
-              <div>
-                <picture className='h-full w-5'>
-                  <img src={logoutSVG} alt='' />
-                </picture>
-                <button
-                  onClick={logOut}
-                  className='px-0 text-start cursor-pointer  font-bold text-lg w-full'
-                >
-                  <span>{'Cerrar Sesión'}</span>
-                </button>
-              </div>
-            </SidebarMenuButton>
-          </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
+      <SidebarFooter>
+        <SidebarGroupContent className='flex justify-end h-full flex-col overflow-hidden items-center '>
+          <SidebarMenuButton
+            asChild
+            size={'lg'}
+            className='hover:rounded-none hover:bg-sb_hover hover:text-sb_text relative '
+          >
+            <div>
+              <picture className='h-full w-5'>
+                <img src={logoutSVG} alt='' />
+              </picture>
+              <button
+                onClick={logOut}
+                className='px-0 text-start cursor-pointer  font-bold text-lg w-full'
+              >
+                <span>{'Cerrar Sesión'}</span>
+              </button>
+            </div>
+          </SidebarMenuButton>
+        </SidebarGroupContent>
+      </SidebarFooter>
     </Sidebar>
   )
 }

@@ -2,20 +2,23 @@
 import QRCodeStyling, { FileExtension } from 'qr-code-styling'
 import { useEffect, useRef, useState } from 'react'
 import algosvg from '@/assets/createMenu/food.svg'
-function QrCode() {
-//   const { restaurant } = useDataGlobalContext()
+function QRComponent({ domain = '' }) {
+  //   const { restaurant } = useDataGlobalContext()
 
   const qrCode = new QRCodeStyling({
     width: 200,
     height: 200,
     image: algosvg,
     dotsOptions: {
-      color: '#4267b2',
+      color: '#000',
       type: 'rounded'
     },
     imageOptions: {
       crossOrigin: 'anonymous',
       margin: 1
+    },
+    backgroundOptions: {
+      color: '#fff'
     }
   })
 
@@ -31,7 +34,8 @@ function QrCode() {
 
   useEffect(() => {
     qrCode.update({
-      data: 'www.youtube.com'
+      // data: import.meta.env.APP_PATH + domain
+      data: domain || 'localhost:3000'
     })
   }, [])
 
@@ -60,7 +64,7 @@ function QrCode() {
   )
 }
 
-export default QrCode
+export default QRComponent
 const styles = {
   inputWrapper: {
     margin: '20px 0',

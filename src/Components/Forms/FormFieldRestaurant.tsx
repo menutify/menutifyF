@@ -22,7 +22,8 @@ function FormFieldRestaurant({
   formDesc = '',
   type = 'text',
   className = '',
-  selectDisable = false
+  selectDisable = false,
+  
 }) {
   const [seePass, setSeePass] = useState(false)
 
@@ -45,7 +46,6 @@ function FormFieldRestaurant({
           )}
           <Select
             disabled={selectDisable}
-            
             onValueChange={field.onChange}
             defaultValue={field.value || ''}
           >
@@ -73,6 +73,7 @@ function FormFieldRestaurant({
                   placeholder={ph}
                   {...field}
                   type={type}
+                  
                 />
               )}
             </FormControl>

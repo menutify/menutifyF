@@ -7,15 +7,20 @@ import { useState } from 'react'
 import ModalFood from '../components/ModalFood'
 import { createPortal } from 'react-dom'
 import FormCategorie from '../components/FormCategorie'
-import QrCode from '@/Components/my/QrCode'
+import { Button } from '@/Components/ui/button'
+import MenuPersonalitation from './MenuPersonalitation'
+import GetDataShareMenu from '../components/GetDataShareMenu'
 // import Test from '../components/test'
 
 function CreateMenu() {
-  const { categories } = useDataGlobalContext()
+  const { categories, restaurant } = useDataGlobalContext()
   const { setSearch } = useMenuContext()
   const [visibleFoodModal, setVisibleFoodModal] = useState(false)
   const [visibleCategoryModal, setVisibleCategoryModal] = useState(false)
   const [handleVisualitation, setHandleVisualitation] = useState(false)
+  const [visiblePersonalitationModal, setVisiblePersonalitationModal] =
+    useState(false)
+  const [visibleDataOfMenu, setVisibleDataOfMenu] = useState(false)
 
   // Test()
   return (
@@ -27,12 +32,61 @@ function CreateMenu() {
           <div className='flex gap-3 justify-between flex-wrap'>
             <div className='h-10 flex-complete gap-1'>
               <Parr className='text-xl text-[#000]'> Nueva Categoria</Parr>
-              <button onClick={() => setVisibleCategoryModal(true)}>+</button>
+              <Button
+                onClick={() => {
+                  if (restaurant.state) {
+                    setVisibleCategoryModal(true)
+                  } else {
+                    alert('Complete los datos del restaurant')
+                  }
+                }}
+              >
+                +
+              </Button>
             </div>
 
             <div className='h-10 flex-complete gap-1'>
               <Parr className='text-xl text-[#000]'> Nuevo Plato</Parr>
-              <button onClick={() => setVisibleFoodModal(true)}>+</button>
+              <Button
+                onClick={() => {
+                  if (restaurant.state) {
+                    setVisibleFoodModal(true)
+                  } else {
+                    alert('Complete los datos del restaurant')
+                  }
+                }}
+              >
+                +
+              </Button>
+            </div>
+
+            <div className='h-10 flex-complete gap-1'>
+              <Parr className='text-xl text-[#000]'> Personalizar</Parr>
+              <Button
+                onClick={() => {
+                  if (restaurant.state) {
+                    setVisiblePersonalitationModal(true)
+                  } else {
+                    alert('Complete los datos del restaurant')
+                  }
+                }}
+              >
+                lapicito
+              </Button>
+            </div>
+            <div className='h-10 flex-complete gap-1'>
+              <Parr className='text-xl text-[#000]'> qr</Parr>
+              <Button
+                onClick={() => {
+                  if (restaurant.state) {
+                    setVisibleDataOfMenu(true)
+                  } else {
+                    alert('Complete los datos del restaurant')
+                  }
+                }}
+              >
+                lapicito
+              </Button>
             </div>
           </div>
           {/* INPUT SEARCH */}
@@ -82,28 +136,8 @@ function CreateMenu() {
                     </ul>
                   </li>
                 )
-              })}{categories.map((todo) => {
-                return (
-                  <li
-                    id={`cat-${todo.id}`}
-                    className='p-2 flex flex-col gap-4 bg-red-300'
-                    key={todo.id + 'flores'}
-                  >
-                    <h2>
-                      id Padre:{todo.id} -- index:{todo.pos}
-                    </h2>
-                    <p>id-----name----index---state</p>
-                    <ul>
-                      {todo.details.foods.map((e) => (
-                        <li key={e.id + 'azucar'}>
-                          {e.id} --- {e.foodDetail.name} --- {e.pos} ------
-                          {e.state ? '1' : '0'} --- {e.id_cat}
-                        </li>
-                      ))}
-                    </ul>
-                  </li>
-                )
-              })}{categories.map((todo) => {
+              })}
+              {categories.map((todo) => {
                 return (
                   <li
                     id={`cat-${todo.id}`}
@@ -125,7 +159,28 @@ function CreateMenu() {
                   </li>
                 )
               })}
-              <QrCode />
+              {categories.map((todo) => {
+                return (
+                  <li
+                    id={`cat-${todo.id}`}
+                    className='p-2 flex flex-col gap-4 bg-red-300'
+                    key={todo.id + 'flores'}
+                  >
+                    <h2>
+                      id Padre:{todo.id} -- index:{todo.pos}
+                    </h2>
+                    <p>id-----name----index---state</p>
+                    <ul>
+                      {todo.details.foods.map((e) => (
+                        <li key={e.id + 'azucar'}>
+                          {e.id} --- {e.foodDetail.name} --- {e.pos} ------
+                          {e.state ? '1' : '0'} --- {e.id_cat}
+                        </li>
+                      ))}
+                    </ul>
+                  </li>
+                )
+              })}
             </ul>
           </div>
         </div>
@@ -160,6 +215,16 @@ function CreateMenu() {
             visibilityModal={setVisibleCategoryModal}
             index={-1}
           />,
+          document.body
+        )}
+      {visiblePersonalitationModal &&
+        createPortal(
+          <MenuPersonalitation closeModal={setVisiblePersonalitationModal} />,
+          document.body
+        )}
+      {visibleDataOfMenu &&
+        createPortal(
+          <GetDataShareMenu closeModal={setVisibleDataOfMenu} />,
           document.body
         )}
     </div>

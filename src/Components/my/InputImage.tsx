@@ -12,7 +12,7 @@ function InputImage({
   setImageDataContainer
 }) {
   const [imgContainer, setImgContainer] = useState('')
-  const { setMenu, setRestaurant } = useDataGlobalContext()
+  const { setMenu, setRestaurant, restaurant } = useDataGlobalContext()
 
   const handleImage = (e) => {
     e.preventDefault()
@@ -20,9 +20,10 @@ function InputImage({
     if (imageContent) {
       setImageDataContainer(imageContent)
       const reader = new FileReader()
-      reader.onload = (e) =>{ 
-        
-        if(e.target?.result && typeof e.target.result =='string'){setImgContainer(e.target?.result)}
+      reader.onload = (e) => {
+        if (e.target?.result && typeof e.target.result == 'string') {
+          setImgContainer(e.target?.result)
+        }
       }
       reader.readAsDataURL(imageContent)
       if (type === 'logo') {
@@ -35,7 +36,7 @@ function InputImage({
 
   return (
     <div className={`flex-1 flex flex-col gap-3 ${className}`}>
-      <Title3>{title}</Title3>
+      {title && <Title3>{title}</Title3>}
       <input id={type} type='file' className='hidden' onChange={handleImage} />
       <label
         htmlFor={type}
@@ -43,12 +44,18 @@ function InputImage({
       >
         <picture
           className={`${
-            imgContainer === '' ? 'w-7 h-7' : 'w-full h-full'
+            imgContainer === '' ? '  w-7 h-7' : 'w-full h-full'
           } block z-10`}
         >
           <img
-            className='h-full w-full object-contain'
-            src={imgContainer === '' ? uploadSVG : imgContainer}
+            className=' h-full w-full object-contain'
+            src={
+              restaurant.logo_url === ''
+                ? imgContainer === ''
+                  ? uploadSVG
+                  : imgContainer
+                : restaurant.logo_url
+            }
             alt=''
           />
         </picture>

@@ -104,7 +104,7 @@ function App() {
           />
         </Route>
         <Route path={routesPath.dashboard} element={<Dashboard />}>
-          <Route index element={<Navigate to={routesPath.restaurant} />} />
+          <Route index element={<Navigate to={routesPath.createMenu} />} />
           <Route path={routesPath.restaurant} element={<Restaurant />} />
           <Route path={routesPath.seeMenu} element={<Component />} />
           <Route path={routesPath.createMenu} element={<CreateMenu />}>

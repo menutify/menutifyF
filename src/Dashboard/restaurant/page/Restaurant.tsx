@@ -1,4 +1,3 @@
-import InputDashboard from '@/Components/my/InputDashboard'
 import Title2 from '@/Components/my/Title2'
 import { Card } from '@/Components/ui/card'
 import { Button } from '@/Components/ui/button'
@@ -7,17 +6,12 @@ import Title3 from '@/Components/my/Title3'
 import RadioButton from '@/Components/my/RadioButton'
 import PickColor from '@/Components/my/PickColor'
 //images
-import wspSVG from '@/assets/all/wsp.svg'
-import hourSVG from '@/assets/all/hour.svg'
-import moneySVG from '@/assets/all/money.svg'
-import sendSVG from '@/assets/all/send.svg'
-import mapSVG from '@/assets/all/map.svg'
 import UrlDetails from '../components/UrlDetails'
 import { useDataGlobalContext } from '@/Context/GlobalContext'
 import HandleFormSubmit from '@/utils/handleForSubmit'
 import { routesApi } from '@/data/routes'
 import { useState } from 'react'
-import InputDashboardType2 from '@/Components/my/InputDashboardType2'
+import RestaurantDataCard from './RestaurantDataCard'
 
 function Restaurant() {
   const [imageLogoDataContainer, setImageLogoDataContainer] = useState<File>()
@@ -93,7 +87,10 @@ function Restaurant() {
 
   return (
     <div className='flex flex-col md:flex-row relative md:pt-20'>
-      <div className='fixed z-40 md:z-0 md:absolute bottom-0 left-0 md:top-0 md:right-0 md:items-end justify-center items-center flex w-full h-[72px] bg-white flex-col' style={{borderTop:'.2px solid #0003'}}>
+      <div
+        className='fixed z-40 md:z-0 md:absolute bottom-0 left-0 md:top-0 md:right-0 md:items-end justify-center items-center flex w-full h-[72px] bg-white flex-col'
+        style={{ borderTop: '.2px solid #0003' }}
+      >
         <Button
           className={`${
             isPending ? 'bg-white' : 'bg-border_input_color'
@@ -102,69 +99,13 @@ function Restaurant() {
           disabled={isPending}
         >
           Guardar cambios
+        </Button>
           {error.error && (
             <p className='absolute -bottom-6 block text-red-500'>{error.msg}</p>
           )}
-        </Button>
       </div>
       <section className='flex-1 flex flex-col items-center p-2'>
-        <Card className='w-full p-3 md:p-6 flex flex-col gap-4'>
-          <Title2 className='text-xl md:text-3xl'>Datos del restaurante</Title2>
-          <div className='flex flex-col gap-2 md:gap-4 '>
-            <InputDashboard
-              name='name'
-              className='flex-1'
-              logoInput={mapSVG}
-              ph={'Añade el nombre de tu local'}
-              title={'Nombre'}
-            />
-            <InputDashboardType2
-              name='desc'
-              className='flex-1'
-              logoInput={mapSVG}
-              ph={'Añade una descripción'}
-              title={'Descripción'}
-            />
-            <div className='flex w-full gap-2 md:gap-4 md:flex-col lg:flex-row md:flex-wrap'>
-              <InputDashboard
-                name='address'
-                className='flex-1'
-                logoInput={mapSVG}
-                ph={'Añade la dirección de tu local'}
-                title={'Dirección'}
-              />
-              <InputDashboard
-                name='number'
-                className='flex-1'
-                logoInput={wspSVG}
-                ph={'Añade un numero de WhatsApp'}
-                title={'Whatsapp'}
-              />
-            </div>
-            <div className='flex w-full gap-2 md:gap-4 md:flex-col lg:flex-row md:flex-wrap'>
-              <InputDashboard
-                name='hour'
-                className='flex-1'
-                logoInput={hourSVG}
-                ph={'Añade tu horario'}
-                title={'Horario'}
-              />
-              <InputDashboard
-                name='currency'
-                className='flex-1'
-                logoInput={moneySVG}
-                ph={'$$$'}
-                title={'Moneda'}
-              />
-            </div>
-            <InputDashboard
-              name='send_method'
-              logoInput={sendSVG}
-              ph={'Ningún metodo seleccionado'}
-              title={'Opciones de envió'}
-            />
-          </div>
-        </Card>
+        <RestaurantDataCard />
       </section>
       <section className='md:min-w-[475px] flex-1 flex flex-col items-center mt-2 md:mt-0 p-2 '>
         <Card className='w-full  p-3 md:p-6 flex flex-col gap-6 '>

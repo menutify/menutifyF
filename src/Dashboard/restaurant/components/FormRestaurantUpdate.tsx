@@ -51,6 +51,7 @@ function FormRestaurantUpdate({
             name={name}
             ph={ph}
             title=''
+            
           />
           <Button className='bg-black ' type='submit'>
             {restaurantData.modal_button}
