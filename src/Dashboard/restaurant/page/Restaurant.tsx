@@ -17,6 +17,7 @@ function Restaurant() {
   const [imageLogoDataContainer, setImageLogoDataContainer] = useState<File>()
   const [imageHeaderDataContainer, setImageHeaderDataContainer] =
     useState<File>()
+  const [statusCode, setStatusCode] = useState(0)
   const { restaurant, setRestaurant, menu, setMenu } = useDataGlobalContext()
 
   const { error, isPending, handlePatchFormSubmit } = HandleFormSubmit()
@@ -46,16 +47,17 @@ function Restaurant() {
       if (promises.length > 0) {
         const results = await Promise.all(promises)
 
+        console.log({ changed: menu.changed, results })
         // Manejo de resultados individuales
         if (restaurant.changed === true && !results[0]) {
           console.log('Error al editar restaurante')
           return
         }
 
-        if (menu.changed === true && !results[1]) {
-          console.log('Error al editar menú')
-          return
-        }
+        // if (menu.changed === true && !results[1]) {
+        //   console.log('Error al editar menú')
+        //   return
+        // }
 
         if (
           restaurant.changed === true &&
@@ -74,9 +76,27 @@ function Restaurant() {
           })
         }
 
-        if (menu.changed === true && results[1]) {
-          const data = results[1]
-          const { myUrl } = data as { myUrl: string }
+        if (menu.changed === true) {
+          let data
+          if (results.length == 1) {
+            data = results[0]
+          } else {
+            data = results[1]
+          }
+
+          const { myUrl, status } = data as { myUrl: string; status: number }
+          console.log(myUrl, status)
+          if (status == 204) {
+            setStatusCode(status)
+
+            setMenu({
+              ...menu,
+              changed: false,
+              header_url: myUrl,
+              domain: menu.id + ''
+            })
+            return
+          }
           setMenu({ ...menu, changed: false, header_url: myUrl })
         }
       }
@@ -100,9 +120,9 @@ function Restaurant() {
         >
           Guardar cambios
         </Button>
-          {error.error && (
-            <p className='absolute -bottom-6 block text-red-500'>{error.msg}</p>
-          )}
+        {error.error && (
+          <p className='absolute -bottom-6 block text-red-500'>{error.msg}</p>
+        )}
       </div>
       <section className='flex-1 flex flex-col items-center p-2'>
         <RestaurantDataCard />
@@ -126,7 +146,7 @@ function Restaurant() {
           </div>
           <span className='block h-0.5 w-full bg-[#ddd4]'></span>
           <Title3>Personaliza tu dominio</Title3>
-          <UrlDetails />
+          <UrlDetails status={statusCode} />
           <span>Selecciona la versión que mas te guste</span>
 
           <RadioButton />

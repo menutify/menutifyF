@@ -16,7 +16,7 @@ function MenuPersonalitation({ closeModal }) {
     useState<File>()
 
   const { menu, setMenu } = useDataGlobalContext()
-
+  const [statusCode, setStatusCode] = useState(0)
   const { error, isPending, handlePatchFormSubmit } = HandleFormSubmit()
 
   const submitData = async () => {
@@ -30,7 +30,19 @@ function MenuPersonalitation({ closeModal }) {
       )
       if (!data) return
 
-      const { myUrl } = data as { myUrl: string }
+      const { myUrl, status } = data as { myUrl: string; status: number }
+      console.log(data)
+      if (status == 204) {
+        setStatusCode(status)
+
+        setMenu({
+          ...menu,
+          changed: false,
+          header_url: myUrl,
+          domain: menu.id + ''
+        })
+        return
+      }
       setMenu({ ...menu, changed: false, header_url: myUrl })
     }
   }
@@ -50,7 +62,7 @@ function MenuPersonalitation({ closeModal }) {
         </div>
         <span className='block h-0.5 w-full bg-[#ddd4]'></span>
         <Title3>Personaliza tu dominio</Title3>
-        <UrlDetails />
+        <UrlDetails status={statusCode} />
         <span>Selecciona la versión que mas te guste</span>
 
         <RadioButton />

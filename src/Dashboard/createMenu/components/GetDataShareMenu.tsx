@@ -15,7 +15,7 @@ function GetDataShareMenu({ closeModal }) {
         <div>
           <Text>Tu nuevo menu ha sido creado exitosamente</Text>
           <Card>
-            <QRComponent domain={menu.domain} />
+            <QRComponent domain={import.meta.env.VITE_APP_PATH +'/'+ menu.domain} />
             <input type='text' value={'localhost:3000'} />
           </Card>
         </div>

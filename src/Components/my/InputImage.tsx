@@ -12,7 +12,7 @@ function InputImage({
   setImageDataContainer
 }) {
   const [imgContainer, setImgContainer] = useState('')
-  const { setMenu, setRestaurant, restaurant } = useDataGlobalContext()
+  const { setMenu, setRestaurant, restaurant, menu } = useDataGlobalContext()
 
   const handleImage = (e) => {
     e.preventDefault()
@@ -44,22 +44,42 @@ function InputImage({
       >
         <picture
           className={`${
-            imgContainer === '' ? '  w-7 h-7' : 'w-full h-full'
+            type === 'logo'
+              ? imgContainer === '' && restaurant.logo_url === ''
+                ? '  w-7 h-7'
+                : 'w-full h-full'
+              : imgContainer === '' && menu.header_url === ''
+              ? '  w-7 h-7'
+              : 'w-full h-full'
           } block z-10`}
         >
           <img
             className=' h-full w-full object-contain'
             src={
-              restaurant.logo_url === ''
-                ? imgContainer === ''
+              type === 'logo'
+                ? restaurant.logo_url === '' && imgContainer === ''
                   ? uploadSVG
                   : imgContainer
-                : restaurant.logo_url
+                  ? imgContainer
+                  : restaurant.logo_url
+                : menu.header_url === '' && imgContainer === ''
+                ? uploadSVG
+                : imgContainer
+                ? imgContainer
+                : menu.header_url
             }
             alt=''
           />
         </picture>
-        {imgContainer === '' ? content : ''}
+        {imgContainer === ''
+          ? type === 'logo'
+            ? restaurant.logo_url
+              ? ''
+              : content
+            : menu.header_url
+            ? ''
+            : content
+          : ''}
       </label>
     </div>
   )
