@@ -33,10 +33,11 @@ function InputTel({ form, name, className = '' }) {
               onChange={(e) =>
                 field.onChange(formatPhoneNumber(e.target.value))
               }
-              className='bg-bg_input border-border_input_color w-full'
+              className='bg-bg_input border-border_input_color w-full h-10 mt-2 flex md:text-sm/6 text-sm/6 placeholder:text-sm/6 focus:border-primary_color'
             />
           </FormControl>
-          <FormMessage />
+
+          <FormMessage className='mt-0 pt-0' />
         </FormItem>
       )}
     />

@@ -1,24 +1,32 @@
-import { Link } from 'react-router-dom'
 import FormLogin from '../layouts/FormLogin'
-import { routesPath } from '../../data/routes'
-import Parr from '@/Components/my/Parr'
-import Title2 from '@/Components/my/Title2'
 import { logText } from '@/data/text'
 import GoogleAndFaceSession from '../layouts/GoogleAndFaceSession'
 import Separator from '@/Components/my/Separator'
 import MyCard from '@/Components/my/MyCard'
-import Logo from '@/Components/my/Logo'
+import logoSVG from '@/assets/logo2.svg'
+import ImgContainer from '@/Components/my/ImgContainer'
+import Title1 from '@/Components/my/Title1'
+import Parr1 from '@/Components/my/Parr1'
+import Anchor1 from '@/Components/my/Anchor1'
+import { routesPath } from '@/data/routes'
 
 const Login = () => {
   return (
-    <MyCard>
-      <Logo />
-      <Title2>{logText.title}</Title2>
-      <Parr>{logText.parr1}</Parr>
+    <MyCard className='items-start'>
+      <ImgContainer src={logoSVG} className='h-10 w-10 mb-[20px]' />
+      <div className='flex flex-col justify-center items-start gap-[10px]'>
+        <Title1>{logText.title}</Title1>
+        <Parr1 className='text-parr_color_1'>
+          ¿Nuevo en Menutify?{' '}
+          <Anchor1 className='text-primary_color' to={routesPath.createAccount}>{logText.regis}</Anchor1>
+        </Parr1>
+      </div>
+
       <FormLogin />
-      <Separator text={logText.other} className='mt-3 mb-3' />
-      <GoogleAndFaceSession className={'mb-1'} />
-      <div className='flex flex-col gap-my_gap_1 mt-1'>
+
+      <Separator text={logText.other} className='mb-[10px] my-[5px] ' />
+      <GoogleAndFaceSession className={''} />
+      {/* <div className='flex flex-col gap-my_gap_1 mt-1'>
         <Link
           className='text-parr_color_2 text-base'
           to={routesPath.repassword}
@@ -34,7 +42,7 @@ const Login = () => {
             {logText.regis}
           </Link>
         </p>
-      </div>
+      </div> */}
     </MyCard>
   )
 }

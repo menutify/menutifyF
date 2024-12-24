@@ -1,17 +1,17 @@
 import information from '@/assets/createMenu/information.svg'
 
 export const logText = {
-  title: 'Ingresa a Menutify',
-  parr1: 'Crea y comparte el menu de tu restaurant, todo en un solo lugar.',
+  title: 'Ingresá a Menutify',
+  parr1: 'Llená los campos y creá tu cuenta en segundos.',
   label1: 'Email',
   label2: 'Contraseña',
-  ph1: 'ejemplo@test.com',
-  ph2: '**************',
-  button: 'Ingresar',
+  ph1: 'ejemplo@gmail.com',
+  ph2: '●●●●●●●●●●●●●●',
+  button: 'Acceder a Menutify',
   repass: '¿Olvidaste tu contraseña?',
   noacc: '¿No tienes una cuenta?',
-  regis: 'Registrate',
-  other: ' O ingresa con',
+  regis: 'Crea tu cuenta ahora',
+  other: 'O continuá con',
   logout: 'Cerrar sesión'
 }
 
@@ -34,12 +34,12 @@ export const repasText = {
 export const caAccount = {
   title1: 'Registrate en Menutify',
   ph1: 'Email',
-  ph2: 'Crear una contraseña',
-  ph3: 'Repita su contraseña',
+  ph2: '●●●●●●●●●●●●●●',
+  ph3: '●●●●●●●●●●●●●●',
   button1: 'Registrarse',
   //verify
-  title2: 'Correo de verificaion enviado',
-  parr1: 'Se le envio un correo de verificacion a su Email',
+  title2: 'Correo de verificación enviado con éxito.',
+  parr1: 'Revisá tu email y seguí el enlace de verificación para continuar.',
   //ready
   title3: 'Confimacion de Cuenta',
   parr2: 'Se creo la cuenta correctamente',

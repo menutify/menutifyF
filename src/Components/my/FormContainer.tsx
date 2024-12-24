@@ -1,27 +1,25 @@
-
 import { Button } from '../../Components/ui/button'
 import { Form } from '../ui/form'
 
-
-
 function FormContainer({
   formOptions,
-  error = {error:false,msg:''},
+  error = { error: false, msg: '' },
   isPending = false,
   textButton,
   functionSubmit,
-  children
+  children,
+  className = ''
 }) {
   return (
     <>
       <Form {...formOptions}>
         <form
           onSubmit={formOptions.handleSubmit(functionSubmit)}
-          className='flex flex-col gap-3 w-full'
+          className={`flex flex-col gap-[10px] w-full ${className}`}
         >
           {children}
           <Button
-            className='bg-primary_color '
+            className='bg-primary_color text-sm/6 font-normal'
             type='submit'
             disabled={isPending ? true : false}
           >

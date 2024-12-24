@@ -7,10 +7,10 @@ export default {
   theme: {
     extend: {
       colors: {
-        bg_color_1: '#191919',
-        primary_color: '#FF6504',
+        bg_color_1: '#121722',
+        primary_color: '#ff6504',
         secondary_color: '##EA5B00',
-        bg_input: '#101010',
+        bg_input: '#1f252e',
         border_input_color: '#464647',
         ph_color_1: '#595A5B',
         progress_bar: '#28282A',
@@ -98,7 +98,7 @@ export default {
         'inner-custom': 'inset 0px 0px 25px rgba(0, 0, 0, 0.3)'
       },
       fontSize: {
-        sz1: '14px',
+        base_size: '14px',
         sz2: '16px',
         sz3: '18px',
         sz4: '20px'

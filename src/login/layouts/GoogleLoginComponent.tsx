@@ -65,7 +65,7 @@ function GoogleLoginComponent() {
         theme='filled_black'
         containerProps={{
           style: {
-           
+            
             borderRadius: '8px', // Hace el contenedor circular
             overflow: 'hidden', // Asegura que el contenido se ajuste al contenedor
             marginRight: '-0px',
@@ -77,9 +77,9 @@ function GoogleLoginComponent() {
       />
       <button
         disabled={isPending ? true : false}
-        className={`text-base min-w-[155px] w-[50%] h-full flex flex-1 gap-2 justify-center items-center ${
+        className={`text-sm/6 min-w-[155px] w-[48%] h-full flex flex-1 gap-2 justify-center items-center ${
           isPending ? 'bg-[#444]' : 'bg-bg_input'
-        } border-border_input_color text-parr_color_3 absolute top-0 left-0 `}
+        } border-border_input_color absolute top-0 left-0 `}
       >
         <img className={'h-[80%]'} src={googleLogo} alt='' />
         <span>Google</span>

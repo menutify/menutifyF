@@ -68,8 +68,8 @@ function FacebookLoginComponent() {
     <>
       <button
         disabled={isPending ? true : false}
-        className={`h-full min-w-[155px] flex w-1/2 gap-2 justify-center items-center 'bg-bg_input border-border_input_color 
-         hover:border-border_input_color text-parr_color_3 text-base flex-1 `}
+        className={`h-full min-w-[155px] w-[48%] flex gap-2 justify-center items-center bg-bg_input border-border_input_color 
+         hover:border-border_input_color text-white text-sm/6 flex-1 `}
         onClick={handleSuccess}
       >
         <img className={'h-[80%]'} src={facebookLogo} alt='' />

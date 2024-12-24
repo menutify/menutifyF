@@ -29,28 +29,33 @@ function FormFieldComponent({
       name={name}
       render={({ field }) => (
         <FormItem className={className + 'relative '}>
-          <FormLabel>{title}</FormLabel>
+          <FormLabel className='font-normal tracking-wider text-sm/6'>
+            {title}
+          </FormLabel>
           {type == 'password' ? (
-            <span
-              onClick={() => setSeePass(!seePass)}
-              className='absolute block w-5 h-5 rounded-full right-2 top-0.5'
-            >
-              <img className='' src={seePass ? oeSVG : ceSVG} alt='' />
-            </span>
+            <></>
           ) : (
             <></>
           )}
           <FormControl>
             {type == 'password' ? (
-              <Input
-                className='h-10 text-base bg-bg_input border-border_input_color placeholder:text-base '
-                placeholder={ph}
-                {...field}
-                type={seePass ? 'text' : type}
-              />
+              <div>
+                <Input
+                  className='h-10 text-base bg-bg_input border-border_input_color placeholder:text-base md:text-sm/6 placeholder:md:text-sm/6 placeholder:text-[#41444f] focus:border-primary_color'
+                  placeholder={ph}
+                  {...field}
+                  type={seePass ? 'text' : type}
+                />
+                <span
+                  onClick={() => setSeePass(!seePass)}
+                  className='absolute block w-5 h-5 rounded-full right-2 top-[42px]'
+                >
+                  <img className='' src={seePass ? oeSVG : ceSVG} alt='' />
+                </span>
+              </div>
             ) : (
               <Input
-                className='h-10 text-base bg-bg_input border-border_input_color placeholder:text-base'
+                className='h-10 text-base bg-bg_input border-border_input_color placeholder:text-base md:text-sm/6 placeholder:md:text-sm/6 placeholder:text-[#41444f] focus:border-primary_color'
                 placeholder={ph}
                 {...field}
                 type={type}

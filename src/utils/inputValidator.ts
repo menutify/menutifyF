@@ -47,9 +47,9 @@ export const nameValidator = z
 export const phoneValidator = z
   .string()
   .trim()
-  .min(10, { message: 'El número de teléfono debe tener al menos 10 dígitos.' })
+  .min(12, { message: 'Formato invalido.' })
   .trim()
-  .max(11)
+  .max(13)
 // .regex(/^\d{3}-\d{3}-\d{4}$/, {
 //   message: 'El número de teléfono debe seguir el formato XXX-XXX-XXXX.',
 // })
@@ -82,9 +82,9 @@ export const checkValidator = z
     message: 'Aceptar los terminos y condiciones'
   })
 
-  export const nameFoodValidator=z.string()
+export const nameFoodValidator = z
+  .string()
   .trim()
   .min(1, { message: msg.min8Caracter })
   .trim()
   .max(40)
-  

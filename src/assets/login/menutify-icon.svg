@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 35 35">
+  <g id="Group_384" data-name="Group 384" transform="translate(-178 -184)">
+    <g id="Group_333" data-name="Group 333" transform="translate(178 184)">
+      <rect id="Rectangle_328" data-name="Rectangle 328" width="35" height="35" rx="8" fill="#fff"/>
+      <g id="Group_332" data-name="Group 332" transform="translate(8.468 6.559)">
+        <path id="Path_92" data-name="Path 92" d="M19.479,0V17.463c-2.71-.238-5.955,2.243-8.493,4.42V8.233c1.6-2.724,4.561-5.47,8.493-8.233" transform="translate(-1.415)" fill="#ea5b00"/>
+        <path id="Path_93" data-name="Path 93" d="M17.66,0V15.155c-2.008-.263-5.009,2.459-6.674,4.84V6.47A18.619,18.619,0,0,1,17.66,0" transform="translate(-1.415)" fill="#ff6504"/>
+        <path id="Path_94" data-name="Path 94" d="M0,0V17.463c2.71-.238,5.955,2.243,8.493,4.42V8.233C6.892,5.509,3.933,2.763,0,0" fill="#ea5b00"/>
+        <path id="Path_95" data-name="Path 95" d="M2.088,0V15.155C4.1,14.892,7.1,17.614,8.762,20V6.47A18.619,18.619,0,0,0,2.088,0" transform="translate(-0.269)" fill="#ff6504"/>
+      </g>
+    </g>
+  </g>
+</svg>
