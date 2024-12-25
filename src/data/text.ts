@@ -41,11 +41,12 @@ export const caAccount = {
   title2: 'Correo de verificación enviado con éxito.',
   parr1: 'Revisá tu email y seguí el enlace de verificación para continuar.',
   //ready
-  title3: 'Confimacion de Cuenta',
-  parr2: 'Se creo la cuenta correctamente',
-  title4: 'Error de confirmacion de cuenta',
-  parr3: 'No se pudo confirmar la creación de la cuenta, link vencido',
-  button2: 'Continuar',
+  title3: '¡Verificación exitosa! Vamos al siguiente paso.',
+  parr2: 'Todo listo. Vamos a activar tu cuenta para que puedas empezar.',
+  title4: 'Error al verificar la cuenta, por favor intentelo de nuevo.',
+  parr3: 'No es posible crear la cuenta, link vencido',
+  button2: 'Continuar con el pago',
+  button3: 'Volver atrás',
   //complete
   title5: 'Proceso completado',
   parr4: 'Su cuenta esta lista para usar.'
@@ -53,8 +54,8 @@ export const caAccount = {
 
 export const caPayment = {
   parr1:
-    'Esta información nos ayudará a asegurar una experiencia fluida y personalizada para usted.',
-  title1: 'Informacion de cuenta',
+    'Completa el pago de tu suscripción para disfrutar de Menutify sin límites.',
+  title1: 'Suscríbete a Menutify',
   ph1: 'Nombre completo',
   ph2: '+54',
   ph3: '2xxxxxxxxx',

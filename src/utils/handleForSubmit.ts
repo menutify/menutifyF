@@ -39,13 +39,15 @@ const HandleFormSubmit = () => {
       error: apiError,
       msg
     } = await callAPI.postData(path, body, header)
-    setApiPetition(false)
     console.log({ data, error, msg })
     if (apiError) {
+      console.log('entramos al error')
       setError({ error: true, msg })
       setIsPending(false)
+      setApiPetition(false)
       return false
     }
+    setApiPetition(false)
 
     setIsPending(false)
     //retornar datos de la APi
@@ -130,13 +132,13 @@ const HandleFormSubmit = () => {
     header: Record<string, string> = {}
   ): Promise<Record<string, any> | boolean> => {
     setIsPending(true)
-   
+
     const {
       data,
       error: apiError,
       msg
     } = await callAPI.patchData(path, body, header)
-   
+
     if (apiError) {
       setError({ error: true, msg })
       setIsPending(false)
@@ -178,7 +180,8 @@ const HandleFormSubmit = () => {
     error,
     isPending,
     handlePatchSubmit,
-    handleDelete,handleDragPatchSubmit
+    handleDelete,
+    handleDragPatchSubmit
   }
 }
 

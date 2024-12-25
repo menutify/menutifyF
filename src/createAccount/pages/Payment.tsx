@@ -1,21 +1,18 @@
 import { useNavigate } from 'react-router-dom'
 import FormPayment from '../components/FormPayment'
-import callAPI from '../../utils/callApi'
-import { routesApi, routesPath } from '../../data/routes'
+import { routesApi } from '../../data/routes'
 import { useDataGlobalContext } from '../../Context/GlobalContext'
-import { Button } from '@/Components/ui/button'
-import Title2 from '@/Components/my/Title2'
-import Parr from '@/Components/my/Parr'
 import { caPayment } from '@/data/text'
 import ProgressBar from '@/Components/my/ProgressBar'
-import Logo from '@/Components/my/Logo'
 import MyCard from '@/Components/my/MyCard'
 import { io } from 'socket.io-client'
 import { useEffect } from 'react'
+import Parr1 from '@/Components/my/Parr1'
+import Title1 from '@/Components/my/Title1'
 
 function Payment() {
   const navigate = useNavigate()
-  const { setUser, user } = useDataGlobalContext()
+  const { user } = useDataGlobalContext()
 
   useEffect(() => {
     const socket = io(import.meta.env.VITE_APIPATH, {
@@ -34,9 +31,9 @@ function Payment() {
     // Error de conexión
     socket.on('connect_error', (err) => {
       console.error('Error de conexión:', err.message)
-      alert(
-        'No se pudo conectar con el servidor. Por favor, revisa tu conexión o recarga la pagina.'
-      )
+      // alert(
+      //   'No se pudo conectar con el servidor. Por favor, revisa tu conexión o recarga la pagina.'
+      // )
     })
 
     // Tiempo de espera superado
@@ -44,7 +41,7 @@ function Payment() {
       console.error(
         'Tiempo de espera superado para la conexión con el servidor.'
       )
-      alert('El servidor no responde. Intenta nuevamente más tarde.')
+      // alert('El servidor no responde. Intenta nuevamente más tarde.')
     })
 
     socket.on('paymentCreated', (payment) => {
@@ -68,34 +65,28 @@ function Payment() {
     }
   }, [user])
 
-  const logOut = async () => {
-    setUser({
-      id: null,
-      isNew: null,
-      email: null,
-      subActive: null
-    })
-    await callAPI.getData(routesApi.logout)
-    window.location.href = routesPath.login
-  }
+  // const logOut = async () => {
+  //   setUser({
+  //     id: null,
+  //     isNew: null,
+  //     email: null,
+  //     subActive: null
+  //   })
+  //   await callAPI.getData(routesApi.logout)
+  //   window.location.href = routesPath.login
+  // }
 
   return (
-    <MyCard className='mt-20 overflow-x-hidden '>
-      <span className='absolute top-20 left-40 text-white '>
+    <MyCard className='overflow-x-hidden '>
+      {/* <span className='absolute top-20 left-40 text-white '>
         5287 3383 1025 3304{' '}
-      </span>
-
-      <Logo />
-      <Title2 className=''>{caPayment.title1}</Title2>
-      <Parr className='text-parr_color_1'>{caPayment.parr1}</Parr>
-
-      <ProgressBar state={2} className={'mt-2 mb-3'} />
-
+      </span> */}
+      <Title1>{caPayment.title1}</Title1>
+      <div className='w-full'>
+        <Parr1 className='text-parr_color_1 spacing'>{caPayment.parr1}</Parr1>
+        <ProgressBar state={2} className={'mt-2 mb-3'} />
+      </div>
       <FormPayment />
-
-      <Button onClick={logOut} className='bg-ph_color_1 h-10'>
-        Cerrar sesión
-      </Button>
     </MyCard>
   )
 }

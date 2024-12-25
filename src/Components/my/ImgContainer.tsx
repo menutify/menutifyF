@@ -5,7 +5,7 @@ function ImgContainer({
   alt = ''
 }) {
   return (
-    <picture className={`overflow  ${className}`}>
+    <picture className={`overflow ${className}`}>
       <img className={`w-full h-full  ${imgClassName}`} src={src} alt={alt} />
     </picture>
   )

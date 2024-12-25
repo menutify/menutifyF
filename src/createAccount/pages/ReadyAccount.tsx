@@ -6,10 +6,11 @@ import { useDataGlobalContext } from '../../Context/GlobalContext'
 import { User } from '@/types'
 import { Button } from '@/Components/ui/button'
 import { caAccount } from '@/data/text'
-import Title2 from '@/Components/my/Title2'
-import Parr from '@/Components/my/Parr'
-import Logo from '@/Components/my/Logo'
+import confirmSVG from '@/assets/login/move-forward-icon.svg'
 import MyCard from '@/Components/my/MyCard'
+import ImgContainer from '@/Components/my/ImgContainer'
+import Title1 from '@/Components/my/Title1'
+import Parr1 from '@/Components/my/Parr1'
 
 function ReadyAccount() {
   const navigate = useNavigate()
@@ -19,20 +20,21 @@ function ReadyAccount() {
   const { error, handleSubmit, isPending } = HandleFormSubmit()
 
   useEffect(() => {
-    handleSubmit(routesApi.caCreate, {}, { Authorization: token as string })
-      .then((data) => {
-        if (!data) {
-          setFail(true)
-          return
-        }
-        console.log(data)
-        setUser(data as User)
-      })
-      .catch(() => {
-        console.error('Error en el inicio de sesión:')
+    const handleSubmitPost = async () => {
+      const data = await handleSubmit(
+        routesApi.caCreate,
+        {},
+        { Authorization: token as string }
+      )
+      if (!data) {
         setFail(true)
         return
-      })
+      }
+      console.log(data)
+      setUser(data as User)
+    }
+
+    handleSubmitPost()
   }, [])
 
   const routeNavigate = () => {
@@ -41,17 +43,18 @@ function ReadyAccount() {
 
   return (
     <MyCard>
-      <Logo />
-      <Title2 className=''>{fail ? caAccount.title4 : caAccount.title3}</Title2>
-      <Parr className='text-parr_color_1'>
+      <ImgContainer src={confirmSVG} className='h-8 w-8' />
+      <Title1>{fail ? caAccount.title4 : caAccount.title3}</Title1>
+      <Parr1 className='text-parr_color_1 spacing'>
         {fail ? caAccount.parr3 : caAccount.parr2}
-      </Parr>
+      </Parr1>
+
       <Button
         onClick={routeNavigate}
         className='bg-primary_color mt-2'
         disabled={isPending ? true : false}
       >
-        {caAccount.button2}
+        {fail ? caAccount.button3 : caAccount.button2}
       </Button>
       {error.error ? <p className='error'>{error.msg}</p> : <></>}
       {/* <button onClick={logOut}>Cerrar sesion</button> */}

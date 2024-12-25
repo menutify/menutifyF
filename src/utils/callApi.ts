@@ -28,7 +28,7 @@ const postData = async (url, body, headers = {}) => {
 
     return data
   } catch (e) {
-    // console.log({ errorInGet: e })
+    
 
     if (typeof e === 'object' && e !== null && 'response' in e) {
       const error = e as { response: { data: { error: boolean; msg: string } } };

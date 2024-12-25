@@ -41,7 +41,7 @@ function FormFieldComponent({
             {type == 'password' ? (
               <div>
                 <Input
-                  className='h-10 text-base bg-bg_input border-border_input_color placeholder:text-base md:text-sm/6 placeholder:md:text-sm/6 placeholder:text-[#41444f] focus:border-primary_color'
+                  className='h-10 bg-bg_input border-border_input_color text-sm/6 placeholder:text-sm/6 placeholder:text-[#41444f] focus:border-primary_color'
                   placeholder={ph}
                   {...field}
                   type={seePass ? 'text' : type}
@@ -55,7 +55,7 @@ function FormFieldComponent({
               </div>
             ) : (
               <Input
-                className='h-10 text-base bg-bg_input border-border_input_color placeholder:text-base md:text-sm/6 placeholder:md:text-sm/6 placeholder:text-[#41444f] focus:border-primary_color'
+                className='h-10 bg-bg_input border-border_input_color  text-sm/6 placeholder:text-sm/6 placeholder:text-[#41444f] focus:border-primary_color'
                 placeholder={ph}
                 {...field}
                 type={type}

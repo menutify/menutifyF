@@ -28,12 +28,13 @@ function FormFieldCheckbox({ form, name = '', className = '', value = '' }) {
               {name === 'star' ? (
                 <FormLabel className='text-white'>{value}</FormLabel>
               ) : (
-                <FormLabel className='text-white text-sm/6 flex-complete font-light h-5 '>
-                  Acepto los&nbsp;
-                  <Anchor2 className='font-light text-primary_color underline'>
+                <FormLabel className='text-white text-sm/6 flex font-light  flex-wrap items-start'>
+                  Acepto los<span>&nbsp;</span>
+                  <Anchor2 className='font-light text-primary_color underline flex-complete'>
                     términos y condiciones
                   </Anchor2>
-                  &nbsp; de Menutify
+                  <span>&nbsp;</span>
+                  de Menutify
                 </FormLabel>
               )}
             </div>
