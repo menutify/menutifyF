@@ -5,6 +5,8 @@ import Title1 from '@/Components/my/Title1'
 import Title2 from '@/Components/my/Title2'
 import { Card } from '@/Components/ui/card'
 import planFooterImg from '@/assets/login/botton-right-image.png'
+import checksvg from '@/assets/login/check.svg'
+import arrowsvg from '@/assets/login/arrowOrange.svg'
 
 function Plans() {
   return (
@@ -46,33 +48,61 @@ function Plans() {
             </div>
           </Card>
         </div>
-        <Card className='flex items-center p-[20px] w-full justify-between'>
-          <div className='bg-[url(/src/assets/login/menutify-pro-image.png)] bg-cover rounded-2xl bg-no-repeat  border p-[15px] py-[30px] text-white '>
+        <Card className='flex items-start p-[20px] w-full  justify-between'>
+          <div className='bg-[url(/src/assets/login/menutify-pro-image.png)] bg-cover rounded-2xl bg-no-repeat  border p-[15px] py-[30px] text-white h-full'>
             <Title2 className='mb-2'>Menutify PRO</Title2>
             <div>
               <Parr1>ARS 20.000,00 / Mes</Parr1>
               <Parr1>1 Miembro activo</Parr1>
             </div>
           </div>
-          <section className='flex flex-col items-start justify-start'>
-            <Parr1>Incluye</Parr1>
-            <Parr1>
-              <>
-                <span></span>Menú digital
-              </>
+          <section className='flex flex-col items-start justify-start gap-[10px] h-full '>
+            <Parr1 className='border-b-2 border-primary_color font-semibold'>
+              Incluye
+            </Parr1>
+            <Parr1 className='flex-complete gap-[5px] font-medium'>
+              <ImgContainer className='h-3 w-3' src={checksvg} />
+              Menú digital
+            </Parr1>
+            <Parr1 className='flex-complete gap-[5px] font-medium'>
+              <ImgContainer className='h-3 w-3' src={checksvg} />
+              Menú para impresión
+            </Parr1>
+            <Parr1 className='flex-complete gap-[5px] font-medium'>
+              <ImgContainer className='h-3 w-3' src={checksvg} />
+              Edición en tiempo real
+            </Parr1>
+            <Parr1 className='flex-complete gap-[5px] font-medium'>
+              <ImgContainer className='h-3 w-3' src={checksvg} />
+              Exportación a PDF y QR
             </Parr1>
           </section>
-          <section className='flex flex-col items-start justify-start'>
-            <Parr1>Incluye</Parr1>
-            <Parr1>
-              <>
-                <span></span>Menú digital
-              </>
+          <section className='flex flex-col items-start justify-start gap-[10px] h-full '>
+            <Parr1 className='border-b-2 border-primary_color font-semibold'>
+              Con tu suscripción
+            </Parr1>
+            <Parr1 className='flex-complete gap-[5px] font-medium'>
+              <ImgContainer className='h-3 w-3' src={arrowsvg} />
+              Soporte 24/7
+            </Parr1>
+            <Parr1 className='flex-complete gap-[5px] font-medium'>
+              <ImgContainer className='h-3 w-3' src={arrowsvg} />
+              Tutoriales y asistencia
+            </Parr1>
+            <Parr1 className='flex-complete gap-[5px] font-medium'>
+              <ImgContainer className='h-3 w-3' src={arrowsvg} />
+              Acceso estritorio/mobile
             </Parr1>
           </section>
         </Card>
+        <div className='block w-full h-[1px] bg-parr_color_2'></div>
+        <div className='flex justify-between items-center w-full'>
+          <Title1>Total</Title1>
+          <Title1>ARS$ 20.000,00 / MES</Title1>
+        </div>
       </div>
-      <ImgContainer src={planFooterImg} alt={''} />
+      <ImgContainer className='w-full' src={planFooterImg} alt={''} />
+      
     </div>
   )
 }

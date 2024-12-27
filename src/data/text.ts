@@ -20,15 +20,15 @@ export const repasText = {
   parr1: 'Se le enviara un correo de reestablecimiento al email que coloque.',
   button: 'Enviar',
   //sendEmail:
-  title2: 'Correo enviado',
+  title2: 'Correo de restablecimiento enviado con éxito.',
   parr2: 'Se le envio un correo de reestablecimiento de contraseña.',
   // changepassword
   label1: 'Nueva contraseña',
   label2: 'Repetir contraseña',
   // confirmado
-  title3: 'Proceso completado',
+  title3: 'Cambio de contraseña exitoso.',
   parr3: 'Se reestablecio su contraseña correctamente.',
-  button2: 'Iniciar sesión'
+  button2: 'Continuar'
 }
 
 export const caAccount = {

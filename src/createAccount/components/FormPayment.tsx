@@ -4,19 +4,17 @@ import { caPaymentFormScheme } from '@/utils/formScheme'
 import { Form } from '@/Components/ui/form'
 import { CardPayment } from '@mercadopago/sdk-react'
 import { useDataGlobalContext } from '@/Context/GlobalContext'
-import { useReducer } from 'react'
+import { useState } from 'react'
 import {
   ICardPaymentBrickPayer,
   ICardPaymentFormData
 } from '@mercadopago/sdk-react/bricks/cardPayment/type'
-import loadingPaySVG from '@/assets/payment/loadingpay.svg'
-import errorSVG from '@/assets/payment/error.svg'
-import { Button } from '@/Components/ui/button'
-import Parr from '@/Components/my/Parr'
 import axiosInstance from '@/utils/axiosConfig'
 
 import axios from 'axios'
-
+import ImgContainer from '@/Components/my/ImgContainer'
+import Parr1 from '@/Components/my/Parr1'
+import alertSVG from '@/assets/login/alert.svg'
 const defaultValueForm = {
   email: ''
 }
@@ -26,46 +24,11 @@ interface dataPayment {
   status_detail: string
 }
 
-interface PaymentState {
-  modal: boolean
-  state: boolean
-  msg: string
-}
-
-const initialState: PaymentState = {
-  modal: false,
-  state: false,
-  msg: ''
-}
-
-type PaymentAction =
-  | { type: 'SET_MODAL'; modal: boolean }
-  | { type: 'SET_STATE'; state: boolean }
-  | { type: 'SET_MSG'; msg: string }
-  | { type: 'RESET' }
-
-function paymentReducer(
-  state: PaymentState,
-  action: PaymentAction
-): PaymentState {
-  switch (action.type) {
-    case 'SET_MODAL':
-      return { ...state, modal: action.modal }
-    case 'SET_STATE':
-      return { ...state, state: action.state }
-    case 'SET_MSG':
-      return { ...state, msg: action.msg }
-    case 'RESET':
-      return initialState
-    default:
-      return state
-  }
-}
 
 function FormPayment() {
-  const [paymentState, dispatch] = useReducer(paymentReducer, initialState)
+  const [modalError, setModalError] = useState(false)
   const formOptions = useFormHook(caPaymentFormScheme, defaultValueForm)
- 
+
   const { setApiPetition } = useDataGlobalContext()
 
   const onSubmit = async (e: ICardPaymentFormData<ICardPaymentBrickPayer>) => {
@@ -75,34 +38,24 @@ function FormPayment() {
       const { data } = await axiosInstance.post('/payment/create-payment', e, {
         withCredentials: true
       })
-      setApiPetition(false)
+      // setApiPetition(false)
 
-      dispatch({ type: 'SET_MODAL', modal: true })
+      
       if (data.error) {
-        dispatch({ type: 'SET_STATE', state: false })
-        dispatch({
-          type: 'SET_MSG',
-          msg: data.msg
-        })
+        setModalError(true)
+        setApiPetition(false)
         return
       }
 
       const { status, status_detail } = data.data as dataPayment
 
       if (status != 'approved') {
-        dispatch({ type: 'SET_STATE', state: false })
-        dispatch({
-          type: 'SET_MSG',
-          msg: status_detail
-        })
+        setModalError(true)
+        setApiPetition(false)
         return
       }
 
-      dispatch({ type: 'SET_STATE', state: true })
-      dispatch({
-        type: 'SET_MSG',
-        msg: status_detail
-      })
+      console.log({status,status_detail})
 
       //rest.data{
       //   error: false,
@@ -111,22 +64,13 @@ function FormPayment() {
       // }
     } catch (error: unknown) {
       if (axios.isAxiosError(error)) {
-        dispatch({ type: 'SET_MODAL', modal: true })
-        dispatch({ type: 'SET_STATE', state: false })
-        dispatch({
-          type: 'SET_MSG',
-          msg: error.response?.data?.msg || 'Error desconocido'
-        })
+        setModalError(true)
         setApiPetition(false)
         console.log(error)
         return
       }
       console.error('Error inesperado:', error)
     }
-  }
-
-  const goBack = () => {
-    dispatch({ type: 'SET_MODAL', modal: false })
   }
 
   return (
@@ -137,31 +81,9 @@ function FormPayment() {
           className='space-y-2 flex flex-col '
         >
           <div className='overflow-hidden'>
-            {paymentState.modal ? (
-              <div className='w-full gap-4 pb-4 h-full flex flex-col justify-center items-center'>
-                <Parr>
-                  {paymentState.state
-                    ? 'Se esta procesando el Pago'
-                    : 'Hubo un error en el pago'}
-                </Parr>
-                <span className='text-[#666666]'>Cod: {paymentState.msg}</span>
-                <div className='w-[20%]'>
-                  <img
-                    src={paymentState.state ? loadingPaySVG : errorSVG}
-                    alt=''
-                  />
-                </div>
-                {!paymentState.state && (
-                  <Button
-                    className='bg-ph_color_1 mt-3 h-10 w-full'
-                    onClick={goBack}
-                  >
-                    Volver
-                  </Button>
-                )}
-              </div>
-            ) : null}
-            <div style={{ display: paymentState.modal ? 'none' : 'block' }}>
+            <div
+            // style={{ display: paymentState.modal ? 'none' : 'block' }}
+            >
               <CardPayment
                 customization={{
                   visual: {
@@ -183,6 +105,17 @@ function FormPayment() {
             {caPayment.button}
           </Button> */}
         </form>
+        {modalError && (
+          <div className='w-full md:w-[40%] flex-complete absolute top-0 left-0'>
+            <div className=' border-2 border-[#ff0000] text-[#ff0000] flex-complete rounded-xl px-[20px] bg-[#ff0000] bg-opacity-20 gap-[5px] py-[10px]'>
+              <ImgContainer className='h-5' src={alertSVG} />
+              <Parr1 className='text-[9px]'>
+                No pudimos procesar tu pago. Revisa la información de tu tarjeta
+                e intenta de nuevo.
+              </Parr1>
+            </div>
+          </div>
+        )}
       </Form>
     </>
   )

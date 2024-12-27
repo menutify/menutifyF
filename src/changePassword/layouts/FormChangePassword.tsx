@@ -50,7 +50,7 @@ function FormChangePassword() {
       functionSubmit={onSubmit}
       textButton={logText.button}
     >
-      <div>
+      <div className='flex-col flex gap-[10px] mb-[10px]'>
         <FormFieldComponent
           className=''
           type='password'

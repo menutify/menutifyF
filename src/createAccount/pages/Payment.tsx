@@ -12,7 +12,7 @@ import Title1 from '@/Components/my/Title1'
 
 function Payment() {
   const navigate = useNavigate()
-  const { user } = useDataGlobalContext()
+  const { user, setApiPetition } = useDataGlobalContext()
 
   useEffect(() => {
     const socket = io(import.meta.env.VITE_APIPATH, {
@@ -41,6 +41,7 @@ function Payment() {
       console.error(
         'Tiempo de espera superado para la conexión con el servidor.'
       )
+      setApiPetition(false)
       // alert('El servidor no responde. Intenta nuevamente más tarde.')
     })
 
@@ -51,6 +52,7 @@ function Payment() {
     socket.on('paymentStatus', (data) => {
       console.log('Respuesta del banco: ', data.status_detail)
       if (data.status_detail === 'accredited' && data.status === 'approved') {
+        setApiPetition(false)
         navigate(routesApi.caComplete)
       }
     })
@@ -77,7 +79,7 @@ function Payment() {
   // }
 
   return (
-    <MyCard className='overflow-x-hidden '>
+    <MyCard className='overflow-x-hidden'>
       {/* <span className='absolute top-20 left-40 text-white '>
         5287 3383 1025 3304{' '}
       </span> */}

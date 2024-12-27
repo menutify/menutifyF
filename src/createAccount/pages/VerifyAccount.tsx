@@ -14,14 +14,14 @@ function VerifyAccount() {
       <Title1>{caAccount.title2}</Title1>
       <Parr1 className='text-parr_color_1 spacing'>{caAccount.parr1}</Parr1>
       <Anchor1
-        className='text-primary_color text-xl underline'
+        className='text-primary_color text-md underline'
         style={{ fontWeight: '400' }}
         to={routesPath.createAccount}
       >
         ¿Te equivocaste de email? &gt;
       </Anchor1>
       <p
-        className='text-primary_color text-xl font-thin underline text-center tracking-wider cursor-pointer'
+        className='text-primary_color text-md font-thin underline text-center tracking-wider cursor-pointer'
         style={{ fontWeight: '400' }}
       >
         Re-enviar mail de confirmación &gt;

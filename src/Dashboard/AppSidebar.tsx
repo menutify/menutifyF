@@ -13,7 +13,6 @@ import {
 import menuSVG from '@/assets/sidebar/menu.svg'
 import shopSVG from '@/assets/sidebar/shop1.svg'
 import userSVG from '@/assets/sidebar/user.svg'
-import logoutSVG from '@/assets/sidebar/logout.svg'
 import helpSVG from '@/assets/sidebar/help.svg'
 import { useDataGlobalContext } from '../Context/GlobalContext'
 import callAPI from '../utils/callApi'
@@ -22,7 +21,15 @@ import { useNavigate, useLocation } from 'react-router-dom'
 import { useEffect, useMemo, useState } from 'react'
 import Text from '@/Components/my/Text'
 import { ArrowRight } from 'lucide-react'
-
+import { Separator } from '@/Components/ui/separator'
+import Label1 from '@/Components/my/Label1'
+import pointsvg from '@/assets/sidebar/points.svg'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger
+} from '@/Components/ui/dropdown-menu'
 export function AppSidebar() {
   const { restaurant, setUser } = useDataGlobalContext()
   const [unEstado, setUnEstado] = useState(-1)
@@ -99,12 +106,14 @@ export function AppSidebar() {
           <div className='h-full  '>
             <img
               className='h-full rounded-xl'
-              src={restaurant.logo_url ? restaurant.logo_url : shopSVG}
+              src={restaurant.logo_url || shopSVG}
               alt=''
             />
           </div>
           <div className='flex flex-col justify-between'>
-            <Text className='font-bold tracking-wider'>Angel's Pizzas</Text>
+            <Text className='font-bold tracking-wider'>
+              {restaurant.name || 'Mi restaurante'}
+            </Text>
             <Text className='font-extralight tracking-widest'>Restaurante</Text>
           </div>
         </div>
@@ -175,26 +184,41 @@ export function AppSidebar() {
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
-      <SidebarFooter>
-        <SidebarGroupContent className='flex justify-end h-full flex-col overflow-hidden items-center '>
-          <SidebarMenuButton
-            asChild
-            size={'lg'}
-            className='hover:rounded-none hover:bg-sb_hover hover:text-sb_text relative '
-          >
-            <div>
-              <picture className='h-full w-5'>
-                <img src={logoutSVG} alt='' />
-              </picture>
-              <button
-                onClick={logOut}
-                className='px-0 text-start cursor-pointer  font-bold text-lg w-full'
-              >
-                <span>{'Cerrar Sesión'}</span>
-              </button>
+      <Separator />
+      <SidebarFooter className='h-[80px] flex-row items-center p-4 px-5 w-full '>
+        <div className='h-full w-full flex gap-3 flex-1'>
+          <div className='h-full bg-red-50 rounded-xl overflow-auto '>
+            <img
+              className='h-full rounded-xl'
+              src={restaurant.logo_url ? restaurant.logo_url : shopSVG}
+              alt=''
+            />
+          </div>
+          <div className='flex flex-col justify-center'>
+            <Text className='font-bold'>Angel Navas</Text>
+            <div className='flex justify-start items-center px-1.5 border border-ph_color_1 gap-2 rounded-sm h-5 w-[72px]'>
+              <span className='w-[2px] h-[2px] bg-green-400 block rounded-full'></span>{' '}
+              <Label1 className='text-[7px] font-thin tracking-widest '>
+                Menutify PRO
+              </Label1>{' '}
             </div>
-          </SidebarMenuButton>
-        </SidebarGroupContent>
+          </div>
+        </div>
+        <DropdownMenu>
+          <DropdownMenuTrigger className='h-[15px] cursor-pointer w-[15px] p-0'>
+            <div className='h-full rounded-xl overflow-auto '>
+              <img className='h-full rounded-xl' src={pointsvg} alt='' />
+            </div>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className='bg-bg_color_1 cursor-pointer border-ph_color_1'>
+            <DropdownMenuItem
+              className='text-red-600 bg-bg_color_1 cursor-pointer flex-complete'
+              onClick={logOut}
+            >
+              Cerrar sesión
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </SidebarFooter>
     </Sidebar>
   )
