@@ -19,7 +19,7 @@ function FormContainer({
         >
           {children}
           <Button
-            className='bg-primary_color text-sm/6 font-normal'
+            className='bg-primary_color text-sm/6 font-bold md:font-bold'
             type='submit'
             disabled={isPending ? true : false}
           >

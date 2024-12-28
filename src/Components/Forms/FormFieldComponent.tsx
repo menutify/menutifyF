@@ -32,16 +32,12 @@ function FormFieldComponent({
           <FormLabel className='font-normal tracking-wider text-sm/6'>
             {title}
           </FormLabel>
-          {type == 'password' ? (
-            <></>
-          ) : (
-            <></>
-          )}
+          {type == 'password' ? <></> : <></>}
           <FormControl>
             {type == 'password' ? (
               <div>
                 <Input
-                  className='h-10 bg-bg_input border-border_input_color text-sm/6 placeholder:text-sm/6 placeholder:text-[#41444f] focus:border-primary_color'
+                  className='h-10 bg-bg_input border-border_input_color text-sm/6 md:text-sm/6 placeholder:text-sm/6 placeholder:text-[#41444f] focus:border-primary_color'
                   placeholder={ph}
                   {...field}
                   type={seePass ? 'text' : type}

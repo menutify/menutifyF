@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom'
 import FormPayment from '../components/FormPayment'
-import { routesApi } from '../../data/routes'
+import { routesPath } from '../../data/routes'
 import { useDataGlobalContext } from '../../Context/GlobalContext'
 import { caPayment } from '@/data/text'
 import ProgressBar from '@/Components/my/ProgressBar'
@@ -50,10 +50,11 @@ function Payment() {
     })
 
     socket.on('paymentStatus', (data) => {
-      console.log('Respuesta del banco: ', data.status_detail)
+      console.log('Respuesta del banco: ', data.status_detail, data.status)
       if (data.status_detail === 'accredited' && data.status === 'approved') {
+        console.log('entramos')
         setApiPetition(false)
-        navigate(routesApi.caComplete)
+        navigate(routesPath.dashboard)
       }
     })
 

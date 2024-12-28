@@ -14,7 +14,7 @@ export const routesPath = {
   caPaySt: '/create-account/payment/Stripe',
   payment: '/payment',
   completePayment: '/create-account/complete',
-
+  
   restaurant: '/dashboard/restaurant',
   seeMenu: '/dashboard/menus',
   createMenu: '/dashboard/create',
@@ -47,5 +47,5 @@ export const routesApi = {
   dragcp: '/drag/drag_cp',
   dragccg: '/drag/drag_ccg',
   dragpp: '/drag/drag_pp',
-  state:'/cat/food/state'
+  state: '/cat/food/state'
 }

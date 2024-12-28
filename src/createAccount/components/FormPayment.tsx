@@ -24,7 +24,6 @@ interface dataPayment {
   status_detail: string
 }
 
-
 function FormPayment() {
   const [modalError, setModalError] = useState(false)
   const formOptions = useFormHook(caPaymentFormScheme, defaultValueForm)
@@ -40,7 +39,6 @@ function FormPayment() {
       })
       // setApiPetition(false)
 
-      
       if (data.error) {
         setModalError(true)
         setApiPetition(false)
@@ -55,7 +53,7 @@ function FormPayment() {
         return
       }
 
-      console.log({status,status_detail})
+      console.log({ status, status_detail })
 
       //rest.data{
       //   error: false,
@@ -109,7 +107,7 @@ function FormPayment() {
           <div className='w-full md:w-[40%] flex-complete absolute top-0 left-0'>
             <div className=' border-2 border-[#ff0000] text-[#ff0000] flex-complete rounded-xl px-[20px] bg-[#ff0000] bg-opacity-20 gap-[5px] py-[10px]'>
               <ImgContainer className='h-5' src={alertSVG} />
-              <Parr1 className='text-[9px]'>
+              <Parr1 className='text-[10px]'>
                 No pudimos procesar tu pago. Revisa la información de tu tarjeta
                 e intenta de nuevo.
               </Parr1>
