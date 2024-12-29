@@ -1,5 +1,5 @@
 import tailwindcssAnimate from 'tailwindcss-animate'
-
+import preline from 'preline/plugin'
 /** @type {import('tailwindcss').Config} */
 export default {
   darkMode: ['class'],
