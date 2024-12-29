@@ -1,5 +1,4 @@
-import CopyButton from '@/Components/my/copyButton'
-
+import CopyButton from '@/Components/my/CopyLabel'
 import QRComponent from '@/Components/my/QRComponent'
 import Text from '@/Components/my/Text'
 import Title2 from '@/Components/my/Title2'
@@ -10,7 +9,7 @@ import { Link } from 'react-router-dom'
 
 function GetDataShareMenu({ closeModal }) {
   const { menu } = useDataGlobalContext()
- 
+
   return (
     <div className='flex-complete absolute top-0 left-0 w-full h-full z-20 bg-[#0002] '>
       <Card>
