@@ -92,7 +92,7 @@ const Tree = () => {
       setCategories(setChangeToArray(categories, active.id, over.id))
 
       const data = await handleDragPatchSubmit(
-        `${routesApi.dragpp}/${active.id}`,
+        `${routesApi.dragpp}/${active.id}`+ `?token=${localStorage.getItem('token')}`,
         {
           direction,
           activeIndex,
@@ -125,7 +125,7 @@ const Tree = () => {
           setChildToOtherFamily(prev, ActiveId, over.id, newParentActiveId)
         )
         const data = await handleDragPatchSubmit(
-          `${routesApi.dragcp}/${ActiveId}`,
+          `${routesApi.dragcp}/${ActiveId}`+ `?token=${localStorage.getItem('token')}`,
           {
             lengthFoodsOfNewCat,
             activeIndex,
@@ -166,7 +166,7 @@ const Tree = () => {
         })
 
         const data = await handleDragPatchSubmit(
-          `${routesApi.dragccg}/${ActiveId}`,
+          `${routesApi.dragccg}/${ActiveId}`+ `?token=${localStorage.getItem('token')}`,
           {
             activeIndex,
             overIndex,
@@ -190,7 +190,7 @@ const Tree = () => {
       if (activeIndex > overIndex) direction = 'desc'
 
       const data = await handleDragPatchSubmit(
-        `${routesApi.dragcc}/${ActiveId}?direction=${direction}`,
+        `${routesApi.dragcc}/${ActiveId}?direction=${direction}&token=${localStorage.getItem('token')}`,
         {
           activeIndex,
           overIndex,

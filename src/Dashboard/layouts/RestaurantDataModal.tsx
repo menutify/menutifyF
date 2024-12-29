@@ -30,7 +30,7 @@ function RestaurantDataModal({ className = '' }) {
         if (!data) return
 
         const { myUrl } = data as { myUrl: string }
-        
+
         setRestaurant({
           ...restaurant,
           state: true,
@@ -106,7 +106,13 @@ function RestaurantDataModal({ className = '' }) {
         />
       </div>
       {error.error && <span>{error.msg}</span>}
-      <Button onClick={submitData} disabled={isPending && true}>
+      <Button
+        onClick={submitData}
+        disabled={
+          (isPending || restaurant.address === '' || restaurant.name === '') &&
+          true
+        }
+      >
         Enviar
       </Button>
     </Card>

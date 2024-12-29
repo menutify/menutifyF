@@ -153,14 +153,17 @@ function ModalFood({
   async function onSubmit(values: Record<string, string>) {
     const { name, cat, desc, star, price } = values
 
-    const data = await handleSubmitForm(routesApi.food, {
-      id_cat: cat,
-      price,
-      name,
-      star,
-      desc,
-      singleImage: chargeImageFile
-    })
+    const data = await handleSubmitForm(
+      routesApi.food + `?token=${localStorage.getItem('token')}`,
+      {
+        id_cat: cat,
+        price,
+        name,
+        star,
+        desc,
+        singleImage: chargeImageFile
+      }
+    )
 
     if (!data) return
 

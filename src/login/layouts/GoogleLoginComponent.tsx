@@ -34,6 +34,13 @@ function GoogleLoginComponent() {
 
         // localStorage.setItem('email', email || '')
         setUser(resp as User)
+
+        const { token } = resp as User
+
+        if (token) {
+          localStorage.setItem('token', token)
+        }
+
         // eslint-disable-next-line @typescript-eslint/no-unused-expressions
         isNew ? navigate(routesPath.caPayment) : navigate(routesPath.dashboard)
       })
@@ -65,7 +72,6 @@ function GoogleLoginComponent() {
         theme='filled_black'
         containerProps={{
           style: {
-            
             borderRadius: '8px', // Hace el contenedor circular
             overflow: 'hidden', // Asegura que el contenido se ajuste al contenedor
             marginRight: '-0px',

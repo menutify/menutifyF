@@ -3,7 +3,11 @@ import tailwindcssAnimate from 'tailwindcss-animate'
 /** @type {import('tailwindcss').Config} */
 export default {
   darkMode: ['class'],
-  content: ['./index.html', './src/**/*.{ts,tsx,js,jsx}'],
+  content: [
+    './index.html',
+    './src/**/*.{ts,tsx,js,jsx}',
+    'node_modules/preline/dist/*.js'
+  ],
   theme: {
     extend: {
       colors: {
@@ -140,6 +144,7 @@ export default {
           'align-items': 'center'
         }
       })
-    }
+    },
+    require('preline/plugin')
   ]
 }

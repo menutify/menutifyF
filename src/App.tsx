@@ -38,6 +38,7 @@ import CreateMenu from './Dashboard/createMenu/page/CreateMenu'
 import Categories from './Dashboard/createMenu/components/Categories'
 import { createPortal } from 'react-dom'
 import Loading from './Components/my/Loading'
+import PdfPage from './Dashboard/createMenu/page/PdfPage'
 
 function App() {
   const { setUser, setLoading, loading, apiPetition } = useDataGlobalContext()
@@ -120,6 +121,7 @@ function App() {
           <Route path={routesPath.settingsMenu} element={<Component />} />
           <Route path={routesPath.account} element={<Component />} />
         </Route>
+        <Route path={'/dashboard/menu/pdf/:domain'} element={<PdfPage />} />
       </Routes>
       {apiPetition &&
         createPortal(

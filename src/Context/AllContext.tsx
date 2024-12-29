@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Context } from './GlobalContext'
 import { Categories, Menu, ReactComponent, Restaurant, User } from '@/types'
-import {  menuInitialData, restaurantInicialData } from '@/data/initialStateData'
+import { menuInitialData, restaurantInicialData } from '@/data/initialStateData'
 
 const AllContext = ({ children }: ReactComponent) => {
   const [user, setUser] = useState<User>({
@@ -20,6 +20,7 @@ const AllContext = ({ children }: ReactComponent) => {
   const [portalVisible, setPortalVisible] = useState(false)
   const [categories, setCategories] = useState<Categories[]>([])
   const [apiPetition, setApiPetition] = useState(false)
+  const [perfil, setPerfil] = useState()
   const options = {
     loading,
     setLoading,
@@ -38,7 +39,9 @@ const AllContext = ({ children }: ReactComponent) => {
     portalVisible,
     setPortalVisible,
     setApiPetition,
-    apiPetition
+    apiPetition,
+    perfil,
+    setPerfil
   }
 
   return <Context.Provider value={options}>{children}</Context.Provider>

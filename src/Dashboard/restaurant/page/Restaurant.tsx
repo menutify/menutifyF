@@ -25,22 +25,31 @@ function Restaurant() {
   const submitData = async () => {
     try {
       const promises: Promise<boolean | Record<string, any>>[] = []
-
+      console.log(
+        routesApi.restaurant + `?token=${localStorage.getItem('token')}`
+      )
       if (restaurant.changed === true) {
         promises.push(
-          handlePatchFormSubmit(routesApi.restaurant, {
-            ...restaurant,
-            singleImage: imageLogoDataContainer
-          })
+          handlePatchFormSubmit(
+            routesApi.restaurant + `?token=${localStorage.getItem('token')}`,
+            {
+              ...restaurant,
+              singleImage: imageLogoDataContainer
+            }
+          )
         )
       }
 
       if (menu.changed === true) {
         promises.push(
-          handlePatchFormSubmit(routesApi.menu + '?size=header', {
-            ...menu,
-            singleImage: imageHeaderDataContainer
-          })
+          handlePatchFormSubmit(
+            routesApi.menu +
+              `?size=header&token=${localStorage.getItem('token')}`,
+            {
+              ...menu,
+              singleImage: imageHeaderDataContainer
+            }
+          )
         )
       }
 
@@ -116,7 +125,12 @@ function Restaurant() {
             isPending ? 'bg-white' : 'bg-border_input_color'
           } flex-complete p-4 gap-4  md:px-10 md:rounded-lg  rounded-lg h-14 relative`}
           onClick={submitData}
-          disabled={isPending}
+          disabled={
+            (isPending ||
+              restaurant.address === '' ||
+              restaurant.name === '') &&
+            true
+          }
         >
           Guardar cambios
         </Button>

@@ -47,8 +47,16 @@ function FacebookLoginComponent() {
           const { isNew } = resp as User
 
           setUser(resp as User)
+
+          const { token } = resp as User
+
+          if (token) {
+            localStorage.setItem('token', token)
+          }
           // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-          isNew ? navigate(routesPath.caPayment) : navigate(routesPath.dashboard)
+          isNew
+            ? navigate(routesPath.caPayment)
+            : navigate(routesPath.dashboard)
         })
       }
     } catch (error) {

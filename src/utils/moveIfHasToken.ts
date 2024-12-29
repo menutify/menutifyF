@@ -21,7 +21,8 @@ const moveIfHasToken = async (navigate, setUser, location) => {
 
   //en este punto ya tenemos la data
   setUser(data)
-  console.log({ data })
+  localStorage.setItem('token', data.token)
+  // console.log({ data })
   // si hay token y es nuevo mandame a payment
   if (data.isNew && !data.subActive) {
     console.log(msg)
@@ -41,6 +42,10 @@ const moveIfHasToken = async (navigate, setUser, location) => {
     navigate(routesPath.dashboard, { replace: true })
   }
   if (!data.isNew && data.subActive) {
+    const { pathname }: { pathname: string } = location
+    if (pathname.startsWith('/dashboard') && !pathname.endsWith('menu')) {
+      return
+    }
     navigate(routesPath.dashboard, { replace: true })
   }
 }

@@ -1,6 +1,6 @@
 import { useDataGlobalContext } from '@/Context/GlobalContext'
 import React from 'react'
-
+import colorPallete from '@/assets/restaurant/colorpallete.svg'
 function PickColor() {
   const colors = React.useMemo(
     () => [
@@ -22,9 +22,9 @@ function PickColor() {
   }
 
   const handleClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    const target = e.target as HTMLElement;
+    const target = e.target as HTMLElement
     if (target.id && target.id.length >= 7) {
-      setMenu({ ...menu, s_color: target.id, changed: true });
+      setMenu({ ...menu, s_color: target.id, changed: true })
     }
   }
 
@@ -40,24 +40,18 @@ function PickColor() {
         >
           <span
             id={col}
-            className='w-full h-full block rounded-full'
+            className='w-full h-full block rounded-full cursor-pointer'
             style={{ backgroundColor: `${col}` }}
           ></span>
         </div>
       ))}
-      <div
-        className='flex  w-8 h-8 md:w-12 md:h-12  rounded-full bg-white p-1 border-2 '
-        style={{
-          borderColor: `${menu.s_color ? menu.s_color : 'transparent'}`
-        }}
-      >
+      <div className='flex  w-8 h-8 md:w-12 md:h-12  rounded-full bg-white p-1 border-2 border-transparent '>
         <label
           htmlFor='pickerColor'
-          className='block w-full h-full rounded-full'
-          style={{
-            backgroundColor: `${menu.s_color}`
-          }}
-        ></label>
+          className='block w-full h-full rounded-full cursor-pointer'
+        >
+          <img src={colorPallete} alt='' />
+        </label>
         <input
           onChange={handleColorPicker}
           id='pickerColor'

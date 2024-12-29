@@ -36,9 +36,11 @@ function FormLogin() {
     if (!data) return
 
     setUser(data as User)
-
-    const { isNew, subActive } = data as User
-
+    console.log('LoginDataUser: ', data)
+    const { isNew, subActive, token } = data as User
+    if (token) {
+      localStorage.setItem('token', token)
+    }
     navigate(
       isNew
         ? subActive

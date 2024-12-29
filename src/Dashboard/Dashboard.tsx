@@ -15,7 +15,9 @@ function Dashboard() {
 
   useEffect(() => {
     const getDataRestaurant = async () => {
-      const { data, error, msg } = await callAPI.getData(routesApi.restaurant)
+      const { data, error, msg } = await callAPI.getData(
+        routesApi.restaurant + `?token=${localStorage.getItem('token')}`
+      )
       if (error) {
         alert(msg)
         return
@@ -64,7 +66,9 @@ function Dashboard() {
 
   return (
     <SidebarProvider
-      className={`dark relative ${!restaurant.state && 'blur-[1.5px] overflow-y-hidden'}`}
+      className={`dark relative ${
+        !restaurant.state && 'blur-[1.5px] overflow-y-hidden'
+      }`}
       style={
         {
           '--sidebar-width': '20rem',
@@ -82,9 +86,7 @@ function Dashboard() {
         </div>
       </MenuContext>
       {!restaurant.state && (
-        <div className='fixed top-0 left-0 w-full h-full flex-complete z-40 block ligth'>
-         
-        </div>
+        <div className='fixed top-0 left-0 w-full h-full flex-complete z-40 block ligth'></div>
       )}
       {!restaurant.state &&
         createPortal(

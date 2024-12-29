@@ -26,6 +26,8 @@ function FormRepassword() {
     })
     if (!resp) return
 
+    localStorage.setItem('emailRe',values.email)
+
     navigate(routesPath.sendEmail, { replace: true })
   }
 

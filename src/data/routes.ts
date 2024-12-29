@@ -14,19 +14,20 @@ export const routesPath = {
   caPaySt: '/create-account/payment/Stripe',
   payment: '/payment',
   completePayment: '/create-account/complete',
-  
+
   restaurant: '/dashboard/restaurant',
   seeMenu: '/dashboard/menus',
   createMenu: '/dashboard/create',
   settingsMenu: '/dashboard/settings',
-  account: '/dashboard/account'
+  account: '/dashboard/account',
+  pdf: '/dashboard/menu/pdf'
 }
 
 //axios instance in utils have all url
 export const routesApi = {
   google: '/login/google',
   facebook: '/login/facebook',
-  authMe: '/auth/me',
+  authMe: '/auth/me'+ `?token=${localStorage.getItem('token')}`,
   login: '/login',
   logout: '/login/logout',
   sendEmail: '/auth/sendemail',

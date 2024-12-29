@@ -30,6 +30,8 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger
 } from '@/Components/ui/dropdown-menu'
+import Parr1 from '@/Components/my/Parr1'
+
 export function AppSidebar() {
   const { restaurant, setUser } = useDataGlobalContext()
   const [unEstado, setUnEstado] = useState(-1)
@@ -110,11 +112,13 @@ export function AppSidebar() {
               alt=''
             />
           </div>
-          <div className='flex flex-col justify-between'>
-            <Text className='font-bold tracking-wider'>
+          <div className='flex flex-col justify-center pt-1'>
+            <Parr1 className='truncate font-semibold '>
               {restaurant.name || 'Mi restaurante'}
-            </Text>
-            <Text className='font-extralight tracking-widest'>Restaurante</Text>
+            </Parr1>
+            <Label1 className='font-extralight tracking-widest'>
+              Restaurante
+            </Label1>
           </div>
         </div>
       </SidebarHeader>
@@ -184,30 +188,30 @@ export function AppSidebar() {
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
-      <Separator />
+      <Separator className='bg-ph_color_1' />
       <SidebarFooter className='h-[80px] flex-row items-center p-4 px-5 w-full '>
         <div className='h-full w-full flex gap-3 flex-1'>
-          <div className='h-full bg-red-50 rounded-xl overflow-auto '>
+          <div className='h-full w-[50px]  rounded-xl overflow-auto '>
             <img
               className='h-full rounded-xl'
               src={restaurant.logo_url ? restaurant.logo_url : shopSVG}
               alt=''
             />
           </div>
-          <div className='flex flex-col justify-center'>
-            <Text className='font-bold'>Angel Navas</Text>
-            <div className='flex justify-start items-center px-1.5 border border-ph_color_1 gap-2 rounded-sm h-5 w-[72px]'>
+          <div className='flex flex-col justify-center gap-1'>
+            <Parr1 className='font-semibold'>Angel Navas</Parr1>
+            <div className='flex justify-start items-center px-1.5 border border-ph_color_1 gap-2 rounded-sm h-5 w-[80px]'>
               <span className='w-[2px] h-[2px] bg-green-400 block rounded-full'></span>{' '}
-              <Label1 className='text-[7px] font-thin tracking-widest '>
+              <label className='text-[8px] font-thin tracking-widest flex-complete'>
                 Menutify PRO
-              </Label1>{' '}
+              </label>{' '}
             </div>
           </div>
         </div>
         <DropdownMenu>
-          <DropdownMenuTrigger className='h-[15px] cursor-pointer w-[15px] p-0'>
-            <div className='h-full rounded-xl overflow-auto '>
-              <img className='h-full rounded-xl' src={pointsvg} alt='' />
+          <DropdownMenuTrigger className='h-[15px] cursor-pointer w-[15px] p-0 select-none focus:outline-none'>
+            <div className='h-full w-full rounded-xl overflow-auto select-none'>
+              <img className='h-full w-full rounded-xl select-none' src={pointsvg} alt='' />
             </div>
           </DropdownMenuTrigger>
           <DropdownMenuContent className='bg-bg_color_1 cursor-pointer border-ph_color_1'>

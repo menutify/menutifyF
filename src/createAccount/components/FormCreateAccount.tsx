@@ -13,6 +13,8 @@ import InputTel from '@/Components/my/InputTel'
 import phoneCodes from '@/data/phoneCodes'
 import FormFieldCheckbox from '@/Components/my/FormFieldCheckbox'
 import Label1 from '@/Components/my/Label1'
+import { useDataGlobalContext } from '@/Context/GlobalContext'
+import { User } from '@/types'
 
 const defaultValueForm = {
   name: '',
@@ -27,7 +29,7 @@ function FormCreateAccount() {
   const navigate = useNavigate()
 
   const formOptions = useFormHook(caAccountFormScheme, defaultValueForm)
-
+  const { setUser, setPerfil } = useDataGlobalContext()
   //manejador del submit
   const { handleSubmit, error, isPending } = HandleFormSubmit()
 
@@ -49,7 +51,21 @@ function FormCreateAccount() {
       console.log('error al enviar email de verificacion')
       return
     }
+    setPerfil({
+      email,
+      password,
+      repassword,
+      phone,
+      name,
+      country: 'Argentina'
+    })
+    console.log('createAccountData: ', resp)
 
+    setUser(resp as User)
+    const { token } = resp as User
+    if (token) {
+      localStorage.setItem('token', token)
+    }
     navigate(routesPath.caVerifyAccount, { replace: true })
   }
   return (
@@ -71,17 +87,17 @@ function FormCreateAccount() {
         />
         <div className='flex gap-[13px]'>
           <div className='flex flex-col'>
-          <Label1 className=''>Télefono</Label1>
-          <div className='flex gap-[13px] h-full justify-center '>
-          <Label className='h-10 w-12 bg-bg_input rounded-md mt-2 border-solid border border-border_input_color flex justify-center items-center'>
-              <img className='h-2/5 rounded-sm ' src={phoneCodes[1].emoji} />
-            </Label>
-            <InputTel
-              className=' flex-1 flex flex-col h-full text-sm/6 '
-              form={formOptions}
-              name={'phone'}
-            />
-          </div>
+            <Label1 className=''>Télefono</Label1>
+            <div className='flex gap-[13px] h-full justify-center '>
+              <Label className='h-10 w-12 bg-bg_input rounded-md mt-2 border-solid border border-border_input_color flex justify-center items-center'>
+                <img className='h-2/5 rounded-sm ' src={phoneCodes[1].emoji} />
+              </Label>
+              <InputTel
+                className=' flex-1 flex flex-col h-full text-sm/6 '
+                form={formOptions}
+                name={'phone'}
+              />
+            </div>
           </div>
           <FormFieldComponent
             className=''

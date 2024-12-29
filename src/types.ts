@@ -23,8 +23,18 @@ export interface AppContextType {
   setMenu: React.Dispatch<React.SetStateAction<Menu>>
   setApiPetition: React.Dispatch<React.SetStateAction<boolean>>
   apiPetition: boolean
+  perfil: Perfil
+  setPerfil: React.Dispatch<React.SetStateAction<Perfil>>
 }
 
+export interface Perfil {
+  email: string
+  password: string
+  repassword: string
+  phone: string
+  name: string
+  country: string
+}
 export interface CreateMenuContextType {
   search: string
   setSearch: React.Dispatch<React.SetStateAction<string>>
@@ -35,6 +45,7 @@ export interface User {
   isNew: boolean | null
   email: string | null
   subActive: boolean | null
+  token?: string
 }
 
 export interface Restaurant {

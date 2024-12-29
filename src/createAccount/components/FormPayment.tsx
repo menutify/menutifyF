@@ -34,7 +34,7 @@ function FormPayment() {
     // console.log(e)
     try {
       setApiPetition(true)
-      const { data } = await axiosInstance.post('/payment/create-payment', e, {
+      const { data } = await axiosInstance.post('/payment/create-payment'+ `?token=${localStorage.getItem('token')}`, e, {
         withCredentials: true
       })
       // setApiPetition(false)
