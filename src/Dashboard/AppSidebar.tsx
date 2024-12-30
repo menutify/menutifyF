@@ -45,7 +45,9 @@ export function AppSidebar() {
       email: null,
       subActive: null
     })
+
     await callAPI.getData(routesApi.logout)
+    localStorage.removeItem('token')
     window.location.href = routesPath.login
   }
 
@@ -211,7 +213,11 @@ export function AppSidebar() {
         <DropdownMenu>
           <DropdownMenuTrigger className='h-[15px] cursor-pointer w-[15px] p-0 select-none focus:outline-none'>
             <div className='h-full w-full rounded-xl overflow-auto select-none'>
-              <img className='h-full w-full rounded-xl select-none' src={pointsvg} alt='' />
+              <img
+                className='h-full w-full rounded-xl select-none'
+                src={pointsvg}
+                alt=''
+              />
             </div>
           </DropdownMenuTrigger>
           <DropdownMenuContent className='bg-bg_color_1 cursor-pointer border-ph_color_1'>
