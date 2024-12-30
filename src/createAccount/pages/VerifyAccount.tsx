@@ -45,8 +45,10 @@ function VerifyAccount() {
         ¿Te equivocaste de email? &gt;
       </Anchor1>
       <button
-        className={`text-primary_color text-sm font-thin underline text-center tracking-wider cursor-pointer p-0 ${
-          countdown != 0 ? 'text-[#aa3202] cursor-not-allowed' : ''
+        className={` text-sm font-thin underline text-center tracking-wider  p-0 ${
+          countdown != 0
+            ? 'text-[#aa3202] cursor-not-allowed'
+            : 'text-primary_color cursor-pointer'
         }`}
         style={{ fontWeight: '400' }}
         disabled={countdown == 0 ? false : true}
