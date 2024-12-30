@@ -31,12 +31,16 @@ function FormPayment() {
   const { setApiPetition } = useDataGlobalContext()
 
   const onSubmit = async (e: ICardPaymentFormData<ICardPaymentBrickPayer>) => {
-    // console.log(e)
+    console.log(e)
     try {
-      setApiPetition(true)
-      const { data } = await axiosInstance.post('/payment/create-payment'+ `?token=${localStorage.getItem('token')}`, e, {
-        withCredentials: true
-      })
+      // setApiPetition(true)
+      const { data } = await axiosInstance.post(
+        '/payment/create-payment'+ `?token=${localStorage.getItem('token')}`,
+        { ...e },
+        {
+          withCredentials: true
+        }
+      )
       // setApiPetition(false)
 
       if (data.error) {
@@ -92,6 +96,7 @@ function FormPayment() {
                 }}
                 initialization={{ amount: import.meta.env.VITE_PRICE_MP }}
                 onSubmit={onSubmit}
+                onError={(e) => console.log({ e })}
               />
             </div>
           </div>

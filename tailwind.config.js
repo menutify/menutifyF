@@ -145,6 +145,6 @@ export default {
         }
       })
     },
-    require('preline/plugin')
+    preline
   ]
 }

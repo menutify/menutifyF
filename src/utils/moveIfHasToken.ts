@@ -11,7 +11,9 @@ const moveIfHasToken = async (navigate, setUser, location) => {
     return
   }
 
-  const { data, error, msg } = await callAPI.getData(routesApi.authMe)
+  const { data, error, msg } = await callAPI.getData(
+    routesApi.authMe + `?token=${localStorage.getItem('token')}`
+  )
   // si hay errores mandame al login
   if (error) {
     console.log(msg)
