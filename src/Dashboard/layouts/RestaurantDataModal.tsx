@@ -22,7 +22,7 @@ function RestaurantDataModal({ className = '' }) {
   const submitData = async () => {
     try {
       if (restaurant.changed === true) {
-        const data = await handlePatchFormSubmit(routesApi.restaurant, {
+        const data = await handlePatchFormSubmit(routesApi.restaurant+ `?token=${localStorage.getItem('token')}`, {
           ...restaurant,
           singleImage: imageLogoDataContainer
         })

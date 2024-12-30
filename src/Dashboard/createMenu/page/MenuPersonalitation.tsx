@@ -22,7 +22,7 @@ function MenuPersonalitation({ closeModal }) {
   const submitData = async () => {
     if (menu.changed === true) {
       const data = await handlePatchFormSubmit(
-        routesApi.menu + '?size=header',
+        routesApi.menu + '?size=header'+ `&token=${localStorage.getItem('token')}`,
         {
           ...menu,
           singleImage: imageHeaderDataContainer
