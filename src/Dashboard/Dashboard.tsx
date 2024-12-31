@@ -10,7 +10,7 @@ import { createPortal } from 'react-dom'
 import RestaurantDataModal from './layouts/RestaurantDataModal'
 
 function Dashboard() {
-  const { setMenu, setRestaurant, restaurant, setCategories } =
+  const { setMenu, setRestaurant, restaurant, setCategories, setPerfil } =
     useDataGlobalContext()
 
   useEffect(() => {
@@ -53,14 +53,32 @@ function Dashboard() {
           }
         })
 
-        console.log({ changeArray })
-
         setCategories(changeArray)
       }
     }
 
+    const getDataFromPerfil = async () => {
+      console.log(routesApi)
+      const { data, error, msg } = await callAPI.getData(
+        '/user' + `?token=${localStorage.getItem('token')}`
+      )
+
+      if (error) {
+        alert(msg)
+        return
+      }
+
+      const { userData } = data
+      const { email, name, password, phone, country } = userData
+
+      setPerfil({ email, name, password, phone, country, repassword: password })
+      console.log(userData)
+    }
+
     if (restaurant.id === -1) {
       getDataRestaurant()
+
+      getDataFromPerfil()
     }
   }, [])
 

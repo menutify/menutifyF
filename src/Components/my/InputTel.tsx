@@ -1,7 +1,19 @@
-import { FormControl, FormField, FormItem, FormMessage } from '../ui/form'
+import {
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage
+} from '../ui/form'
 import { Input } from '../ui/input'
 
-function InputTel({ form, name, className = '' }) {
+function InputTel({
+  form,
+  name,
+  className = '',
+  bgstyle = 'bg-bg_input border-border_input_color focus:border-primary_color',
+  title = ''
+}) {
   function formatPhoneNumber(value: string) {
     const cleaned = value.replace(/\D/g, '') // Quita caracteres no numéricos
     const match = cleaned.match(/^(\d{1,3})(\d{1,3})?(\d{1,4})?$/)
@@ -24,6 +36,7 @@ function InputTel({ form, name, className = '' }) {
       name={name}
       render={({ field }) => (
         <FormItem className={className}>
+          <FormLabel>{title}</FormLabel>
           <FormControl>
             <Input
               {...field}
@@ -33,7 +46,7 @@ function InputTel({ form, name, className = '' }) {
               onChange={(e) =>
                 field.onChange(formatPhoneNumber(e.target.value))
               }
-              className='bg-bg_input border-border_input_color w-full h-10 mt-2 flex md:text-sm/6 text-sm/6 placeholder:text-sm/6 focus:border-primary_color'
+              className={` w-full h-10 mt-2 flex md:text-sm/6 text-sm/6 placeholder:text-sm/6  ${bgstyle}`}
             />
           </FormControl>
 

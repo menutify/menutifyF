@@ -43,6 +43,24 @@ export const caAccountFormScheme = z
     path: ['repassword']
   })
 
+export const perfilFormScheme = z
+  .object({
+    name: nameValidator,
+    phone: z
+      .string()
+      .trim()
+      .min(9, { message: 'Formato invalido.' })
+      .trim()
+      .max(10),
+    email: emailValidator,
+    password: passwordValidator,
+    repassword: z.string()
+  })
+  .refine((data) => data.password === data.repassword, {
+    message: 'Las contraseñas no coinciden',
+    path: ['repassword']
+  })
+
 export const caPaymentFormScheme = z.object({
   email: emailValidator
 })

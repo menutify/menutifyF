@@ -33,7 +33,7 @@ import CompletePayment from './createAccount/pages/CompletePayment'
 import LoadingBar from './Components/my/LoadingBar'
 import Dashboard from './Dashboard/Dashboard'
 import Restaurant from './Dashboard/restaurant/page/Restaurant'
-import Component from './Component'
+import Perfil from './Dashboard/editPerfil/Perfil'
 import CreateMenu from './Dashboard/createMenu/page/CreateMenu'
 import Categories from './Dashboard/createMenu/components/Categories'
 import { createPortal } from 'react-dom'
@@ -107,7 +107,7 @@ function App() {
         <Route path={routesPath.dashboard} element={<Dashboard />}>
           <Route index element={<Navigate to={routesPath.createMenu} />} />
           <Route path={routesPath.restaurant} element={<Restaurant />} />
-          <Route path={routesPath.seeMenu} element={<Component />} />
+          
           <Route path={routesPath.createMenu} element={<CreateMenu />}>
             <Route
               index
@@ -118,8 +118,8 @@ function App() {
               element={<Categories />}
             />
           </Route>
-          <Route path={routesPath.settingsMenu} element={<Component />} />
-          <Route path={routesPath.account} element={<Component />} />
+          
+          <Route path={routesPath.account} element={<Perfil />} />
         </Route>
         <Route path={'/dashboard/menu/pdf/:domain'} element={<PdfPage />} />
       </Routes>

@@ -27,7 +27,7 @@ export const routesPath = {
 export const routesApi = {
   google: '/login/google',
   facebook: '/login/facebook',
-  authMe: '/auth/me'+ `?token=${localStorage.getItem('token')}`,
+  authMe: '/auth/me' + `?token=${localStorage.getItem('token')}`,
   login: '/login',
   logout: '/login/logout',
   sendEmail: '/auth/sendemail',
