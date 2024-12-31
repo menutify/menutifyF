@@ -39,8 +39,8 @@ function Perfil() {
   useEffect(() => {
     form.reset({
       ...perfil,
-      password: '',
-      repassword: ''
+      password: 'MiContr4seña.',
+      repassword: 'MiContr4seña.'
     })
   }, [perfil])
 
@@ -70,8 +70,8 @@ function Perfil() {
 
     if (
       name == perfil.name &&
-      password == '' &&
-      repassword == '' &&
+      password == 'MiContr4seña.' &&
+      repassword == 'MiContr4seña.' &&
       phone == perfil.phone
     ) {
       return
@@ -81,7 +81,7 @@ function Perfil() {
       return
     }
 
-    if (repassword != '') {
+    if (repassword != 'MiContr4seña.') {
       const data = await handlePatchSubmit(
         '/user' + `?token=${localStorage.getItem('token')}`,
         { name, password, phone }
