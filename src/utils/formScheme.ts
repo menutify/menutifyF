@@ -46,12 +46,9 @@ export const caAccountFormScheme = z
 export const perfilFormScheme = z
   .object({
     name: nameValidator,
-    phone: z
-      .string()
-      .trim()
-      .min(9, { message: 'Formato invalido.' })
-      .trim()
-      .max(10),
+    phone: z.string().trim().max(10),
+    // .min(9, { message: 'Formato invalido.' })
+    // .trim()
     email: emailValidator,
     password: passwordValidator,
     repassword: z.string()
