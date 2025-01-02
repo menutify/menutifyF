@@ -48,7 +48,14 @@ function PdfPage() {
   ) : (
     <PDFViewer className='w-full h-full min-h-screen'>
       <Document>
-        <Page size={'A4'} style={{ padding: '20 40' }}>
+        <Page
+          size={'A4'}
+          style={{
+            padding: '20 40',
+            backgroundColor: menu?.f_color ? 'white' : 'black',
+            color: menu?.f_color ? 'black' : 'white'
+          }}
+        >
           <View
             style={{
               display: 'flex',
