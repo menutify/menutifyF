@@ -27,6 +27,8 @@ function Perfil() {
   const { perfil } = useDataGlobalContext()
   const { handlePatchSubmit } = HandleFormSubmit()
   const [inputEditable, setInputEditable] = useState(initialState)
+  const [submitData, setSubmitData] = useState(false)
+
   const initialPerfilData = {
     email: '',
     password: '',
@@ -63,6 +65,9 @@ function Perfil() {
   }
 
   async function onSubmit(values: z.infer<typeof perfilFormScheme>) {
+    if (!submitData) {
+      return
+    }
     setInputEditable(initialState)
     console.log(values)
     console.log(perfil)
@@ -99,6 +104,8 @@ function Perfil() {
       if (!data) {
         return
       }
+
+      setSubmitData(false)
     }
   }
 
@@ -124,9 +131,10 @@ function Perfil() {
                   />
                   <span
                     className='w-5 cursor-pointer'
-                    onClick={() =>
+                    onClick={() => {
+                      setSubmitData(true)
                       setInputEditable({ ...initialState, name: true })
-                    }
+                    }}
                   >
                     <img src={lapizSVG} />
                   </span>
@@ -159,9 +167,10 @@ function Perfil() {
                   />
                   <span
                     className='w-5 cursor-pointer'
-                    onClick={() =>
+                    onClick={() => {
+                      setSubmitData(true)
                       setInputEditable({ ...initialState, phone: true })
-                    }
+                    }}
                   >
                     <img src={lapizSVG} />
                   </span>
@@ -234,9 +243,10 @@ function Perfil() {
                   />
                   <span
                     className='w-5 cursor-pointer'
-                    onClick={() =>
+                    onClick={() => {
+                      setSubmitData(true)
                       setInputEditable({ ...initialState, password: true })
-                    }
+                    }}
                   >
                     <img src={lapizSVG} />
                   </span>
@@ -273,7 +283,7 @@ function Perfil() {
           )}
         />
 
-        <Button type='submit' className='mx-[20px]'>
+        <Button type='submit' className='mx-[20px]' disabled={!submitData}>
           Submit
         </Button>
       </form>
