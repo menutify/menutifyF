@@ -196,7 +196,7 @@ export function AppSidebar() {
           <div className='h-full w-[50px]  rounded-xl overflow-auto '>
             <img
               className='h-full rounded-xl'
-              src={restaurant.logo_url ? restaurant.logo_url : shopSVG}
+              src={shopSVG}
               alt=''
             />
           </div>
