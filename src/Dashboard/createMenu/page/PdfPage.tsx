@@ -30,7 +30,10 @@ function PdfPage() {
       .then((res) => {
         const { data } = res.data
         const { categories: categoriesData, restaurant, ...alldata } = data
-        setMenu(alldata)
+        setMenu({
+          ...alldata,
+          s_color: alldata.s_color === '' ? 'ff0000' : alldata.s_color
+        })
         setCategories(categoriesData)
         setRestaurant(restaurant)
         console.log({ alldata })
