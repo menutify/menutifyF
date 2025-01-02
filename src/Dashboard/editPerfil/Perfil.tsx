@@ -25,7 +25,7 @@ const initialState = {
 
 function Perfil() {
   const { perfil } = useDataGlobalContext()
-  const { handlePatchSubmit} = HandleFormSubmit()
+  const { handlePatchSubmit } = HandleFormSubmit()
   const [inputEditable, setInputEditable] = useState(initialState)
   const initialPerfilData = {
     email: '',
@@ -90,7 +90,7 @@ function Perfil() {
       if (!data) {
         return
       }
-    }else{
+    } else {
       const data = await handlePatchSubmit(
         '/user' + `?token=${localStorage.getItem('token')}`,
         { name, phone }
@@ -100,8 +100,6 @@ function Perfil() {
         return
       }
     }
-
-
   }
 
   return (
@@ -248,11 +246,16 @@ function Perfil() {
             </FormItem>
           )}
         />
+
         <FormField
           control={form.control}
           name='repassword'
           render={({ field }) => (
-            <FormItem className='px-[20px]'>
+            <FormItem
+              className={`px-[20px] hidden ${
+                inputEditable.password && 'block'
+              }`}
+            >
               <FormLabel>Repetir contraseña</FormLabel>
               <FormControl>
                 <Input
