@@ -30,7 +30,8 @@ export const passwordValidator = z
   .min(6, { message: 'Debe tener al menos 6 caracteres.' }) // Mínimo 6 caracteres
   .regex(/^[A-Z]/, { message: 'Debe comenzar con una letra mayúscula.' }) // Comenzar con mayúscula
   .regex(/\d/, { message: 'Debe contener al menos un número.' }) // Contener al menos un número
-  .regex(/[^\w\s]/, { message: 'Debe contener al menos un símbolo.' })
+  .regex(/[^\w\sñÑ]/, { message: 'Debe contener al menos un símbolo.' })
+
   .max(40)
   .trim()
   .regex(/^\S*$/, { message: 'No puede contener espacios.' })
