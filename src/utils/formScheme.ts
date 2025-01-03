@@ -46,7 +46,17 @@ export const caAccountFormScheme = z
 export const perfilFormScheme = z
   .object({
     name: nameValidator,
-    phone: z.string().trim().max(10),
+    phone: z
+      .union([
+        z
+          .string()
+          .trim()
+          .max(10, { message: 'Debe tener como máximo 10 caracteres.' })
+          .regex(/^\d*$/, { message: 'Debe contener solo números.' }),
+        z.literal(''), // Acepta una cadena vacía
+        z.null() // Acepta null
+      ])
+      .optional(), // Hace que el campo sea opcional
     // .min(9, { message: 'Formato invalido.' })
     // .trim()
     email: emailValidator,

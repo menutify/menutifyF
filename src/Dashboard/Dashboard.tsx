@@ -10,18 +10,31 @@ import { createPortal } from 'react-dom'
 import RestaurantDataModal from './layouts/RestaurantDataModal'
 
 function Dashboard() {
-  const { setMenu, setRestaurant, restaurant, setCategories, setPerfil } =
-    useDataGlobalContext()
+  const {
+    setMenu,
+    setRestaurant,
+    setSubDetails,
+    restaurant,
+    setCategories,
+    setPerfil
+  } = useDataGlobalContext()
 
   useEffect(() => {
-    const getDataRestaurant = async () => {
-      const { data, error, msg } = await callAPI.getData(
-        routesApi.restaurant + `?token=${localStorage.getItem('token')}`
-      )
+    const token = localStorage.getItem('token')
+
+    const handleApiError = (error, msg) => {
       if (error) {
         alert(msg)
-        return
+        return true
       }
+      return false
+    }
+
+    const getDataRestaurant = async () => {
+      const { data, error, msg } = await callAPI.getData(
+        routesApi.restaurant + `?token=${token}`
+      )
+      if (handleApiError(error, msg)) return
 
       const { respRest, respMenu } = data
 
@@ -31,55 +44,95 @@ function Dashboard() {
 
       setMenu({
         ...respMenu,
-        s_color: respMenu.s_color === '' ? '#FF5733' : respMenu.s_color
+        s_color: respMenu.s_color || '#FF5733'
       })
 
       if (respMenu.id) {
-        console.log(respMenu.id)
-        const { data, error, msg } = await callAPI.getData(
-          `${routesApi.catCascade}/${respMenu.id}`
-        )
-        if (error) {
-          alert(msg)
-          return
-        }
+        // console.log(respMenu.id)
+        const {
+          data: catData,
+          error: catError,
+          msg: catMsg
+        } = await callAPI.getData(`${routesApi.catCascade}/${respMenu.id}`)
+        if (handleApiError(catError, catMsg)) return
 
-        const changeArray = data.allCategories.map((value) => {
-          const { food, categoriesDetail, ...alldata } = value
+        // const changeArray = data.allCategories.map((value) => {
+        //   const { food, categoriesDetail, ...alldata } = value
 
-          return {
+        //   return {
+        //     ...alldata,
+        //     details: { ...categoriesDetail, foods: [...food] }
+        //   }
+        // })
+        const changeArray = catData.allCategories.map(
+          ({ food, categoriesDetail, ...alldata }) => ({
             ...alldata,
             details: { ...categoriesDetail, foods: [...food] }
-          }
-        })
+          })
+        )
 
         setCategories(changeArray)
       }
     }
 
     const getDataFromPerfil = async () => {
-      console.log(routesApi)
+      // console.log(routesApi)
       const { data, error, msg } = await callAPI.getData(
-        '/user' + `?token=${localStorage.getItem('token')}`
+        '/user' + `?token=${token}`
       )
 
-      if (error) {
-        alert(msg)
-        return
-      }
+      if (handleApiError(error, msg)) return
 
       const { userData } = data
       const { email, name, password, phone, country } = userData
 
       setPerfil({ email, name, password, phone, country, repassword: password })
-      console.log(userData)
+      // console.log(userData)
     }
 
-    if (restaurant.id === -1) {
-      getDataRestaurant()
+    // if (restaurant.id === -1) {
+    //   getDataRestaurant()
+    //   getDataFromPerfil()
+    // }
 
-      getDataFromPerfil()
+    const getSubDetails = async () => {
+      const { data, error, msg } = await callAPI.getData(
+        '/sub' + `?token=${token}`
+      )
+
+      if (handleApiError(error, msg)) return
+
+      // console.log(data)
+      const { f_date, c_date, state } = data
+
+      const calculateDaysDifference = (date1: string) => {
+        // Convierte la segunda fecha
+        const finishDate = new Date(date1).getTime()
+        const nowDate = new Date().getTime()
+        if (isNaN(nowDate) || isNaN(finishDate)) {
+          throw new Error('Invalid date format')
+        }
+        const diffInMs = finishDate - nowDate // Diferencia en milisegundos
+        const diffInDays = diffInMs / (1000 * 60 * 60 * 24) // Convertir a días
+        return diffInDays
+      }
+
+      const daysResult = Math.floor(calculateDaysDifference(f_date))
+
+      setSubDetails({ c_date, f_date, state, days: daysResult })
     }
+
+    const fetchAllData = async () => {
+      if (restaurant.id === -1) {
+        await Promise.all([
+          getDataRestaurant(),
+          getDataFromPerfil(),
+          getSubDetails()
+        ])
+      }
+    }
+
+    fetchAllData()
   }, [])
 
   return (

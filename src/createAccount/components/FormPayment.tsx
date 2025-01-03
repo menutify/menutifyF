@@ -24,7 +24,7 @@ interface dataPayment {
   status_detail: string
 }
 
-function FormPayment() {
+function FormPayment({ className = '' }) {
   const [modalError, setModalError] = useState(false)
   const formOptions = useFormHook(caPaymentFormScheme, defaultValueForm)
 
@@ -35,7 +35,7 @@ function FormPayment() {
     try {
       // setApiPetition(true)
       const { data } = await axiosInstance.post(
-        '/payment/create-payment'+ `?token=${localStorage.getItem('token')}`,
+        '/payment/create-payment' + `?token=${localStorage.getItem('token')}`,
         { ...e },
         {
           withCredentials: true
@@ -80,7 +80,7 @@ function FormPayment() {
       <Form {...formOptions}>
         <form
           onSubmit={formOptions.handleSubmit(onSubmit)}
-          className='space-y-2 flex flex-col '
+          className={`space-y-2 flex flex-col ${className}`}
         >
           <div className='overflow-hidden'>
             <div

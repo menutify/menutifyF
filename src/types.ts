@@ -25,6 +25,8 @@ export interface AppContextType {
   apiPetition: boolean
   perfil: Perfil
   setPerfil: React.Dispatch<React.SetStateAction<Perfil>>
+  subDetails: SubDetailsType
+  setSubDetails: React.Dispatch<React.SetStateAction<SubDetailsType>>
 }
 
 export interface Perfil {
@@ -94,6 +96,12 @@ export interface Categories {
   details: CategoriesDetails
 }
 
+export interface SubDetailsType {
+  state: boolean
+  f_date: string
+  c_date: string
+  days: number
+}
 export interface Categories2 {
   id: number
   id_menu: number
