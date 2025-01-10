@@ -8,6 +8,7 @@ import { useDataGlobalContext } from '../Context/GlobalContext'
 import MenuContext from '@/Context/createMenuContext'
 import { createPortal } from 'react-dom'
 import RestaurantDataModal from './layouts/RestaurantDataModal'
+import DatesToEndModal from '@/Components/my/DatesToEndModal'
 
 function Dashboard() {
   const {
@@ -152,6 +153,7 @@ function Dashboard() {
       <MenuContext>
         <div className='bg-white w-full min-h-full md:mt-0 ligth'>
           <div className='flex h-[72px] md:hidden'></div>
+          <DatesToEndModal/>
           <Outlet />
           <div className='flex h-[72px] md:hidden'></div>
         </div>

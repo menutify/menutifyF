@@ -17,7 +17,8 @@ import { useDataGlobalContext } from '@/Context/GlobalContext'
 import type { Perfil } from '@/types'
 import HandleFormSubmit from '@/utils/handleForSubmit'
 import FormPayment from '@/createAccount/components/FormPayment'
-
+import oeSVG from '@/assets/all/openeye.svg'
+import ceSVG from '@/assets/all/closeeye.svg'
 const initialState = {
   name: false,
   phone: false,
@@ -29,6 +30,7 @@ function Perfil() {
   const { handlePatchSubmit } = HandleFormSubmit()
   const [inputEditable, setInputEditable] = useState(initialState)
   const [submitData, setSubmitData] = useState(false)
+  const [seePass, setSeePass] = useState(false)
 
   const initialPerfilData = {
     email: '',
@@ -245,16 +247,25 @@ function Perfil() {
                 <FormLabel>Contraseña</FormLabel>
                 <FormControl>
                   <div className='flex-complete gap-[20px]'>
+                    <div className=' relative flex-complete w-full'>
+
                     <Input
                       placeholder='●●●●●●●●●●●●●●'
-                      type='password'
+                      type={seePass ? 'text' : 'password'}
                       {...field}
                       value={field.value || ''}
                       disabled={!inputEditable.password && true}
                       className={`border-transparent border-b-gray-300 ${
                         inputEditable.password && 'border-gray-300'
                       }`}
-                    />
+                      />
+                    <span
+                  onClick={() => setSeePass(!seePass)}
+                  className='absolute block w-5 h-5 rounded-full bg-red-50 right-2 top-1/2 -translate-y-1/2 cursor-pointer'
+                  >
+                    <img className='' src={seePass ? oeSVG : ceSVG} alt='' />
+                  </span>
+                  </div>
                     <span
                       className='w-5 cursor-pointer'
                       onClick={() => {
@@ -282,15 +293,18 @@ function Perfil() {
               >
                 <FormLabel>Repetir contraseña</FormLabel>
                 <FormControl>
+                  
                   <Input
                     placeholder='●●●●●●●●●●●●●●'
-                    type='password'
+                    type={seePass ? 'text' : 'password'}
                     {...field}
                     disabled={!inputEditable.password && true}
                     className={`border-transparent border-b-gray-300 ${
                       inputEditable.password && 'border-gray-300'
                     }`}
                   />
+                
+                  
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -302,9 +316,10 @@ function Perfil() {
           </Button>
         </form>
       </Form>
-      <section id='payment section ' className='flex-1 flex-complete '>
+      {subDetails?.days <36 &&
+        <section id='payment section ' className='flex-1 flex-complete '>
         {CardPaymentMemo}
-      </section>
+      </section>}
       <span className='block absolute bottom-0 w-[50px] h-[50px] flex-complete bg-red-50'>
         d {subDetails?.days || 0}
       </span>

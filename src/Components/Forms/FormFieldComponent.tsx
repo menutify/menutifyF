@@ -44,7 +44,7 @@ function FormFieldComponent({
                 />
                 <span
                   onClick={() => setSeePass(!seePass)}
-                  className='absolute block w-5 h-5 rounded-full right-2 top-[42px]'
+                  className='absolute block w-5 h-5 rounded-full right-2 top-[42px] cursor-pointer'
                 >
                   <img className='' src={seePass ? oeSVG : ceSVG} alt='' />
                 </span>
