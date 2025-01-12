@@ -43,9 +43,7 @@ function Perfil() {
 
   useEffect(() => {
     form.reset({
-      ...perfil,
-      password: 'MiContr4seña.',
-      repassword: 'MiContr4seña.'
+      ...perfil
     })
   }, [perfil])
 
@@ -77,40 +75,30 @@ function Perfil() {
     console.log(perfil)
     const { name, password, repassword, phone } = values
 
-    if (
-      name == perfil.name &&
-      password == 'MiContr4seña.' &&
-      repassword == 'MiContr4seña.' &&
-      phone == perfil.phone
-    ) {
-      return
-    }
-
     if (password !== repassword) {
       return
     }
 
-    if (repassword != 'MiContr4seña.') {
+    if (
+      name == perfil.name &&
+      password == perfil.password &&
+      repassword == perfil.repassword &&
+      phone == perfil.phone
+    ) {
+      return
+    }else{
+
       const data = await handlePatchSubmit(
         '/user' + `?token=${localStorage.getItem('token')}`,
         { name, password, phone:phone || '' }
       )
-
-      if (!data) {
-        return
-      }
-    } else {
-      const data = await handlePatchSubmit(
-        '/user' + `?token=${localStorage.getItem('token')}`,
-        { name, phone:phone || '' }
-      )
-
+  
       if (!data) {
         return
       }
 
-      setSubmitData(false)
     }
+    setSubmitData(false)
   }
 
   const CardPaymentMemo = useMemo(
